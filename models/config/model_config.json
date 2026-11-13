@@ -1,0 +1,76 @@
+{
+  "model_family": "iSign-T5",
+  "task": "pose_to_text",
+  "selected_checkpoint": "t5-base",
+  "base_model": "t5-base",
+  "pose_dim": 300,
+  "use_motion": false,
+  "max_pose_length": 500,
+  "max_generation_length": 128,
+  "num_beams": 4,
+  "length_penalty": 2.0,
+  "normalization": "zscore",
+  "components": [
+    "POSE_LANDMARKS",
+    "LEFT_HAND_LANDMARKS",
+    "RIGHT_HAND_LANDMARKS"
+  ],
+  "landmark_counts": {
+    "POSE_LANDMARKS": 33,
+    "LEFT_HAND_LANDMARKS": 21,
+    "RIGHT_HAND_LANDMARKS": 21,
+    "total_landmarks": 75,
+    "channels_per_landmark": 4,
+    "base_spatial_dim": 300
+  },
+  "available_checkpoints": {
+    "t5-small": {
+      "base_model": "t5-small",
+      "pose_dim": 300,
+      "use_motion": false,
+      "d_model": 512,
+      "parameters": "~60M"
+    },
+    "t5-small-motion": {
+      "base_model": "t5-small",
+      "pose_dim": 600,
+      "use_motion": true,
+      "d_model": 512,
+      "parameters": "~60M"
+    },
+    "t5-base": {
+      "base_model": "t5-base",
+      "pose_dim": 300,
+      "use_motion": false,
+      "d_model": 768,
+      "parameters": "~220M"
+    },
+    "t5-base-motion": {
+      "base_model": "t5-base",
+      "pose_dim": 600,
+      "use_motion": true,
+      "d_model": 768,
+      "parameters": "~220M"
+    },
+    "t5-large": {
+      "base_model": "t5-large",
+      "pose_dim": 300,
+      "use_motion": false,
+      "d_model": 1024,
+      "parameters": "~770M"
+    },
+    "t5-large-motion": {
+      "base_model": "t5-large",
+      "pose_dim": 600,
+      "use_motion": true,
+      "d_model": 1024,
+      "parameters": "~770M"
+    }
+  },
+  "tokenizer": {
+    "name": "google-t5/t5-small",
+    "type": "T5TokenizerFast",
+    "vocab_size": 32100,
+    "offline_local_dir": "models/tokenizer/t5-small"
+  }
+}

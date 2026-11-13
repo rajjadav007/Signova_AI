@@ -1,0 +1,51 @@
+{
+  "Exp 1: Baseline Bi-GRU": {
+    "accuracy": 0.8214,
+    "macro_precision": 0.7417,
+    "macro_recall": 0.7933,
+    "macro_f1": 0.74,
+    "weighted_f1": 0.8119,
+    "top3_accuracy": 0.9286,
+    "train_time_s": 49.64,
+    "epochs_run": 47
+  },
+  "Exp 2: Bi-GRU + Bilateral Mirror": {
+    "accuracy": 0.7857,
+    "macro_precision": 0.725,
+    "macro_recall": 0.76,
+    "macro_f1": 0.72,
+    "weighted_f1": 0.7714,
+    "top3_accuracy": 0.9286,
+    "train_time_s": 79.79,
+    "epochs_run": 48
+  },
+  "Exp 3: Bi-GRU + Bilateral + Reg": {
+    "accuracy": 0.7857,
+    "macro_precision": 0.76,
+    "macro_recall": 0.76,
+    "macro_f1": 0.7233,
+    "weighted_f1": 0.7702,
+    "top3_accuracy": 0.8214,
+    "train_time_s": 96.65,
+    "epochs_run": 53
+  },
+  "Exp 4: Random Forest + Bilateral": {
+    "accuracy": 0.6786,
+    "macro_precision": 0.6533,
+    "macro_recall": 0.6867,
+    "macro_f1": 0.6127,
+    "weighted_f1": 0.6846,
+    "top3_accuracy": 0.8929,
+    "train_time_s": 0.7
+  },
+  "Exp 5: 1-Layer Bi-GRU (h=96) + Bilateral": {
+    "accuracy": 0.7857,
+    "macro_precision": 0.725,
+    "macro_recall": 0.76,
+    "macro_f1": 0.6967,
+    "weighted_f1": 0.7702,
+    "top3_accuracy": 0.9643,
+    "train_time_s": 43.27,
+    "epochs_run": 42
+  }
+}
