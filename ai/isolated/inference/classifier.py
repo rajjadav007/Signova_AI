@@ -7,6 +7,7 @@ import logging
 import os
 from pathlib import Path
 import tempfile
+import threading
 import time
 from typing import Any, Dict, List, Optional, Union
 import numpy as np
@@ -64,6 +65,8 @@ class IsolatedSignRecognizer:
         self.enable_motion_window: bool = False
         self.classes: List[str] = list(ISOLATED_CLASSES)
         self.idx_to_class: Dict[int, str] = dict(IDX_TO_CLASS)
+        self._extractor: Optional[Any] = None
+        self._extractor_lock = threading.Lock()
 
     def load_model(self) -> None:
         """Loads classifier checkpoint if available."""
@@ -328,9 +331,11 @@ class IsolatedSignRecognizer:
             tmp_path = Path(tmp.name)
 
         try:
-            if not hasattr(self, "_extractor") or self._extractor is None:
-                from ai.pose_extraction.mediapipe_extractor import ModernMediaPipeExtractor
-                self._extractor = ModernMediaPipeExtractor()
+            if self._extractor is None:
+                with self._extractor_lock:
+                    if self._extractor is None:
+                        from ai.pose_extraction.mediapipe_extractor import ModernMediaPipeExtractor
+                        self._extractor = ModernMediaPipeExtractor()
             raw_spatial, meta = self._extractor.extract_isign_video(tmp_path)
             landmarks_75x4 = raw_spatial.reshape(-1, 75, 4)
             return self.predict_landmarks(

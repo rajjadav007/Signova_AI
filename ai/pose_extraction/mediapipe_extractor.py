@@ -252,6 +252,7 @@ class ModernMediaPipeExtractor:
         # Lazy IMAGE mode landmarkers for single-frame calls (avoid 110ms startup overhead when unused)
         self._pose_image = None
         self._hand_image = None
+        self._image_lock = threading.Lock()
 
     def _ensure_image_landmarkers(self) -> None:
         """Lazily initialize persistent IMAGE mode landmarkers on first single-frame call."""
@@ -272,18 +273,19 @@ class ModernMediaPipeExtractor:
             self._hand_image = vision.HandLandmarker.create_from_options(hand_options_image)
 
     def extract_isign_frame(
-        self, rgb_frame: np.ndarray
+        self, rgb_frame: np.ndarray, hand_history: Optional[List[str]] = None
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
         """
         Extract 75 landmarks from a single RGB frame using IMAGE mode.
         """
-        self._ensure_image_landmarkers()
+        with self._image_lock:
+            self._ensure_image_landmarkers()
 
-        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb_frame)
-        pose_result = self._pose_image.detect(mp_image)
-        hand_result = self._hand_image.detect(mp_image)
+            mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb_frame)
+            pose_result = self._pose_image.detect(mp_image)
+            hand_result = self._hand_image.detect(mp_image)
 
-        return self._format_75_landmarks(pose_result, hand_result)
+        return self._format_75_landmarks(pose_result, hand_result, hand_history=hand_history)
 
     def extract_isign_video(
         self,
@@ -337,7 +339,7 @@ class ModernMediaPipeExtractor:
         corrupted_frames = 0
         read_frames = 0
         last_timestamp_ms = -1
-        self._hand_history: List[str] = []
+        hand_history: List[str] = []
 
         t_start = time.perf_counter()
 
@@ -368,7 +370,7 @@ class ModernMediaPipeExtractor:
                 pose_res = pose_video.detect_for_video(mp_image, ts_ms)
                 hand_res = hand_video.detect_for_video(mp_image, ts_ms)
 
-                kps, info = self._format_75_landmarks(pose_res, hand_res)
+                kps, info = self._format_75_landmarks(pose_res, hand_res, hand_history=hand_history)
                 frames_spatial_300.append(kps.reshape(-1))
 
                 if info["pose"]:
@@ -454,7 +456,10 @@ class ModernMediaPipeExtractor:
         return raw_spatial_array, metadata
 
     def _format_75_landmarks(
-        self, pose_result: Any, hand_result: Any
+        self,
+        pose_result: Any,
+        hand_result: Any,
+        hand_history: Optional[List[str]] = None,
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
         """
         Assemble pose and hand detection results into the official 75-landmark format.
@@ -481,8 +486,9 @@ class ModernMediaPipeExtractor:
         # Hand assignment with anatomical validation and hysteresis stabilization
         hands = hand_result.hand_landmarks if hand_result.hand_landmarks else []
         handedness = hand_result.handedness if hand_result.handedness else []
+        effective_history = hand_history if hand_history is not None else getattr(self, "_hand_history", None)
         lh, rh = _assign_hands_anatomically(
-            hands, handedness, pose_lms, hand_history=getattr(self, "_hand_history", None)
+            hands, handedness, pose_lms, hand_history=effective_history
         )
 
         left_detected = lh is not None
@@ -521,8 +527,9 @@ class ModernMediaPipeExtractor:
         # On Windows, explicitly calling .close() on both landmarker C++ instances
         # causes a double-free / STATUS_INVALID_HANDLE (0xc0000008) in LiteRT thread pool.
         # Setting references to None allows Python GC and native destructor to release cleanly.
-        self._pose_image = None
-        self._hand_image = None
+        with self._image_lock:
+            self._pose_image = None
+            self._hand_image = None
 
 
 # ---------------------------------------------------------------------------
@@ -556,14 +563,16 @@ class LegacyMediaPipeExtractor:
             min_hand_landmarks_confidence=min_hand_landmarks_confidence,
         )
         self._landmarker = vision.HolisticLandmarker.create_from_options(self.options)
+        self._lock = threading.Lock()
 
     def extract_frame(self, rgb_frame: np.ndarray) -> Tuple[np.ndarray, Dict[str, bool]]:
         """Extract 94 landmarks from a single RGB frame for isolated sign recognition."""
-        if self._landmarker is None:
-            raise RuntimeError("LegacyMediaPipeExtractor is closed.")
+        with self._lock:
+            if self._landmarker is None:
+                raise RuntimeError("LegacyMediaPipeExtractor is closed.")
 
-        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb_frame)
-        result = self._landmarker.detect(mp_image)
+            mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb_frame)
+            result = self._landmarker.detect(mp_image)
 
         keypoints = np.zeros((NUM_KEYPOINTS, 4), dtype=np.float32)
         detections = {"pose": False, "left_hand": False, "right_hand": False, "face": False}
@@ -601,11 +610,12 @@ class LegacyMediaPipeExtractor:
         self, rgb_frame: np.ndarray
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
         """Extract 75 landmarks from a single RGB frame for continuous iSign translation."""
-        if self._landmarker is None:
-            raise RuntimeError("LegacyMediaPipeExtractor is closed.")
+        with self._lock:
+            if self._landmarker is None:
+                raise RuntimeError("LegacyMediaPipeExtractor is closed.")
 
-        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb_frame)
-        result = self._landmarker.detect(mp_image)
+            mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb_frame)
+            result = self._landmarker.detect(mp_image)
 
         keypoints = np.zeros((ISIGN_TOTAL_LANDMARKS, ISIGN_CHANNELS), dtype=np.float32)
         pose_detected = False
@@ -772,9 +782,10 @@ class LegacyMediaPipeExtractor:
         return raw_spatial_array, metadata
 
     def close(self) -> None:
-        if hasattr(self, "_landmarker") and self._landmarker is not None:
-            self._landmarker.close()
-            self._landmarker = None
+        with self._lock:
+            if hasattr(self, "_landmarker") and self._landmarker is not None:
+                self._landmarker.close()
+                self._landmarker = None
 
 
 # ---------------------------------------------------------------------------
@@ -832,13 +843,13 @@ class MediaPipeLandmarkExtractor:
             )
 
     def extract_isign_frame(
-        self, rgb_frame: np.ndarray
+        self, rgb_frame: np.ndarray, hand_history: Optional[List[str]] = None
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
         """
         Extract 75 landmarks from a single RGB frame for continuous iSign translation.
         """
         if self._modern_extractor is not None:
-            return self._modern_extractor.extract_isign_frame(rgb_frame)
+            return self._modern_extractor.extract_isign_frame(rgb_frame, hand_history=hand_history)
         if self._legacy_extractor is not None:
             return self._legacy_extractor.extract_isign_frame(rgb_frame)
         raise RuntimeError("MediaPipeLandmarkExtractor is closed.")

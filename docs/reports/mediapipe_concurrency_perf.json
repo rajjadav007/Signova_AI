@@ -1,0 +1,110 @@
+[
+  {
+    "concurrency": 1,
+    "total_requests": 4,
+    "wall_time_sec": 17.246,
+    "avg_latency_sec": 4.311,
+    "median_latency_sec": 4.715,
+    "p95_latency_sec": 5.4,
+    "throughput_req_per_sec": 0.232,
+    "errors": 0,
+    "consistency": {
+      "food.mp4": [
+        [
+          "food",
+          0.972
+        ]
+      ],
+      "hello.mp4": [
+        [
+          "hello",
+          0.998
+        ]
+      ],
+      "help.mp4": [
+        [
+          "help",
+          0.994
+        ]
+      ],
+      "no.mp4": [
+        [
+          "no",
+          0.905
+        ]
+      ]
+    }
+  },
+  {
+    "concurrency": 2,
+    "total_requests": 4,
+    "wall_time_sec": 9.773,
+    "avg_latency_sec": 4.5,
+    "median_latency_sec": 4.885,
+    "p95_latency_sec": 5.664,
+    "throughput_req_per_sec": 0.409,
+    "errors": 0,
+    "consistency": {
+      "hello.mp4": [
+        [
+          "hello",
+          0.998
+        ]
+      ],
+      "food.mp4": [
+        [
+          "food",
+          0.972
+        ]
+      ],
+      "help.mp4": [
+        [
+          "help",
+          0.994
+        ]
+      ],
+      "no.mp4": [
+        [
+          "no",
+          0.905
+        ]
+      ]
+    }
+  },
+  {
+    "concurrency": 4,
+    "total_requests": 4,
+    "wall_time_sec": 9.75,
+    "avg_latency_sec": 8.411,
+    "median_latency_sec": 8.82,
+    "p95_latency_sec": 9.715,
+    "throughput_req_per_sec": 0.41,
+    "errors": 0,
+    "consistency": {
+      "hello.mp4": [
+        [
+          "hello",
+          0.998
+        ]
+      ],
+      "food.mp4": [
+        [
+          "food",
+          0.972
+        ]
+      ],
+      "no.mp4": [
+        [
+          "no",
+          0.905
+        ]
+      ],
+      "help.mp4": [
+        [
+          "help",
+          0.994
+        ]
+      ]
+    }
+  }
+]
