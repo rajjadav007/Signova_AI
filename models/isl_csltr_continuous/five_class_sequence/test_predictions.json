@@ -1,0 +1,87 @@
+[
+  {
+    "sequence_id": "s000_signer2_comb_your_hair",
+    "signer_id": 2,
+    "ground_truth_id": 0,
+    "ground_truth_sentence": "comb your hair",
+    "predicted_id": 0,
+    "predicted_sentence": "comb your hair",
+    "is_correct": true,
+    "confidence": 0.7647,
+    "probabilities": [
+      0.7647,
+      0.0295,
+      0.0903,
+      0.0835,
+      0.0321
+    ]
+  },
+  {
+    "sequence_id": "s001_signer2_help_me",
+    "signer_id": 2,
+    "ground_truth_id": 1,
+    "ground_truth_sentence": "help me",
+    "predicted_id": 2,
+    "predicted_sentence": "i am fine. thank you sir.",
+    "is_correct": false,
+    "confidence": 0.5433,
+    "probabilities": [
+      0.057,
+      0.1847,
+      0.5433,
+      0.102,
+      0.113
+    ]
+  },
+  {
+    "sequence_id": "s002_signer2_i_am_fine__thank_you_sir_",
+    "signer_id": 2,
+    "ground_truth_id": 2,
+    "ground_truth_sentence": "i am fine. thank you sir.",
+    "predicted_id": 2,
+    "predicted_sentence": "i am fine. thank you sir.",
+    "is_correct": true,
+    "confidence": 0.4291,
+    "probabilities": [
+      0.0911,
+      0.0726,
+      0.4291,
+      0.2363,
+      0.1709
+    ]
+  },
+  {
+    "sequence_id": "s003_signer2_i_need_water",
+    "signer_id": 2,
+    "ground_truth_id": 3,
+    "ground_truth_sentence": "i need water",
+    "predicted_id": 3,
+    "predicted_sentence": "i need water",
+    "is_correct": true,
+    "confidence": 0.3628,
+    "probabilities": [
+      0.1093,
+      0.0479,
+      0.3413,
+      0.3628,
+      0.1387
+    ]
+  },
+  {
+    "sequence_id": "s004_signer2_who_are_you",
+    "signer_id": 2,
+    "ground_truth_id": 4,
+    "ground_truth_sentence": "who are you",
+    "predicted_id": 2,
+    "predicted_sentence": "i am fine. thank you sir.",
+    "is_correct": false,
+    "confidence": 0.4427,
+    "probabilities": [
+      0.095,
+      0.1041,
+      0.4427,
+      0.1998,
+      0.1583
+    ]
+  }
+]

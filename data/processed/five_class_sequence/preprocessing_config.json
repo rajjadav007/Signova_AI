@@ -1,0 +1,41 @@
+{
+  "num_classes": 5,
+  "classes": [
+    {
+      "class_id": 0,
+      "name": "comb your hair",
+      "folder": "comb your hair"
+    },
+    {
+      "class_id": 1,
+      "name": "help me",
+      "folder": "help me"
+    },
+    {
+      "class_id": 2,
+      "name": "i am fine. thank you sir.",
+      "folder": "i am fine. thank you sir"
+    },
+    {
+      "class_id": 3,
+      "name": "i need water",
+      "folder": "i need water"
+    },
+    {
+      "class_id": 4,
+      "name": "who are you",
+      "folder": "who are you"
+    }
+  ],
+  "landmark_count": 75,
+  "landmark_channels": 4,
+  "feature_dim": 300,
+  "normalization": "torso_centered",
+  "origin_landmarks": [
+    11,
+    12
+  ],
+  "scale_reference": "shoulder_distance",
+  "missing_hand_strategy": "zero_fill",
+  "timestamp": "2026-11-14 04:10:32"
+}

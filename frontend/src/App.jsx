@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import MainLayout from "./components/layout/MainLayout";
 import DashboardPage from "./pages/DashboardPage";
 import LiveRecognitionPage from "./pages/LiveRecognitionPage";
+import SentenceTestingPage from "./pages/SentenceTestingPage";
 import PlaceholderPage from "./components/common/PlaceholderPage";
 import {
   BookOpen,
@@ -31,16 +32,7 @@ export function AppRoutes() {
             />
           }
         />
-        <Route
-          path="history"
-          element={
-            <PlaceholderPage
-              title="Testing & History"
-              description="Review recent gesture classification tests, accuracy benchmarks, and historical logs."
-              icon={History}
-            />
-          }
-        />
+        <Route path="history" element={<SentenceTestingPage />} />
         <Route
           path="settings"
           element={

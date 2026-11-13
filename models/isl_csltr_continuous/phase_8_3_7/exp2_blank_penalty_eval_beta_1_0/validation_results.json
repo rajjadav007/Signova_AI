@@ -1,0 +1,3132 @@
+{
+  "experiment_name": "exp2_blank_penalty_beta_1.0",
+  "blank_penalty": 1.0,
+  "validation_evaluation": {
+    "total_samples": 85,
+    "exact_matches": 0,
+    "exact_match_rate": 0.0,
+    "total_ref_tokens": 304,
+    "total_dist": 252,
+    "substitutions": 116,
+    "deletions": 135,
+    "insertions": 1,
+    "wer": 0.8289,
+    "ter": 0.8289,
+    "macro_f1": 0.0052,
+    "per_gloss": {
+      "(AGE)": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "A": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "ABOUT": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "ABUSE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "AFRAID": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "AGREE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "ALL": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "AM": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "ANGRY": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "ANY": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "ANYTHING": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "APPRECIATE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "BAD": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "BECOME": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "BED": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "BORED": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "BRING": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "BY": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "CAME": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "CARE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "CLASS": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "COLD": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "COLLEGE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "COMB": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "COMING": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "CONGRATULATIIONS": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "CRY": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "DIFFERENCE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "DILEMMA": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "DO": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 14,
+        "ref_count": 14,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "DONOT": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "ENJOYED": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "FAVOUR": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "FEELING": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "FINE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "FOOD": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "FREE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "FRIEND": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "FROM": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "GLASS": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "GO": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "GOOD": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "GOT": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "GRATEFUL": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "HAIR": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "HAPPENED": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "HAPPY": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "HE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 6,
+        "ref_count": 6,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "HEAR": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "HEART": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "HELP": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 4,
+        "ref_count": 4,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "HI": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "HIDE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "HIM": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "HOW": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 5,
+        "ref_count": 5,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "HUNGRY": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "HURT": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "I": {
+        "tp": 27,
+        "fp": 58,
+        "fn": 4,
+        "ref_count": 31,
+        "hyp_count": 85,
+        "precision": 0.3176,
+        "recall": 0.871,
+        "f1": 0.4655
+      },
+      "IN": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "INTO": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "IT": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 7,
+        "ref_count": 7,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "KIND": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "KNOW": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "LEAVE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "LIGHT": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "LIKE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "LOT": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "LOVE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "MAKE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "ME": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 5,
+        "ref_count": 5,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "MEAN": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "MEDICINE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "MORE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "MUCH": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "MY": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "NAME": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "NEED": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "ref_count": 3,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "NEVER": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "NOT": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 8,
+        "ref_count": 8,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "NOW": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "NUMBER": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "OF": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "OFF": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "OLD": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "ON": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "ONE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "ONWARDS": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "OUTSIDE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "PHONE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "PLEASE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "POUR": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "PREPARE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "PROMISE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "REALLY": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "ref_count": 3,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "REPEAT": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "ROOM": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "SCHOOL": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "SERVE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "SHE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "SHIRT": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "SIR": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "SITTING": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "SLOWER": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "SO": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "SOFTLY": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "SOME": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "SOMEHOW": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "SOMEONE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "SOMETHING": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "SORRY": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "SPEAK": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "STOPPED": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "SURE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "TAKE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "ref_count": 3,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "TALK": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "TELL": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "THANK": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "THAT": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "ref_count": 3,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "THE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "THERE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "THINGS": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "THINK": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "THIS": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "TIRED": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "TO": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 4,
+        "ref_count": 4,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "TODAY": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "TRAIN": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "TRUST": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "TRUTH": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "TRY": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "TURN": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "UNDERSTAND": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "VERY": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "WANT": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "WATER": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "ref_count": 3,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "WAY": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "WE": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "WEAR": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "WELCOME": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "WHAT": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 8,
+        "ref_count": 8,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "WHEN": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "WHICH": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "WHO": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "WHY": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "WITH": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "WORRY": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "XXXXXXXX": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "YOU": {
+        "tp": 19,
+        "fp": 66,
+        "fn": 15,
+        "ref_count": 34,
+        "hyp_count": 85,
+        "precision": 0.2235,
+        "recall": 0.5588,
+        "f1": 0.3193
+      },
+      "YOUR": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "ref_count": 2,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "YOURSELF": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "ref_count": 1,
+        "hyp_count": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    },
+    "top_confusions": [
+      [
+        [
+          "YOU",
+          "<deletion>"
+        ],
+        15
+      ],
+      [
+        [
+          "WHAT",
+          "I"
+        ],
+        7
+      ],
+      [
+        [
+          "DO",
+          "I"
+        ],
+        6
+      ],
+      [
+        [
+          "IT",
+          "<deletion>"
+        ],
+        6
+      ],
+      [
+        [
+          "HE",
+          "I"
+        ],
+        5
+      ],
+      [
+        [
+          "DO",
+          "YOU"
+        ],
+        5
+      ],
+      [
+        [
+          "NOT",
+          "YOU"
+        ],
+        4
+      ],
+      [
+        [
+          "HOW",
+          "I"
+        ],
+        4
+      ],
+      [
+        [
+          "NOT",
+          "<deletion>"
+        ],
+        4
+      ],
+      [
+        [
+          "ME",
+          "YOU"
+        ],
+        3
+      ],
+      [
+        [
+          "TO",
+          "<deletion>"
+        ],
+        3
+      ],
+      [
+        [
+          "DO",
+          "<deletion>"
+        ],
+        3
+      ],
+      [
+        [
+          "TODAY",
+          "<deletion>"
+        ],
+        2
+      ],
+      [
+        [
+          "SOMETHING",
+          "<deletion>"
+        ],
+        2
+      ],
+      [
+        [
+          "ME",
+          "<deletion>"
+        ],
+        2
+      ]
+    ],
+    "ctc_loss": 4.5063,
+    "mean_blank_percentage": 96.25,
+    "mean_blank_posterior": 0.9139,
+    "mean_ref_length": 3.58,
+    "mean_hyp_length": 2.0,
+    "distinct_glosses_predicted": 2,
+    "predicted_gloss_counts": {
+      "I": 85,
+      "YOU": 85
+    },
+    "sample_records": [
+      {
+        "video_id": "s000_signer7_free__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "YOU",
+          "FREE",
+          "TODAY"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.61016949152543,
+        "total_frames": 59
+      },
+      {
+        "video_id": "s001_signer7_MVI_6209",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "YOU",
+          "HIDE",
+          "SOMETHING"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 95.83333333333334,
+        "total_frames": 48
+      },
+      {
+        "video_id": "s002_signer7_bring_water_for_me__8_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "BRING",
+          "WATER",
+          "ME"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 95.91836734693877,
+        "total_frames": 49
+      },
+      {
+        "video_id": "s003_signer7_help__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "I",
+          "HELP",
+          "YOU"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.0,
+        "total_frames": 50
+      },
+      {
+        "video_id": "s004_signer7_can_you_repeat_that_please__1_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "YOU",
+          "REPEAT",
+          "PLEASE"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.36363636363636,
+        "total_frames": 55
+      },
+      {
+        "video_id": "s005_signer7_comb__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "COMB",
+          "YOU",
+          "HAIR"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 95.91836734693877,
+        "total_frames": 49
+      },
+      {
+        "video_id": "s006_signer7_congratulations__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "CONGRATULATIIONS"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 95.55555555555556,
+        "total_frames": 45
+      },
+      {
+        "video_id": "s007_signer7_could_you_please_talk_slower__3_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "YOU",
+          "PLEASE",
+          "TALK",
+          "SLOWER"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 97.1830985915493,
+        "total_frames": 71
+      },
+      {
+        "video_id": "s008_signer7_favour__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "DO",
+          "ME",
+          "FAVOUR"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 95.91836734693877,
+        "total_frames": 49
+      },
+      {
+        "video_id": "s009_signer7_abuse__4_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "DONOT",
+          "ABUSE",
+          "HIM"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 97.26027397260275,
+        "total_frames": 73
+      },
+      {
+        "video_id": "s013_signer7_heart__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "DO",
+          "NOT",
+          "TAKE",
+          "IT",
+          "HEART"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.36363636363636,
+        "total_frames": 55
+      },
+      {
+        "video_id": "s014_signer7_worry__4_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "DO",
+          "NOT",
+          "WORRY"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.15384615384616,
+        "total_frames": 52
+      },
+      {
+        "video_id": "s015_signer7_something__3_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "DO",
+          "YOU",
+          "NEED",
+          "SOMETHING"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 97.14285714285714,
+        "total_frames": 70
+      },
+      {
+        "video_id": "s017_signer7_food__4_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "YOUR",
+          "FOOD"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.07843137254902,
+        "total_frames": 51
+      },
+      {
+        "video_id": "s018_signer7_train__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "HE",
+          "CAME",
+          "TRAIN"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.875,
+        "total_frames": 64
+      },
+      {
+        "video_id": "s019_signer7_room__4_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "HE",
+          "GO",
+          "INTO",
+          "ROOM"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.875,
+        "total_frames": 64
+      },
+      {
+        "video_id": "s020_signer7_way__4_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "HE",
+          "ON",
+          "WAY"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 95.65217391304348,
+        "total_frames": 46
+      },
+      {
+        "video_id": "s021_signer7_friend__4_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "HE",
+          "SHE",
+          "MY",
+          "FRIEND"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 95.74468085106383,
+        "total_frames": 47
+      },
+      {
+        "video_id": "s022_signer7_today__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "HE",
+          "COMING",
+          "TODAY"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.96969696969697,
+        "total_frames": 66
+      },
+      {
+        "video_id": "s023_signer7_help_me__8_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "HELP",
+          "ME"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 95.91836734693877,
+        "total_frames": 49
+      },
+      {
+        "video_id": "s024_signer7_hi_how_are_you__3_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "HI",
+          "HOW",
+          "YOU"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.42857142857143,
+        "total_frames": 56
+      },
+      {
+        "video_id": "s025_signer7_things__4_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "HOW",
+          "THINGS"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 97.84946236559139,
+        "total_frames": 93
+      },
+      {
+        "video_id": "s026_signer7_how_can_i_help_you__3_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "HOW",
+          "I",
+          "HELP",
+          "YOU"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 97.05882352941177,
+        "total_frames": 68
+      },
+      {
+        "video_id": "s027_signer7_trust__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "HOW",
+          "I",
+          "TRUST",
+          "YOU"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.49122807017544,
+        "total_frames": 57
+      },
+      {
+        "video_id": "s029_signer7_how_old_are_you__3_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "HOW",
+          "OLD",
+          "YOU"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.42857142857143,
+        "total_frames": 56
+      },
+      {
+        "video_id": "s030_signer7_i_am__age___1_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "I",
+          "(AGE)"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 95.34883720930233,
+        "total_frames": 43
+      },
+      {
+        "video_id": "s031_signer7_afraid__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "I",
+          "AFRAID",
+          "THAT"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.61016949152543,
+        "total_frames": 59
+      },
+      {
+        "video_id": "s032_signer7_i_am_crying__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "I",
+          "CRY"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 95.91836734693877,
+        "total_frames": 49
+      },
+      {
+        "video_id": "s033_signer7_bored__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "I",
+          "FEELING",
+          "BORED"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.07843137254902,
+        "total_frames": 51
+      },
+      {
+        "video_id": "s034_signer7_cold__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "I",
+          "FEELING",
+          "COLD"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 95.1219512195122,
+        "total_frames": 41
+      },
+      {
+        "video_id": "s035_signer7_fine_thank__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "I",
+          "FINE",
+          "THANK",
+          "YOU",
+          "SIR"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.92307692307692,
+        "total_frames": 65
+      },
+      {
+        "video_id": "s036_signer7_i_am_hungry____3_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "I",
+          "HUNGRY"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.15384615384616,
+        "total_frames": 52
+      },
+      {
+        "video_id": "s037_signer7_dilemma__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "I",
+          "IN",
+          "DILEMMA",
+          "WHAT",
+          "TO",
+          "DO"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 97.1830985915493,
+        "total_frames": 71
+      },
+      {
+        "video_id": "s038_signer7_really_sure__4_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "I",
+          "NOT",
+          "REALLY",
+          "SURE"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 95.83333333333334,
+        "total_frames": 48
+      },
+      {
+        "video_id": "s039_signer7_MVI_6104",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "I",
+          "REALLY",
+          "GRATEFUL"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 97.01492537313433,
+        "total_frames": 67
+      },
+      {
+        "video_id": "s040_signer7_sitting__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "I",
+          "SITTING",
+          "IN",
+          "THE",
+          "CLASS"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 97.72727272727273,
+        "total_frames": 88
+      },
+      {
+        "video_id": "s041_signer7_sorry_hear__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "I",
+          "AM",
+          "SO",
+          "SORRY",
+          "TO",
+          "HEAR",
+          "THAT"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.49122807017544,
+        "total_frames": 57
+      },
+      {
+        "video_id": "s043_signer7_tired__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "I",
+          "TIRED"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.55172413793103,
+        "total_frames": 58
+      },
+      {
+        "video_id": "s044_signer7_very_happy__4_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "I",
+          "VERY",
+          "HAPPY"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.36363636363636,
+        "total_frames": 55
+      },
+      {
+        "video_id": "s045_signer7_MVI_6109",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "I",
+          "NOT",
+          "HELP",
+          "YOU",
+          "THERE"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.875,
+        "total_frames": 64
+      },
+      {
+        "video_id": "s046_signer7_agree__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "I",
+          "DONOT",
+          "AGREE"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.92307692307692,
+        "total_frames": 65
+      },
+      {
+        "video_id": "s047_signer7_hate__4_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "I",
+          "DO",
+          "NOT",
+          "LIKE",
+          "IT"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.36363636363636,
+        "total_frames": 55
+      },
+      {
+        "video_id": "s048_signer7_mean__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "I",
+          "DO",
+          "NOT",
+          "MEAN",
+          "IT"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 97.70114942528735,
+        "total_frames": 87
+      },
+      {
+        "video_id": "s050_signer7_enjoyed__4_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "I",
+          "ENJOYED",
+          "A",
+          "LOT"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.0,
+        "total_frames": 50
+      },
+      {
+        "video_id": "s051_signer7_got_hurt__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "I",
+          "GOT",
+          "HURT"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.66666666666667,
+        "total_frames": 60
+      },
+      {
+        "video_id": "s052_signer7_MVI_6207",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "I",
+          "LIKE",
+          "YOU",
+          "I",
+          "LOVE",
+          "YOU"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 94.73684210526315,
+        "total_frames": 38
+      },
+      {
+        "video_id": "s053_signer7_i_need_water_7",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "I",
+          "NEED",
+          "WATER"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.96969696969697,
+        "total_frames": 66
+      },
+      {
+        "video_id": "s054_signer7_promise__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "I",
+          "PROMISE"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 95.65217391304348,
+        "total_frames": 46
+      },
+      {
+        "video_id": "s055_signer7_i_really_appreciate_it__3_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "I",
+          "REALLY",
+          "APPRECIATE",
+          "IT"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.22641509433963,
+        "total_frames": 53
+      },
+      {
+        "video_id": "s056_signer7_somehow__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "I",
+          "SOMEHOW",
+          "GOT",
+          "KNOW",
+          "ABOUT",
+          "IT"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.72131147540983,
+        "total_frames": 61
+      },
+      {
+        "video_id": "s057_signer7_stopped__3_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "I",
+          "STOPPED",
+          "BY",
+          "SOMEONE"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.15384615384616,
+        "total_frames": 52
+      },
+      {
+        "video_id": "s058_signer7_difference__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "IT",
+          "DO",
+          "NOT",
+          "MAKE",
+          "ANY",
+          "DIFFERENCE",
+          "TO",
+          "ME"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.82539682539682,
+        "total_frames": 63
+      },
+      {
+        "video_id": "s061_signer7_my_name_is_xxxxxxxx__1_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "MY",
+          "NAME",
+          "XXXXXXXX"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 95.34883720930233,
+        "total_frames": 43
+      },
+      {
+        "video_id": "s064_signer7_never_hurt__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "NOW",
+          "ONWARDS",
+          "HE",
+          "NEVER",
+          "HURT",
+          "YOU"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 97.77777777777777,
+        "total_frames": 90
+      },
+      {
+        "video_id": "s065_signer7_pour__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "POUR",
+          "SOME",
+          "MORE",
+          "WATER",
+          "INTO",
+          "THE",
+          "GLASS"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 95.83333333333334,
+        "total_frames": 48
+      },
+      {
+        "video_id": "s066_signer7_bed__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "PREPARE",
+          "BED"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.66666666666667,
+        "total_frames": 60
+      },
+      {
+        "video_id": "s067_signer7_serve__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "SERVE",
+          "FOOD"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.42857142857143,
+        "total_frames": 56
+      },
+      {
+        "video_id": "s068_signer7_outside__4_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "WE",
+          "GO",
+          "OUTSIDE"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.72131147540983,
+        "total_frames": 61
+      },
+      {
+        "video_id": "s069_signer7_softly__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "SPEAK",
+          "SOFTLY"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 94.73684210526315,
+        "total_frames": 38
+      },
+      {
+        "video_id": "s070_signer7_take_care__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "TAKE",
+          "CARE",
+          "OF",
+          "YOURSELF"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.66666666666667,
+        "total_frames": 60
+      },
+      {
+        "video_id": "s071_signer7_truth__4_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "TELL",
+          "ME",
+          "TRUTH"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 95.1219512195122,
+        "total_frames": 41
+      },
+      {
+        "video_id": "s072_signer7_thank_you_so_much__1_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "THANK",
+          "YOU",
+          "SO",
+          "MUCH"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.29629629629629,
+        "total_frames": 54
+      },
+      {
+        "video_id": "s073_signer7_MVI_6106",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "THAT",
+          "KIND",
+          "YOU"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.0,
+        "total_frames": 50
+      },
+      {
+        "video_id": "s075_signer7_understand__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "TRY",
+          "TO",
+          "UNDERSTAND"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 97.26027397260275,
+        "total_frames": 73
+      },
+      {
+        "video_id": "s076_signer7_turn_on__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "TURN",
+          "ON",
+          "LIGHT",
+          "TURN",
+          "OFF",
+          "LIGHT"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 95.1219512195122,
+        "total_frames": 41
+      },
+      {
+        "video_id": "s077_signer7_MVI_6208",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "WE",
+          "ALL",
+          "WITH",
+          "YOU"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 95.55555555555556,
+        "total_frames": 45
+      },
+      {
+        "video_id": "s078_signer7_shirt__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "WEAR",
+          "SHIRT"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.0,
+        "total_frames": 50
+      },
+      {
+        "video_id": "s079_signer7_what_are_you_doing__1_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "WHAT",
+          "YOU",
+          "DO"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 95.74468085106383,
+        "total_frames": 47
+      },
+      {
+        "video_id": "s080_signer7_tell_him__4_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "WHAT",
+          "YOU",
+          "TELL",
+          "HIM"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.07843137254902,
+        "total_frames": 51
+      },
+      {
+        "video_id": "s082_signer7_what_do_you_think__1_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "WHAT",
+          "DO",
+          "YOU",
+          "THINK"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.0,
+        "total_frames": 50
+      },
+      {
+        "video_id": "s083_signer7_become__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "WHAT",
+          "DO",
+          "YOU",
+          "WANT",
+          "BECOME"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.15384615384616,
+        "total_frames": 52
+      },
+      {
+        "video_id": "s084_signer7_happened__3_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "WHAT",
+          "HAPPENED"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 95.55555555555556,
+        "total_frames": 45
+      },
+      {
+        "video_id": "s086_signer7_what_is_your_phone_number__1_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "WHAT",
+          "YOUR",
+          "PHONE",
+          "NUMBER"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 97.2972972972973,
+        "total_frames": 74
+      },
+      {
+        "video_id": "s087_signer7_what_you_want__1_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "WHAT",
+          "YOU",
+          "WANT"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 95.45454545454545,
+        "total_frames": 44
+      },
+      {
+        "video_id": "s088_signer7_leave__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "WHEN",
+          "TRAIN",
+          "LEAVE"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.61016949152543,
+        "total_frames": 59
+      },
+      {
+        "video_id": "s090_signer7_college_school__3_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "WHICH",
+          "COLLEGE",
+          "SCHOOL",
+          "YOU",
+          "FROM"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 97.33333333333334,
+        "total_frames": 75
+      },
+      {
+        "video_id": "s091_signer7_who_are_you__1_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "WHO",
+          "YOU"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.22641509433963,
+        "total_frames": 53
+      },
+      {
+        "video_id": "s092_signer7_angry__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "WHY",
+          "YOU",
+          "ANGRY"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 95.74468085106383,
+        "total_frames": 47
+      },
+      {
+        "video_id": "s093_signer7_crying__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "WHY",
+          "YOU",
+          "CRY"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.0,
+        "total_frames": 50
+      },
+      {
+        "video_id": "s095_signer7_bad__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "YOU",
+          "BAD"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 93.10344827586206,
+        "total_frames": 29
+      },
+      {
+        "video_id": "s096_signer7_good__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "YOU",
+          "GOOD"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 94.73684210526315,
+        "total_frames": 38
+      },
+      {
+        "video_id": "s097_signer7_welcome__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "YOU",
+          "WELCOME"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 95.1219512195122,
+        "total_frames": 41
+      },
+      {
+        "video_id": "s098_signer7_can_do__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "YOU",
+          "DO",
+          "IT"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 95.34883720930233,
+        "total_frames": 43
+      },
+      {
+        "video_id": "s099_signer7_dont_care__2_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "YOU",
+          "DO",
+          "ANYTHING",
+          "I",
+          "DO",
+          "NOT",
+          "CARE"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 97.33333333333334,
+        "total_frames": 75
+      },
+      {
+        "video_id": "s100_signer7_medicine__5_",
+        "signer_id": 7,
+        "resolution": "1920x1080",
+        "reference": [
+          "YOU",
+          "NEED",
+          "A",
+          "MEDICINE",
+          "TAKE",
+          "THIS",
+          "ONE"
+        ],
+        "hypothesis": [
+          "I",
+          "YOU"
+        ],
+        "exact_match": false,
+        "blank_percentage": 96.55172413793103,
+        "total_frames": 58
+      }
+    ]
+  }
+}

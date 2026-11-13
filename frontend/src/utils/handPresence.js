@@ -15,6 +15,7 @@ export const RECOGNITION_STATE = {
   RECOGNIZING: "RECOGNIZING",
   SUCCESS: "SUCCESS",
   UNCERTAIN: "UNCERTAIN",
+  NO_LANDMARKS: "NO_LANDMARKS",
   ERROR: "ERROR",
   RESULT_DISPLAYED: "RESULT_DISPLAYED",
   RESET_SEQUENCE: "RESET_SEQUENCE",
@@ -30,10 +31,27 @@ export const RECOGNITION_STATE_LABELS = {
   [RECOGNITION_STATE.RECOGNIZING]: "Recognizing",
   [RECOGNITION_STATE.SUCCESS]: "Sign recognized",
   [RECOGNITION_STATE.UNCERTAIN]: "Sign unclear, try again",
+  [RECOGNITION_STATE.NO_LANDMARKS]: "No valid landmarks detected",
   [RECOGNITION_STATE.ERROR]: "Recognition unavailable",
   [RECOGNITION_STATE.RESULT_DISPLAYED]: "Sign recognized",
   [RECOGNITION_STATE.RESET_SEQUENCE]: "Preparing next sign",
   [RECOGNITION_STATE.WAITING_FOR_NEXT_SIGN]: "Ready for next sign",
+};
+
+export const SENTENCE_STATE_LABELS = {
+  [RECOGNITION_STATE.NO_HAND]: "Waiting for signing",
+  [RECOGNITION_STATE.HAND_DETECTED]: "Detecting hands",
+  [RECOGNITION_STATE.RECORDING_GESTURE]: "Collecting frames",
+  [RECOGNITION_STATE.GESTURE_ENDED]: "Processing sequence",
+  [RECOGNITION_STATE.VALIDATING_RECORDING]: "Processing sequence",
+  [RECOGNITION_STATE.RECOGNIZING]: "Processing sequence",
+  [RECOGNITION_STATE.SUCCESS]: "Prediction available",
+  [RECOGNITION_STATE.UNCERTAIN]: "Uncertain prediction",
+  [RECOGNITION_STATE.NO_LANDMARKS]: "No valid landmarks detected",
+  [RECOGNITION_STATE.ERROR]: "Recognition unavailable",
+  [RECOGNITION_STATE.RESULT_DISPLAYED]: "Prediction available",
+  [RECOGNITION_STATE.RESET_SEQUENCE]: "Waiting for signing",
+  [RECOGNITION_STATE.WAITING_FOR_NEXT_SIGN]: "Waiting for signing",
 };
 
 export const FULL_FRAME_ZONE = {
@@ -46,20 +64,44 @@ export const FULL_FRAME_ZONE = {
 export const DEFAULT_FOCUS_ZONE = FULL_FRAME_ZONE;
 
 /**
- * Checks whether an RGB pixel matches universal human skin-chroma characteristics.
- * Uses standard RGB bounding rule for diverse human skin tones:
- * R > 60, G > 40, B > 20, R > G, R > B, max - min > 15, |R - G| > 12
+ * Checks whether an RGB pixel matches human skin-chroma characteristics.
+ * Supports both daylight conditions and illumination-tolerant backlit / low-light conditions.
  */
 export function isSkinPixel(r, g, b) {
-  return (
+  // Reject pure grayscale, blacks, whites
+  if (r === g && g === b) return false;
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const diff = max - min;
+  if (diff < 8) return false;
+
+  // 1. Daylight & standard illumination skin rule
+  const isDaylightSkin = (
     r > 60 &&
     g > 35 &&
     b > 20 &&
     r > g &&
     r > b &&
-    Math.max(r, g, b) - Math.min(r, g, b) > 15 &&
-    Math.abs(r - g) > 12
+    diff > 12 &&
+    Math.abs(r - g) > 10
   );
+
+  // 2. Normalized chromaticity rule (illumination-invariant, handles backlit / underexposed webcams)
+  const sum = r + g + b;
+  if (sum > 60 && sum < 740) {
+    const nr = r / sum;
+    const ng = g / sum;
+    const isNormSkin = (
+      nr >= 0.33 && nr <= 0.58 &&
+      ng >= 0.25 && ng <= 0.40 &&
+      r > b &&
+      r >= g &&
+      (r - b) >= 6
+    );
+    if (isNormSkin) return true;
+  }
+
+  return isDaylightSkin;
 }
 
 /**
@@ -67,7 +109,7 @@ export function isSkinPixel(r, g, b) {
  *
  * @param {HTMLCanvasElement} canvas
  * @param {Object} [focusZone]
- * @param {number} [skinRatioThreshold=0.015] - Minimum skin-color pixel density
+ * @param {number} [skinRatioThreshold=0.008] - Minimum skin-color pixel density
  * @returns {{
  *   detected: boolean,
  *   confidence: number,
@@ -78,7 +120,7 @@ export function isSkinPixel(r, g, b) {
 export function detectHandPresenceInCanvas(
   canvas,
   focusZone = DEFAULT_FOCUS_ZONE,
-  skinRatioThreshold = 0.015
+  skinRatioThreshold = 0.008
 ) {
   if (!canvas || !canvas.width || !canvas.height) {
     return { detected: false, confidence: 0, hands: [], skinRatio: 0 };
@@ -272,7 +314,7 @@ export function detectHandPresenceInCanvas(
 
   // Filter out head blob and neck/upper-torso candidates
   const handBlobs = [];
-  const MIN_HAND_PIXELS = 20; // Minimum sampled skin pixels for a valid hand candidate
+  const MIN_HAND_PIXELS = 12; // Minimum sampled skin pixels for a valid hand candidate
 
   for (let i = 0; i < blobs.length; i++) {
     if (i === headBlobIndex) {

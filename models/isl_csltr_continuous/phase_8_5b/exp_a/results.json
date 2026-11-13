@@ -1,0 +1,872 @@
+{
+  "exp_id": "A",
+  "exp_name": "Standard CTC Baseline",
+  "best_epoch": 24,
+  "total_epochs": 39,
+  "training_time_seconds": 139.77,
+  "validation_metrics": {
+    "loss": 2.778,
+    "wer": 76.92,
+    "ter": 76.92,
+    "exact_match_rate": 0.0,
+    "vocabulary_diversity": 1,
+    "macro_f1": 3.64,
+    "blank_posterior_mean": 0.97,
+    "quintile_stats": {
+      "Q1_nonblank_pct": 0.0,
+      "Q2_nonblank_pct": 0.0,
+      "Q3_nonblank_pct": 0.0,
+      "Q4_nonblank_pct": 0.0,
+      "Q5_nonblank_pct": 5.5,
+      "interior_nonblank_pct": 0.0,
+      "blank_posterior_mean": 0.97
+    },
+    "per_gloss": {
+      "(AGE)": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "predicted": 0,
+        "tp": 0
+      },
+      "ANGRY": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "predicted": 0,
+        "tp": 0
+      },
+      "BAD": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "predicted": 0,
+        "tp": 0
+      },
+      "CONGRATULATIIONS": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "predicted": 0,
+        "tp": 0
+      },
+      "CRY": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 2,
+        "predicted": 0,
+        "tp": 0
+      },
+      "DISAPPOINTED": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0,
+        "predicted": 0,
+        "tp": 0
+      },
+      "GOOD": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "predicted": 0,
+        "tp": 0
+      },
+      "HELP": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 3,
+        "predicted": 0,
+        "tp": 0
+      },
+      "HI": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "predicted": 0,
+        "tp": 0
+      },
+      "HOW": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 3,
+        "predicted": 0,
+        "tp": 0
+      },
+      "HUNGRY": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "predicted": 0,
+        "tp": 0
+      },
+      "I": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 7,
+        "predicted": 0,
+        "tp": 0
+      },
+      "ME": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "predicted": 0,
+        "tp": 0
+      },
+      "PROMISE": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "predicted": 0,
+        "tp": 0
+      },
+      "THINGS": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "predicted": 0,
+        "tp": 0
+      },
+      "TIRED": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "predicted": 0,
+        "tp": 0
+      },
+      "WELCOME": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "predicted": 0,
+        "tp": 0
+      },
+      "WHO": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "predicted": 0,
+        "tp": 0
+      },
+      "WHY": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 2,
+        "predicted": 0,
+        "tp": 0
+      },
+      "YOU": {
+        "precision": 52.94,
+        "recall": 100.0,
+        "f1": 69.23,
+        "support": 9,
+        "predicted": 17,
+        "tp": 9
+      }
+    },
+    "examples": [
+      {
+        "video_id": "s003_signer7_help__5_",
+        "sentence": "can i help you",
+        "reference": "I HELP YOU",
+        "hypothesis": "YOU",
+        "match": false
+      },
+      {
+        "video_id": "s006_signer7_congratulations__5_",
+        "sentence": "congratulations",
+        "reference": "CONGRATULATIIONS",
+        "hypothesis": "YOU",
+        "match": false
+      },
+      {
+        "video_id": "s023_signer7_help_me__8_",
+        "sentence": "help me",
+        "reference": "HELP ME",
+        "hypothesis": "YOU",
+        "match": false
+      },
+      {
+        "video_id": "s024_signer7_hi_how_are_you__3_",
+        "sentence": "hi how are you",
+        "reference": "HI HOW YOU",
+        "hypothesis": "YOU",
+        "match": false
+      },
+      {
+        "video_id": "s025_signer7_things__4_",
+        "sentence": "how are things",
+        "reference": "HOW THINGS",
+        "hypothesis": "YOU",
+        "match": false
+      }
+    ]
+  },
+  "test_metrics": {
+    "loss": 2.7104,
+    "wer": 75.0,
+    "ter": 75.0,
+    "exact_match_rate": 0.0,
+    "vocabulary_diversity": 1,
+    "macro_f1": 3.9,
+    "blank_posterior_mean": 0.96,
+    "quintile_stats": {
+      "Q1_nonblank_pct": 0.0,
+      "Q2_nonblank_pct": 0.0,
+      "Q3_nonblank_pct": 0.0,
+      "Q4_nonblank_pct": 0.0,
+      "Q5_nonblank_pct": 11.53,
+      "interior_nonblank_pct": 0.0,
+      "blank_posterior_mean": 0.96
+    },
+    "per_gloss": {
+      "(AGE)": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0,
+        "predicted": 0,
+        "tp": 0
+      },
+      "ANGRY": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "predicted": 0,
+        "tp": 0
+      },
+      "BAD": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "predicted": 0,
+        "tp": 0
+      },
+      "CONGRATULATIIONS": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "predicted": 0,
+        "tp": 0
+      },
+      "CRY": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 2,
+        "predicted": 0,
+        "tp": 0
+      },
+      "DISAPPOINTED": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "predicted": 0,
+        "tp": 0
+      },
+      "GOOD": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "predicted": 0,
+        "tp": 0
+      },
+      "HELP": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 3,
+        "predicted": 0,
+        "tp": 0
+      },
+      "HI": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "predicted": 0,
+        "tp": 0
+      },
+      "HOW": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 3,
+        "predicted": 0,
+        "tp": 0
+      },
+      "HUNGRY": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "predicted": 0,
+        "tp": 0
+      },
+      "I": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 6,
+        "predicted": 0,
+        "tp": 0
+      },
+      "ME": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "predicted": 0,
+        "tp": 0
+      },
+      "PROMISE": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "predicted": 0,
+        "tp": 0
+      },
+      "THINGS": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "predicted": 0,
+        "tp": 0
+      },
+      "TIRED": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "predicted": 0,
+        "tp": 0
+      },
+      "WELCOME": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "predicted": 0,
+        "tp": 0
+      },
+      "WHO": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "predicted": 0,
+        "tp": 0
+      },
+      "WHY": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 3,
+        "predicted": 0,
+        "tp": 0
+      },
+      "YOU": {
+        "precision": 58.82,
+        "recall": 100.0,
+        "f1": 74.07,
+        "support": 10,
+        "predicted": 17,
+        "tp": 10
+      }
+    },
+    "examples": [
+      {
+        "video_id": "s003_signer2_can_i_help_you__2_",
+        "sentence": "can i help you",
+        "reference": "I HELP YOU",
+        "hypothesis": "YOU",
+        "match": false
+      },
+      {
+        "video_id": "s006_signer2_congratulations",
+        "sentence": "congratulations",
+        "reference": "CONGRATULATIIONS",
+        "hypothesis": "YOU",
+        "match": false
+      },
+      {
+        "video_id": "s023_signer2_help_me__6_",
+        "sentence": "help me",
+        "reference": "HELP ME",
+        "hypothesis": "YOU",
+        "match": false
+      },
+      {
+        "video_id": "s024_signer2_hi_how_are_you__1_",
+        "sentence": "hi how are you",
+        "reference": "HI HOW YOU",
+        "hypothesis": "YOU",
+        "match": false
+      },
+      {
+        "video_id": "s025_signer2_how_are_things__2_",
+        "sentence": "how are things",
+        "reference": "HOW THINGS",
+        "hypothesis": "YOU",
+        "match": false
+      }
+    ]
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 70.1599,
+      "val_loss": 10.1137,
+      "val_wer": 100.0,
+      "val_ter": 100.0,
+      "val_exact_match": 0.0,
+      "val_diversity": 0,
+      "val_interior_nonblank": 0.0,
+      "is_best": true
+    },
+    {
+      "epoch": 2,
+      "train_loss": 5.5147,
+      "val_loss": 3.7616,
+      "val_wer": 100.0,
+      "val_ter": 100.0,
+      "val_exact_match": 0.0,
+      "val_diversity": 0,
+      "val_interior_nonblank": 0.0,
+      "is_best": true
+    },
+    {
+      "epoch": 3,
+      "train_loss": 3.3948,
+      "val_loss": 3.3986,
+      "val_wer": 100.0,
+      "val_ter": 100.0,
+      "val_exact_match": 0.0,
+      "val_diversity": 0,
+      "val_interior_nonblank": 0.0,
+      "is_best": true
+    },
+    {
+      "epoch": 4,
+      "train_loss": 3.3428,
+      "val_loss": 3.2955,
+      "val_wer": 100.0,
+      "val_ter": 100.0,
+      "val_exact_match": 0.0,
+      "val_diversity": 0,
+      "val_interior_nonblank": 0.0,
+      "is_best": true
+    },
+    {
+      "epoch": 5,
+      "train_loss": 3.237,
+      "val_loss": 3.2202,
+      "val_wer": 100.0,
+      "val_ter": 100.0,
+      "val_exact_match": 0.0,
+      "val_diversity": 0,
+      "val_interior_nonblank": 0.0,
+      "is_best": true
+    },
+    {
+      "epoch": 6,
+      "train_loss": 3.2085,
+      "val_loss": 3.2089,
+      "val_wer": 100.0,
+      "val_ter": 100.0,
+      "val_exact_match": 0.0,
+      "val_diversity": 0,
+      "val_interior_nonblank": 0.0,
+      "is_best": true
+    },
+    {
+      "epoch": 7,
+      "train_loss": 3.1774,
+      "val_loss": 3.1615,
+      "val_wer": 100.0,
+      "val_ter": 100.0,
+      "val_exact_match": 0.0,
+      "val_diversity": 0,
+      "val_interior_nonblank": 0.0,
+      "is_best": true
+    },
+    {
+      "epoch": 8,
+      "train_loss": 3.1408,
+      "val_loss": 3.1489,
+      "val_wer": 100.0,
+      "val_ter": 100.0,
+      "val_exact_match": 0.0,
+      "val_diversity": 0,
+      "val_interior_nonblank": 0.0,
+      "is_best": true
+    },
+    {
+      "epoch": 9,
+      "train_loss": 3.112,
+      "val_loss": 3.1067,
+      "val_wer": 100.0,
+      "val_ter": 100.0,
+      "val_exact_match": 0.0,
+      "val_diversity": 0,
+      "val_interior_nonblank": 0.0,
+      "is_best": true
+    },
+    {
+      "epoch": 10,
+      "train_loss": 3.0836,
+      "val_loss": 3.09,
+      "val_wer": 100.0,
+      "val_ter": 100.0,
+      "val_exact_match": 0.0,
+      "val_diversity": 0,
+      "val_interior_nonblank": 0.0,
+      "is_best": true
+    },
+    {
+      "epoch": 11,
+      "train_loss": 3.0553,
+      "val_loss": 3.0682,
+      "val_wer": 100.0,
+      "val_ter": 100.0,
+      "val_exact_match": 0.0,
+      "val_diversity": 0,
+      "val_interior_nonblank": 0.0,
+      "is_best": true
+    },
+    {
+      "epoch": 12,
+      "train_loss": 3.0325,
+      "val_loss": 3.0559,
+      "val_wer": 100.0,
+      "val_ter": 100.0,
+      "val_exact_match": 0.0,
+      "val_diversity": 0,
+      "val_interior_nonblank": 0.0,
+      "is_best": true
+    },
+    {
+      "epoch": 13,
+      "train_loss": 3.0216,
+      "val_loss": 3.0297,
+      "val_wer": 100.0,
+      "val_ter": 100.0,
+      "val_exact_match": 0.0,
+      "val_diversity": 0,
+      "val_interior_nonblank": 0.0,
+      "is_best": true
+    },
+    {
+      "epoch": 14,
+      "train_loss": 2.9775,
+      "val_loss": 3.0056,
+      "val_wer": 100.0,
+      "val_ter": 100.0,
+      "val_exact_match": 0.0,
+      "val_diversity": 0,
+      "val_interior_nonblank": 0.0,
+      "is_best": true
+    },
+    {
+      "epoch": 15,
+      "train_loss": 2.9472,
+      "val_loss": 2.9859,
+      "val_wer": 100.0,
+      "val_ter": 100.0,
+      "val_exact_match": 0.0,
+      "val_diversity": 0,
+      "val_interior_nonblank": 0.0,
+      "is_best": true
+    },
+    {
+      "epoch": 16,
+      "train_loss": 2.9422,
+      "val_loss": 2.9684,
+      "val_wer": 100.0,
+      "val_ter": 100.0,
+      "val_exact_match": 0.0,
+      "val_diversity": 0,
+      "val_interior_nonblank": 0.0,
+      "is_best": true
+    },
+    {
+      "epoch": 17,
+      "train_loss": 2.9019,
+      "val_loss": 2.9696,
+      "val_wer": 100.0,
+      "val_ter": 100.0,
+      "val_exact_match": 0.0,
+      "val_diversity": 0,
+      "val_interior_nonblank": 0.0,
+      "is_best": false
+    },
+    {
+      "epoch": 18,
+      "train_loss": 2.8303,
+      "val_loss": 2.9103,
+      "val_wer": 100.0,
+      "val_ter": 100.0,
+      "val_exact_match": 0.0,
+      "val_diversity": 0,
+      "val_interior_nonblank": 0.0,
+      "is_best": true
+    },
+    {
+      "epoch": 19,
+      "train_loss": 2.7903,
+      "val_loss": 2.8936,
+      "val_wer": 100.0,
+      "val_ter": 100.0,
+      "val_exact_match": 0.0,
+      "val_diversity": 0,
+      "val_interior_nonblank": 0.0,
+      "is_best": true
+    },
+    {
+      "epoch": 20,
+      "train_loss": 2.7634,
+      "val_loss": 2.8485,
+      "val_wer": 97.44,
+      "val_ter": 97.44,
+      "val_exact_match": 0.0,
+      "val_diversity": 1,
+      "val_interior_nonblank": 0.0,
+      "is_best": true
+    },
+    {
+      "epoch": 21,
+      "train_loss": 2.7057,
+      "val_loss": 2.8334,
+      "val_wer": 82.05,
+      "val_ter": 82.05,
+      "val_exact_match": 0.0,
+      "val_diversity": 1,
+      "val_interior_nonblank": 0.0,
+      "is_best": true
+    },
+    {
+      "epoch": 22,
+      "train_loss": 2.6826,
+      "val_loss": 2.8056,
+      "val_wer": 76.92,
+      "val_ter": 76.92,
+      "val_exact_match": 0.0,
+      "val_diversity": 1,
+      "val_interior_nonblank": 0.0,
+      "is_best": true
+    },
+    {
+      "epoch": 23,
+      "train_loss": 2.6759,
+      "val_loss": 2.8069,
+      "val_wer": 76.92,
+      "val_ter": 76.92,
+      "val_exact_match": 0.0,
+      "val_diversity": 1,
+      "val_interior_nonblank": 0.0,
+      "is_best": false
+    },
+    {
+      "epoch": 24,
+      "train_loss": 2.6185,
+      "val_loss": 2.778,
+      "val_wer": 76.92,
+      "val_ter": 76.92,
+      "val_exact_match": 0.0,
+      "val_diversity": 1,
+      "val_interior_nonblank": 0.0,
+      "is_best": true
+    },
+    {
+      "epoch": 25,
+      "train_loss": 2.5944,
+      "val_loss": 2.8368,
+      "val_wer": 76.92,
+      "val_ter": 76.92,
+      "val_exact_match": 0.0,
+      "val_diversity": 1,
+      "val_interior_nonblank": 0.0,
+      "is_best": false
+    },
+    {
+      "epoch": 26,
+      "train_loss": 2.6033,
+      "val_loss": 2.7998,
+      "val_wer": 76.92,
+      "val_ter": 76.92,
+      "val_exact_match": 0.0,
+      "val_diversity": 1,
+      "val_interior_nonblank": 0.0,
+      "is_best": false
+    },
+    {
+      "epoch": 27,
+      "train_loss": 2.5205,
+      "val_loss": 2.7782,
+      "val_wer": 76.92,
+      "val_ter": 76.92,
+      "val_exact_match": 0.0,
+      "val_diversity": 1,
+      "val_interior_nonblank": 0.0,
+      "is_best": false
+    },
+    {
+      "epoch": 28,
+      "train_loss": 2.5259,
+      "val_loss": 2.7836,
+      "val_wer": 76.92,
+      "val_ter": 76.92,
+      "val_exact_match": 0.0,
+      "val_diversity": 1,
+      "val_interior_nonblank": 0.0,
+      "is_best": false
+    },
+    {
+      "epoch": 29,
+      "train_loss": 2.5191,
+      "val_loss": 2.7956,
+      "val_wer": 76.92,
+      "val_ter": 76.92,
+      "val_exact_match": 0.0,
+      "val_diversity": 1,
+      "val_interior_nonblank": 0.0,
+      "is_best": false
+    },
+    {
+      "epoch": 30,
+      "train_loss": 2.5164,
+      "val_loss": 2.8119,
+      "val_wer": 76.92,
+      "val_ter": 76.92,
+      "val_exact_match": 0.0,
+      "val_diversity": 1,
+      "val_interior_nonblank": 0.0,
+      "is_best": false
+    },
+    {
+      "epoch": 31,
+      "train_loss": 2.4762,
+      "val_loss": 2.8209,
+      "val_wer": 76.92,
+      "val_ter": 76.92,
+      "val_exact_match": 0.0,
+      "val_diversity": 1,
+      "val_interior_nonblank": 0.0,
+      "is_best": false
+    },
+    {
+      "epoch": 32,
+      "train_loss": 2.4648,
+      "val_loss": 2.8046,
+      "val_wer": 76.92,
+      "val_ter": 76.92,
+      "val_exact_match": 0.0,
+      "val_diversity": 1,
+      "val_interior_nonblank": 0.0,
+      "is_best": false
+    },
+    {
+      "epoch": 33,
+      "train_loss": 2.4606,
+      "val_loss": 2.8452,
+      "val_wer": 76.92,
+      "val_ter": 76.92,
+      "val_exact_match": 0.0,
+      "val_diversity": 1,
+      "val_interior_nonblank": 0.0,
+      "is_best": false
+    },
+    {
+      "epoch": 34,
+      "train_loss": 2.4532,
+      "val_loss": 2.8315,
+      "val_wer": 76.92,
+      "val_ter": 76.92,
+      "val_exact_match": 0.0,
+      "val_diversity": 1,
+      "val_interior_nonblank": 0.0,
+      "is_best": false
+    },
+    {
+      "epoch": 35,
+      "train_loss": 2.436,
+      "val_loss": 2.8099,
+      "val_wer": 82.05,
+      "val_ter": 82.05,
+      "val_exact_match": 0.0,
+      "val_diversity": 2,
+      "val_interior_nonblank": 0.0,
+      "is_best": false
+    },
+    {
+      "epoch": 36,
+      "train_loss": 2.4307,
+      "val_loss": 2.8289,
+      "val_wer": 79.49,
+      "val_ter": 79.49,
+      "val_exact_match": 0.0,
+      "val_diversity": 2,
+      "val_interior_nonblank": 0.0,
+      "is_best": false
+    },
+    {
+      "epoch": 37,
+      "train_loss": 2.4413,
+      "val_loss": 2.8364,
+      "val_wer": 79.49,
+      "val_ter": 79.49,
+      "val_exact_match": 0.0,
+      "val_diversity": 2,
+      "val_interior_nonblank": 0.0,
+      "is_best": false
+    },
+    {
+      "epoch": 38,
+      "train_loss": 2.3974,
+      "val_loss": 2.8283,
+      "val_wer": 79.49,
+      "val_ter": 79.49,
+      "val_exact_match": 0.0,
+      "val_diversity": 2,
+      "val_interior_nonblank": 0.0,
+      "is_best": false
+    },
+    {
+      "epoch": 39,
+      "train_loss": 2.4144,
+      "val_loss": 2.8526,
+      "val_wer": 82.05,
+      "val_ter": 82.05,
+      "val_exact_match": 0.0,
+      "val_diversity": 2,
+      "val_interior_nonblank": 0.0,
+      "is_best": false
+    }
+  ]
+}

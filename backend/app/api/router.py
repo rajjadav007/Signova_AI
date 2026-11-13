@@ -1,6 +1,23 @@
 from fastapi import APIRouter
 
-from app.api.routes import health, isolated_recognition, predict, speech, translation
+try:
+    from app.api.routes import (
+        health,
+        isolated_recognition,
+        predict,
+        sentence_recognition,
+        speech,
+        translation,
+    )
+except ModuleNotFoundError:
+    from backend.app.api.routes import (
+        health,
+        isolated_recognition,
+        predict,
+        sentence_recognition,
+        speech,
+        translation,
+    )
 
 api_router = APIRouter()
 
@@ -8,6 +25,7 @@ api_router = APIRouter()
 api_router.include_router(health.router)
 api_router.include_router(predict.router)
 api_router.include_router(isolated_recognition.router)
+api_router.include_router(sentence_recognition.router)
 api_router.include_router(translation.router)
 api_router.include_router(speech.router)
 

@@ -15,6 +15,18 @@ try:
         SUPPORTED_SARVAM_LANGUAGES,
         SUPPORTED_SARVAM_SPEAKERS,
     )
+    from app.schemas.sentence import (
+        SentenceLandmarkRequest,
+        TopSentencePrediction,
+        SentenceRecognitionResponse,
+        SentenceVocabularyItem,
+        SentenceVocabularyResponse,
+        DemoClassItem,
+        DemoClassesResponse,
+        DemoRankingItem,
+        DemoSentenceRecognitionResponse,
+        FiveClassSentenceRecognitionResponse,
+    )
 except ModuleNotFoundError:
     from backend.app.schemas.health import HealthResponse
     from backend.app.schemas.error import ErrorResponse, ErrorDetail
@@ -32,6 +44,18 @@ except ModuleNotFoundError:
         SUPPORTED_SARVAM_LANGUAGES,
         SUPPORTED_SARVAM_SPEAKERS,
     )
+    from backend.app.schemas.sentence import (
+        SentenceLandmarkRequest,
+        TopSentencePrediction,
+        SentenceRecognitionResponse,
+        SentenceVocabularyItem,
+        SentenceVocabularyResponse,
+        DemoClassItem,
+        DemoClassesResponse,
+        DemoRankingItem,
+        DemoSentenceRecognitionResponse,
+        FiveClassSentenceRecognitionResponse,
+    )
 
 __all__ = [
     "HealthResponse",
@@ -47,4 +71,13 @@ __all__ = [
     "TTSResponse",
     "SUPPORTED_SARVAM_LANGUAGES",
     "SUPPORTED_SARVAM_SPEAKERS",
+    "SentenceLandmarkRequest",
+    "TopSentencePrediction",
+    "SentenceRecognitionResponse",
+    "SentenceVocabularyItem",
+    "SentenceVocabularyResponse",
+    "DemoClassItem",
+    "DemoClassesResponse",
+    "DemoRankingItem",
+    "DemoSentenceRecognitionResponse",
 ]

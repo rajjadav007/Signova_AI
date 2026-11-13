@@ -1,0 +1,1040 @@
+{
+  "prototype_name": "Signova AI - 5-Class ISL Continuous Sentence Recognition (Hackathon Demo)",
+  "timestamp": "2026-11-14 03:08:41",
+  "methodology": "1-NN Dynamic Time Warping (DTW) with Cosine Metric on 48-dim Frame PCA Features",
+  "reference_dataset": {
+    "num_classes": 5,
+    "references_per_class": 2,
+    "total_reference_videos": 10,
+    "reference_split": "train strictly (Signers 1, 3, 4, 5, 6)"
+  },
+  "evaluation_summary": {
+    "total_in_vocab_eval_videos": 25,
+    "eval_videos_per_class": 5,
+    "eval_signers_tested": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "eval_splits_represented": [
+      "validation",
+      "train",
+      "test"
+    ],
+    "top1_accuracy": 0.64,
+    "top1_correct": 16,
+    "macro_f1": 0.6472,
+    "macro_precision": 0.7409,
+    "macro_recall": 0.64,
+    "mean_matching_latency_ms": 10.06,
+    "p95_matching_latency_ms": 15.84,
+    "unknown_oov_rejection_rate": 0.6,
+    "unknown_oov_rejected_count": "15/25"
+  },
+  "per_class_metrics": {
+    "comb your hair": {
+      "class_id": 0,
+      "original_sentence_id": 5,
+      "evaluation_videos": 5,
+      "correct_predictions": 3,
+      "accuracy": 0.6,
+      "precision": 1.0,
+      "recall": 0.6,
+      "f1_score": 0.75
+    },
+    "help me": {
+      "class_id": 1,
+      "original_sentence_id": 23,
+      "evaluation_videos": 5,
+      "correct_predictions": 2,
+      "accuracy": 0.4,
+      "precision": 0.5,
+      "recall": 0.4,
+      "f1_score": 0.4444
+    },
+    "i am fine. thank you sir": {
+      "class_id": 2,
+      "original_sentence_id": 35,
+      "evaluation_videos": 5,
+      "correct_predictions": 3,
+      "accuracy": 0.6,
+      "precision": 0.75,
+      "recall": 0.6,
+      "f1_score": 0.6667
+    },
+    "i need water": {
+      "class_id": 3,
+      "original_sentence_id": 53,
+      "evaluation_videos": 5,
+      "correct_predictions": 5,
+      "accuracy": 1.0,
+      "precision": 0.4545,
+      "recall": 1.0,
+      "f1_score": 0.625
+    },
+    "who are you": {
+      "class_id": 4,
+      "original_sentence_id": 91,
+      "evaluation_videos": 5,
+      "correct_predictions": 3,
+      "accuracy": 0.6,
+      "precision": 1.0,
+      "recall": 0.6,
+      "f1_score": 0.75
+    }
+  },
+  "confusion_matrix": {
+    "classes": [
+      "comb your hair",
+      "help me",
+      "i am fine. thank you sir",
+      "i need water",
+      "who are you"
+    ],
+    "matrix": [
+      [
+        3,
+        1,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        2,
+        0,
+        3,
+        0
+      ],
+      [
+        0,
+        1,
+        3,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        5,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        2,
+        3
+      ]
+    ]
+  },
+  "sample_correct_examples": [
+    {
+      "video_id": "s005_signer4_comb__2_",
+      "video_filename": "comb (2).MP4",
+      "sentence": "comb your hair",
+      "true_class_id": 0,
+      "true_sentence": "comb your hair",
+      "pred_class_id": 0,
+      "pred_sentence": "comb your hair",
+      "signer_id": 4,
+      "split": "train",
+      "is_correct": true,
+      "is_recognized": true,
+      "status": "Recognized",
+      "top_similarity": 0.6499,
+      "top_distance": 0.3501,
+      "margin_to_second": 0.0356,
+      "latency_ms": 12.06,
+      "rankings": [
+        {
+          "class_id": 0,
+          "original_sentence_id": 5,
+          "sentence": "comb your hair",
+          "isl_gloss": "COMB YOU HAIR",
+          "dtw_distance": 0.3501,
+          "similarity": 0.6499
+        },
+        {
+          "class_id": 3,
+          "original_sentence_id": 53,
+          "sentence": "i need water",
+          "isl_gloss": "I NEED WATER",
+          "dtw_distance": 0.3857,
+          "similarity": 0.6143
+        },
+        {
+          "class_id": 4,
+          "original_sentence_id": 91,
+          "sentence": "who are you",
+          "isl_gloss": "WHO YOU",
+          "dtw_distance": 0.3902,
+          "similarity": 0.6098
+        },
+        {
+          "class_id": 2,
+          "original_sentence_id": 35,
+          "sentence": "i am fine. thank you sir",
+          "isl_gloss": "I FINE. THANK YOU SIR",
+          "dtw_distance": 0.4403,
+          "similarity": 0.5597
+        },
+        {
+          "class_id": 1,
+          "original_sentence_id": 23,
+          "sentence": "help me",
+          "isl_gloss": "HELP ME",
+          "dtw_distance": 0.4429,
+          "similarity": 0.5571
+        }
+      ]
+    },
+    {
+      "video_id": "s005_signer6_comb__4_",
+      "video_filename": "comb (4).MP4",
+      "sentence": "comb your hair",
+      "true_class_id": 0,
+      "true_sentence": "comb your hair",
+      "pred_class_id": 0,
+      "pred_sentence": "comb your hair",
+      "signer_id": 6,
+      "split": "train",
+      "is_correct": true,
+      "is_recognized": true,
+      "status": "Recognized",
+      "top_similarity": 0.6883,
+      "top_distance": 0.3117,
+      "margin_to_second": 0.0579,
+      "latency_ms": 10.32,
+      "rankings": [
+        {
+          "class_id": 0,
+          "original_sentence_id": 5,
+          "sentence": "comb your hair",
+          "isl_gloss": "COMB YOU HAIR",
+          "dtw_distance": 0.3117,
+          "similarity": 0.6883
+        },
+        {
+          "class_id": 3,
+          "original_sentence_id": 53,
+          "sentence": "i need water",
+          "isl_gloss": "I NEED WATER",
+          "dtw_distance": 0.3696,
+          "similarity": 0.6304
+        },
+        {
+          "class_id": 2,
+          "original_sentence_id": 35,
+          "sentence": "i am fine. thank you sir",
+          "isl_gloss": "I FINE. THANK YOU SIR",
+          "dtw_distance": 0.4177,
+          "similarity": 0.5823
+        },
+        {
+          "class_id": 4,
+          "original_sentence_id": 91,
+          "sentence": "who are you",
+          "isl_gloss": "WHO YOU",
+          "dtw_distance": 0.4399,
+          "similarity": 0.5601
+        },
+        {
+          "class_id": 1,
+          "original_sentence_id": 23,
+          "sentence": "help me",
+          "isl_gloss": "HELP ME",
+          "dtw_distance": 0.4746,
+          "similarity": 0.5254
+        }
+      ]
+    },
+    {
+      "video_id": "s005_signer5_comb__3_",
+      "video_filename": "comb (3).MP4",
+      "sentence": "comb your hair",
+      "true_class_id": 0,
+      "true_sentence": "comb your hair",
+      "pred_class_id": 0,
+      "pred_sentence": "comb your hair",
+      "signer_id": 5,
+      "split": "train",
+      "is_correct": true,
+      "is_recognized": true,
+      "status": "Recognized",
+      "top_similarity": 0.7034,
+      "top_distance": 0.2966,
+      "margin_to_second": 0.1355,
+      "latency_ms": 16.69,
+      "rankings": [
+        {
+          "class_id": 0,
+          "original_sentence_id": 5,
+          "sentence": "comb your hair",
+          "isl_gloss": "COMB YOU HAIR",
+          "dtw_distance": 0.2966,
+          "similarity": 0.7034
+        },
+        {
+          "class_id": 3,
+          "original_sentence_id": 53,
+          "sentence": "i need water",
+          "isl_gloss": "I NEED WATER",
+          "dtw_distance": 0.4321,
+          "similarity": 0.5679
+        },
+        {
+          "class_id": 1,
+          "original_sentence_id": 23,
+          "sentence": "help me",
+          "isl_gloss": "HELP ME",
+          "dtw_distance": 0.5105,
+          "similarity": 0.4895
+        },
+        {
+          "class_id": 4,
+          "original_sentence_id": 91,
+          "sentence": "who are you",
+          "isl_gloss": "WHO YOU",
+          "dtw_distance": 0.517,
+          "similarity": 0.483
+        },
+        {
+          "class_id": 2,
+          "original_sentence_id": 35,
+          "sentence": "i am fine. thank you sir",
+          "isl_gloss": "I FINE. THANK YOU SIR",
+          "dtw_distance": 0.5277,
+          "similarity": 0.4723
+        }
+      ]
+    },
+    {
+      "video_id": "s023_signer3_help_me__1_",
+      "video_filename": "help me (1).MP4",
+      "sentence": "help me",
+      "true_class_id": 1,
+      "true_sentence": "help me",
+      "pred_class_id": 1,
+      "pred_sentence": "help me",
+      "signer_id": 3,
+      "split": "train",
+      "is_correct": true,
+      "is_recognized": true,
+      "status": "Recognized",
+      "top_similarity": 0.6514,
+      "top_distance": 0.3486,
+      "margin_to_second": 0.0792,
+      "latency_ms": 8.91,
+      "rankings": [
+        {
+          "class_id": 1,
+          "original_sentence_id": 23,
+          "sentence": "help me",
+          "isl_gloss": "HELP ME",
+          "dtw_distance": 0.3486,
+          "similarity": 0.6514
+        },
+        {
+          "class_id": 3,
+          "original_sentence_id": 53,
+          "sentence": "i need water",
+          "isl_gloss": "I NEED WATER",
+          "dtw_distance": 0.4278,
+          "similarity": 0.5722
+        },
+        {
+          "class_id": 4,
+          "original_sentence_id": 91,
+          "sentence": "who are you",
+          "isl_gloss": "WHO YOU",
+          "dtw_distance": 0.4279,
+          "similarity": 0.5721
+        },
+        {
+          "class_id": 0,
+          "original_sentence_id": 5,
+          "sentence": "comb your hair",
+          "isl_gloss": "COMB YOU HAIR",
+          "dtw_distance": 0.4415,
+          "similarity": 0.5585
+        },
+        {
+          "class_id": 2,
+          "original_sentence_id": 35,
+          "sentence": "i am fine. thank you sir",
+          "isl_gloss": "I FINE. THANK YOU SIR",
+          "dtw_distance": 0.4701,
+          "similarity": 0.5299
+        }
+      ]
+    },
+    {
+      "video_id": "s023_signer7_help_me__8_",
+      "video_filename": "help me (8).MP4",
+      "sentence": "help me",
+      "true_class_id": 1,
+      "true_sentence": "help me",
+      "pred_class_id": 1,
+      "pred_sentence": "help me",
+      "signer_id": 7,
+      "split": "validation",
+      "is_correct": true,
+      "is_recognized": true,
+      "status": "Recognized",
+      "top_similarity": 0.6917,
+      "top_distance": 0.3083,
+      "margin_to_second": 0.1221,
+      "latency_ms": 9.25,
+      "rankings": [
+        {
+          "class_id": 1,
+          "original_sentence_id": 23,
+          "sentence": "help me",
+          "isl_gloss": "HELP ME",
+          "dtw_distance": 0.3083,
+          "similarity": 0.6917
+        },
+        {
+          "class_id": 2,
+          "original_sentence_id": 35,
+          "sentence": "i am fine. thank you sir",
+          "isl_gloss": "I FINE. THANK YOU SIR",
+          "dtw_distance": 0.4304,
+          "similarity": 0.5696
+        },
+        {
+          "class_id": 3,
+          "original_sentence_id": 53,
+          "sentence": "i need water",
+          "isl_gloss": "I NEED WATER",
+          "dtw_distance": 0.4432,
+          "similarity": 0.5568
+        },
+        {
+          "class_id": 4,
+          "original_sentence_id": 91,
+          "sentence": "who are you",
+          "isl_gloss": "WHO YOU",
+          "dtw_distance": 0.4785,
+          "similarity": 0.5215
+        },
+        {
+          "class_id": 0,
+          "original_sentence_id": 5,
+          "sentence": "comb your hair",
+          "isl_gloss": "COMB YOU HAIR",
+          "dtw_distance": 0.5093,
+          "similarity": 0.4907
+        }
+      ]
+    },
+    {
+      "video_id": "s035_signer4_fine_thank__2_",
+      "video_filename": "fine thank (2).MP4",
+      "sentence": "i am fine. thank you sir",
+      "true_class_id": 2,
+      "true_sentence": "i am fine. thank you sir",
+      "pred_class_id": 2,
+      "pred_sentence": "i am fine. thank you sir",
+      "signer_id": 4,
+      "split": "train",
+      "is_correct": true,
+      "is_recognized": true,
+      "status": "Recognized",
+      "top_similarity": 0.6544,
+      "top_distance": 0.3456,
+      "margin_to_second": 0.0426,
+      "latency_ms": 12.42,
+      "rankings": [
+        {
+          "class_id": 2,
+          "original_sentence_id": 35,
+          "sentence": "i am fine. thank you sir",
+          "isl_gloss": "I FINE. THANK YOU SIR",
+          "dtw_distance": 0.3456,
+          "similarity": 0.6544
+        },
+        {
+          "class_id": 4,
+          "original_sentence_id": 91,
+          "sentence": "who are you",
+          "isl_gloss": "WHO YOU",
+          "dtw_distance": 0.3882,
+          "similarity": 0.6118
+        },
+        {
+          "class_id": 3,
+          "original_sentence_id": 53,
+          "sentence": "i need water",
+          "isl_gloss": "I NEED WATER",
+          "dtw_distance": 0.427,
+          "similarity": 0.573
+        },
+        {
+          "class_id": 1,
+          "original_sentence_id": 23,
+          "sentence": "help me",
+          "isl_gloss": "HELP ME",
+          "dtw_distance": 0.4644,
+          "similarity": 0.5356
+        },
+        {
+          "class_id": 0,
+          "original_sentence_id": 5,
+          "sentence": "comb your hair",
+          "isl_gloss": "COMB YOU HAIR",
+          "dtw_distance": 0.4647,
+          "similarity": 0.5353
+        }
+      ]
+    }
+  ],
+  "incorrect_examples": [
+    {
+      "video_id": "s005_signer2_comb_your_hair__2_",
+      "video_filename": "comb your hair (2).mp4",
+      "sentence": "comb your hair",
+      "true_class_id": 0,
+      "true_sentence": "comb your hair",
+      "pred_class_id": 2,
+      "pred_sentence": "i am fine. thank you sir",
+      "signer_id": 2,
+      "split": "test",
+      "is_correct": false,
+      "is_recognized": false,
+      "status": "Sentence not recognized.",
+      "top_similarity": 0.7654,
+      "top_distance": 0.2346,
+      "margin_to_second": 0.0103,
+      "latency_ms": 7.71,
+      "rankings": [
+        {
+          "class_id": 2,
+          "original_sentence_id": 35,
+          "sentence": "i am fine. thank you sir",
+          "isl_gloss": "I FINE. THANK YOU SIR",
+          "dtw_distance": 0.2346,
+          "similarity": 0.7654
+        },
+        {
+          "class_id": 3,
+          "original_sentence_id": 53,
+          "sentence": "i need water",
+          "isl_gloss": "I NEED WATER",
+          "dtw_distance": 0.2449,
+          "similarity": 0.7551
+        },
+        {
+          "class_id": 0,
+          "original_sentence_id": 5,
+          "sentence": "comb your hair",
+          "isl_gloss": "COMB YOU HAIR",
+          "dtw_distance": 0.2512,
+          "similarity": 0.7488
+        },
+        {
+          "class_id": 4,
+          "original_sentence_id": 91,
+          "sentence": "who are you",
+          "isl_gloss": "WHO YOU",
+          "dtw_distance": 0.2802,
+          "similarity": 0.7198
+        },
+        {
+          "class_id": 1,
+          "original_sentence_id": 23,
+          "sentence": "help me",
+          "isl_gloss": "HELP ME",
+          "dtw_distance": 0.6207,
+          "similarity": 0.3793
+        }
+      ]
+    },
+    {
+      "video_id": "s005_signer7_comb__5_",
+      "video_filename": "comb (5).MP4",
+      "sentence": "comb your hair",
+      "true_class_id": 0,
+      "true_sentence": "comb your hair",
+      "pred_class_id": 1,
+      "pred_sentence": "help me",
+      "signer_id": 7,
+      "split": "validation",
+      "is_correct": false,
+      "is_recognized": true,
+      "status": "Recognized",
+      "top_similarity": 0.6805,
+      "top_distance": 0.3195,
+      "margin_to_second": 0.1331,
+      "latency_ms": 9.27,
+      "rankings": [
+        {
+          "class_id": 1,
+          "original_sentence_id": 23,
+          "sentence": "help me",
+          "isl_gloss": "HELP ME",
+          "dtw_distance": 0.3195,
+          "similarity": 0.6805
+        },
+        {
+          "class_id": 3,
+          "original_sentence_id": 53,
+          "sentence": "i need water",
+          "isl_gloss": "I NEED WATER",
+          "dtw_distance": 0.4526,
+          "similarity": 0.5474
+        },
+        {
+          "class_id": 2,
+          "original_sentence_id": 35,
+          "sentence": "i am fine. thank you sir",
+          "isl_gloss": "I FINE. THANK YOU SIR",
+          "dtw_distance": 0.4545,
+          "similarity": 0.5455
+        },
+        {
+          "class_id": 0,
+          "original_sentence_id": 5,
+          "sentence": "comb your hair",
+          "isl_gloss": "COMB YOU HAIR",
+          "dtw_distance": 0.4821,
+          "similarity": 0.5179
+        },
+        {
+          "class_id": 4,
+          "original_sentence_id": 91,
+          "sentence": "who are you",
+          "isl_gloss": "WHO YOU",
+          "dtw_distance": 0.5068,
+          "similarity": 0.4932
+        }
+      ]
+    },
+    {
+      "video_id": "s023_signer4_help_me__3_",
+      "video_filename": "help me (3).MP4",
+      "sentence": "help me",
+      "true_class_id": 1,
+      "true_sentence": "help me",
+      "pred_class_id": 3,
+      "pred_sentence": "i need water",
+      "signer_id": 4,
+      "split": "train",
+      "is_correct": false,
+      "is_recognized": true,
+      "status": "Recognized",
+      "top_similarity": 0.7151,
+      "top_distance": 0.2849,
+      "margin_to_second": 0.0428,
+      "latency_ms": 7.62,
+      "rankings": [
+        {
+          "class_id": 3,
+          "original_sentence_id": 53,
+          "sentence": "i need water",
+          "isl_gloss": "I NEED WATER",
+          "dtw_distance": 0.2849,
+          "similarity": 0.7151
+        },
+        {
+          "class_id": 1,
+          "original_sentence_id": 23,
+          "sentence": "help me",
+          "isl_gloss": "HELP ME",
+          "dtw_distance": 0.3277,
+          "similarity": 0.6723
+        },
+        {
+          "class_id": 4,
+          "original_sentence_id": 91,
+          "sentence": "who are you",
+          "isl_gloss": "WHO YOU",
+          "dtw_distance": 0.421,
+          "similarity": 0.579
+        },
+        {
+          "class_id": 0,
+          "original_sentence_id": 5,
+          "sentence": "comb your hair",
+          "isl_gloss": "COMB YOU HAIR",
+          "dtw_distance": 0.4977,
+          "similarity": 0.5023
+        },
+        {
+          "class_id": 2,
+          "original_sentence_id": 35,
+          "sentence": "i am fine. thank you sir",
+          "isl_gloss": "I FINE. THANK YOU SIR",
+          "dtw_distance": 0.515,
+          "similarity": 0.485
+        }
+      ]
+    },
+    {
+      "video_id": "s023_signer2_help_me__6_",
+      "video_filename": "help me (6).mp4",
+      "sentence": "help me",
+      "true_class_id": 1,
+      "true_sentence": "help me",
+      "pred_class_id": 3,
+      "pred_sentence": "i need water",
+      "signer_id": 2,
+      "split": "test",
+      "is_correct": false,
+      "is_recognized": true,
+      "status": "Recognized",
+      "top_similarity": 0.8551,
+      "top_distance": 0.1449,
+      "margin_to_second": 0.0266,
+      "latency_ms": 4.75,
+      "rankings": [
+        {
+          "class_id": 3,
+          "original_sentence_id": 53,
+          "sentence": "i need water",
+          "isl_gloss": "I NEED WATER",
+          "dtw_distance": 0.1449,
+          "similarity": 0.8551
+        },
+        {
+          "class_id": 2,
+          "original_sentence_id": 35,
+          "sentence": "i am fine. thank you sir",
+          "isl_gloss": "I FINE. THANK YOU SIR",
+          "dtw_distance": 0.1715,
+          "similarity": 0.8285
+        },
+        {
+          "class_id": 4,
+          "original_sentence_id": 91,
+          "sentence": "who are you",
+          "isl_gloss": "WHO YOU",
+          "dtw_distance": 0.1755,
+          "similarity": 0.8245
+        },
+        {
+          "class_id": 0,
+          "original_sentence_id": 5,
+          "sentence": "comb your hair",
+          "isl_gloss": "COMB YOU HAIR",
+          "dtw_distance": 0.3485,
+          "similarity": 0.6515
+        },
+        {
+          "class_id": 1,
+          "original_sentence_id": 23,
+          "sentence": "help me",
+          "isl_gloss": "HELP ME",
+          "dtw_distance": 0.7808,
+          "similarity": 0.2192
+        }
+      ]
+    },
+    {
+      "video_id": "s023_signer1_help_me__7_",
+      "video_filename": "help me (7).mp4",
+      "sentence": "help me",
+      "true_class_id": 1,
+      "true_sentence": "help me",
+      "pred_class_id": 3,
+      "pred_sentence": "i need water",
+      "signer_id": 1,
+      "split": "train",
+      "is_correct": false,
+      "is_recognized": true,
+      "status": "Recognized",
+      "top_similarity": 0.8077,
+      "top_distance": 0.1923,
+      "margin_to_second": 0.0218,
+      "latency_ms": 5.61,
+      "rankings": [
+        {
+          "class_id": 3,
+          "original_sentence_id": 53,
+          "sentence": "i need water",
+          "isl_gloss": "I NEED WATER",
+          "dtw_distance": 0.1923,
+          "similarity": 0.8077
+        },
+        {
+          "class_id": 2,
+          "original_sentence_id": 35,
+          "sentence": "i am fine. thank you sir",
+          "isl_gloss": "I FINE. THANK YOU SIR",
+          "dtw_distance": 0.2141,
+          "similarity": 0.7859
+        },
+        {
+          "class_id": 4,
+          "original_sentence_id": 91,
+          "sentence": "who are you",
+          "isl_gloss": "WHO YOU",
+          "dtw_distance": 0.2178,
+          "similarity": 0.7822
+        },
+        {
+          "class_id": 0,
+          "original_sentence_id": 5,
+          "sentence": "comb your hair",
+          "isl_gloss": "COMB YOU HAIR",
+          "dtw_distance": 0.3314,
+          "similarity": 0.6686
+        },
+        {
+          "class_id": 1,
+          "original_sentence_id": 23,
+          "sentence": "help me",
+          "isl_gloss": "HELP ME",
+          "dtw_distance": 0.7752,
+          "similarity": 0.2248
+        }
+      ]
+    },
+    {
+      "video_id": "s035_signer5_fine_thank__3_",
+      "video_filename": "fine thank (3).MP4",
+      "sentence": "i am fine. thank you sir",
+      "true_class_id": 2,
+      "true_sentence": "i am fine. thank you sir",
+      "pred_class_id": 1,
+      "pred_sentence": "help me",
+      "signer_id": 5,
+      "split": "train",
+      "is_correct": false,
+      "is_recognized": true,
+      "status": "Recognized",
+      "top_similarity": 0.6016,
+      "top_distance": 0.3984,
+      "margin_to_second": 0.0154,
+      "latency_ms": 19.35,
+      "rankings": [
+        {
+          "class_id": 1,
+          "original_sentence_id": 23,
+          "sentence": "help me",
+          "isl_gloss": "HELP ME",
+          "dtw_distance": 0.3984,
+          "similarity": 0.6016
+        },
+        {
+          "class_id": 4,
+          "original_sentence_id": 91,
+          "sentence": "who are you",
+          "isl_gloss": "WHO YOU",
+          "dtw_distance": 0.4138,
+          "similarity": 0.5862
+        },
+        {
+          "class_id": 2,
+          "original_sentence_id": 35,
+          "sentence": "i am fine. thank you sir",
+          "isl_gloss": "I FINE. THANK YOU SIR",
+          "dtw_distance": 0.4143,
+          "similarity": 0.5857
+        },
+        {
+          "class_id": 3,
+          "original_sentence_id": 53,
+          "sentence": "i need water",
+          "isl_gloss": "I NEED WATER",
+          "dtw_distance": 0.4166,
+          "similarity": 0.5834
+        },
+        {
+          "class_id": 0,
+          "original_sentence_id": 5,
+          "sentence": "comb your hair",
+          "isl_gloss": "COMB YOU HAIR",
+          "dtw_distance": 0.4659,
+          "similarity": 0.5341
+        }
+      ]
+    },
+    {
+      "video_id": "s035_signer3_fine_thank",
+      "video_filename": "fine thank.MP4",
+      "sentence": "i am fine. thank you sir",
+      "true_class_id": 2,
+      "true_sentence": "i am fine. thank you sir",
+      "pred_class_id": 3,
+      "pred_sentence": "i need water",
+      "signer_id": 3,
+      "split": "train",
+      "is_correct": false,
+      "is_recognized": false,
+      "status": "Sentence not recognized.",
+      "top_similarity": 0.6171,
+      "top_distance": 0.3829,
+      "margin_to_second": 0.0029,
+      "latency_ms": 15.95,
+      "rankings": [
+        {
+          "class_id": 3,
+          "original_sentence_id": 53,
+          "sentence": "i need water",
+          "isl_gloss": "I NEED WATER",
+          "dtw_distance": 0.3829,
+          "similarity": 0.6171
+        },
+        {
+          "class_id": 4,
+          "original_sentence_id": 91,
+          "sentence": "who are you",
+          "isl_gloss": "WHO YOU",
+          "dtw_distance": 0.3858,
+          "similarity": 0.6142
+        },
+        {
+          "class_id": 1,
+          "original_sentence_id": 23,
+          "sentence": "help me",
+          "isl_gloss": "HELP ME",
+          "dtw_distance": 0.4293,
+          "similarity": 0.5707
+        },
+        {
+          "class_id": 2,
+          "original_sentence_id": 35,
+          "sentence": "i am fine. thank you sir",
+          "isl_gloss": "I FINE. THANK YOU SIR",
+          "dtw_distance": 0.4431,
+          "similarity": 0.5569
+        },
+        {
+          "class_id": 0,
+          "original_sentence_id": 5,
+          "sentence": "comb your hair",
+          "isl_gloss": "COMB YOU HAIR",
+          "dtw_distance": 0.4582,
+          "similarity": 0.5418
+        }
+      ]
+    },
+    {
+      "video_id": "s091_signer7_who_are_you__1_",
+      "video_filename": "who are you (1).MP4",
+      "sentence": "who are you",
+      "true_class_id": 4,
+      "true_sentence": "who are you",
+      "pred_class_id": 3,
+      "pred_sentence": "i need water",
+      "signer_id": 7,
+      "split": "validation",
+      "is_correct": false,
+      "is_recognized": true,
+      "status": "Recognized",
+      "top_similarity": 0.6189,
+      "top_distance": 0.3811,
+      "margin_to_second": 0.0204,
+      "latency_ms": 9.42,
+      "rankings": [
+        {
+          "class_id": 3,
+          "original_sentence_id": 53,
+          "sentence": "i need water",
+          "isl_gloss": "I NEED WATER",
+          "dtw_distance": 0.3811,
+          "similarity": 0.6189
+        },
+        {
+          "class_id": 1,
+          "original_sentence_id": 23,
+          "sentence": "help me",
+          "isl_gloss": "HELP ME",
+          "dtw_distance": 0.4015,
+          "similarity": 0.5985
+        },
+        {
+          "class_id": 4,
+          "original_sentence_id": 91,
+          "sentence": "who are you",
+          "isl_gloss": "WHO YOU",
+          "dtw_distance": 0.4699,
+          "similarity": 0.5301
+        },
+        {
+          "class_id": 0,
+          "original_sentence_id": 5,
+          "sentence": "comb your hair",
+          "isl_gloss": "COMB YOU HAIR",
+          "dtw_distance": 0.4925,
+          "similarity": 0.5075
+        },
+        {
+          "class_id": 2,
+          "original_sentence_id": 35,
+          "sentence": "i am fine. thank you sir",
+          "isl_gloss": "I FINE. THANK YOU SIR",
+          "dtw_distance": 0.5187,
+          "similarity": 0.4813
+        }
+      ]
+    },
+    {
+      "video_id": "s091_signer2_who_are_you__7_",
+      "video_filename": "who are you (7).mp4",
+      "sentence": "who are you",
+      "true_class_id": 4,
+      "true_sentence": "who are you",
+      "pred_class_id": 3,
+      "pred_sentence": "i need water",
+      "signer_id": 2,
+      "split": "test",
+      "is_correct": false,
+      "is_recognized": false,
+      "status": "Sentence not recognized.",
+      "top_similarity": 0.8719,
+      "top_distance": 0.1281,
+      "margin_to_second": 0.0002,
+      "latency_ms": 8.03,
+      "rankings": [
+        {
+          "class_id": 3,
+          "original_sentence_id": 53,
+          "sentence": "i need water",
+          "isl_gloss": "I NEED WATER",
+          "dtw_distance": 0.1281,
+          "similarity": 0.8719
+        },
+        {
+          "class_id": 4,
+          "original_sentence_id": 91,
+          "sentence": "who are you",
+          "isl_gloss": "WHO YOU",
+          "dtw_distance": 0.1283,
+          "similarity": 0.8717
+        },
+        {
+          "class_id": 2,
+          "original_sentence_id": 35,
+          "sentence": "i am fine. thank you sir",
+          "isl_gloss": "I FINE. THANK YOU SIR",
+          "dtw_distance": 0.131,
+          "similarity": 0.869
+        },
+        {
+          "class_id": 0,
+          "original_sentence_id": 5,
+          "sentence": "comb your hair",
+          "isl_gloss": "COMB YOU HAIR",
+          "dtw_distance": 0.3234,
+          "similarity": 0.6766
+        },
+        {
+          "class_id": 1,
+          "original_sentence_id": 23,
+          "sentence": "help me",
+          "isl_gloss": "HELP ME",
+          "dtw_distance": 0.6696,
+          "similarity": 0.3304
+        }
+      ]
+    }
+  ]
+}

@@ -25,6 +25,7 @@ window.speechSynthesis = {
 
 describe("Signova AI Application Layout & Navigation (FE-02)", () => {
   beforeEach(() => {
+    window.history.pushState({}, "", "/");
     vi.restoreAllMocks();
     vi.spyOn(api, "fetchHealth").mockResolvedValue({
       status: "healthy",

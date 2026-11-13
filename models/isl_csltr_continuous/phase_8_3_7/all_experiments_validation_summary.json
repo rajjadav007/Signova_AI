@@ -1,0 +1,87 @@
+{
+  "phase_8_3_6_baseline": {
+    "name": "Phase 8.3.6 Baseline",
+    "val_loss": 4.3026,
+    "val_wer": 0.8257,
+    "val_ter": 0.8257,
+    "val_exact_match": 0.0,
+    "val_macro_f1": 0.0053,
+    "mean_blank_pct": 96.3,
+    "mean_blank_post": 0.9468,
+    "mean_hyp_length": 1.99,
+    "distinct_glosses": 2,
+    "top_predictions": {
+      "YOU": 85,
+      "I": 84
+    }
+  },
+  "exp1_balanced_sampling": {
+    "name": "Exp 1: Class-Balanced Sampling",
+    "val_loss": 4.3839,
+    "val_wer": 0.8289,
+    "val_ter": 0.8289,
+    "val_exact_match": 0.0,
+    "val_macro_f1": 0.0052,
+    "mean_blank_pct": 96.25,
+    "mean_blank_post": 0.938,
+    "mean_hyp_length": 2.0,
+    "distinct_glosses": 2,
+    "top_predictions": {
+      "I": 85,
+      "YOU": 85
+    }
+  },
+  "exp2_blank_penalty_0_5": {
+    "name": "Exp 2: Blank Penalty beta=0.5",
+    "val_loss": 4.3337,
+    "val_wer": 0.8289,
+    "val_ter": 0.8289,
+    "val_exact_match": 0.0,
+    "val_macro_f1": 0.0052,
+    "mean_blank_pct": 96.25,
+    "mean_blank_post": 0.9331,
+    "mean_hyp_length": 2.0,
+    "distinct_glosses": 2,
+    "top_predictions": {
+      "I": 85,
+      "YOU": 85
+    }
+  },
+  "exp2_blank_penalty_1_0": {
+    "name": "Exp 2: Blank Penalty beta=1.0",
+    "val_loss": 4.5063,
+    "val_wer": 0.8289,
+    "val_ter": 0.8289,
+    "val_exact_match": 0.0,
+    "val_macro_f1": 0.0052,
+    "mean_blank_pct": 96.25,
+    "mean_blank_post": 0.9139,
+    "mean_hyp_length": 2.0,
+    "distinct_glosses": 2,
+    "top_predictions": {
+      "I": 85,
+      "YOU": 85
+    }
+  },
+  "exp2_blank_penalty_2_0": {
+    "name": "Exp 2: Blank Penalty beta=2.0",
+    "val_loss": 5.5359,
+    "val_wer": 0.8289,
+    "val_ter": 0.8289,
+    "val_exact_match": 0.0,
+    "val_macro_f1": 0.0052,
+    "mean_blank_pct": 95.59,
+    "mean_blank_post": 0.8473,
+    "mean_hyp_length": 2.0,
+    "distinct_glosses": 2,
+    "top_predictions": {
+      "I": 85,
+      "YOU": 85
+    }
+  },
+  "exp3_focal_class_balanced_ctc_analysis": {
+    "name": "Exp 3: Focal/Class-Balanced CTC Theoretical Analysis",
+    "status": "SKIPPED_WITH_MATHEMATICAL_JUSTIFICATION",
+    "reason": "Standard PyTorch CTCLoss forward-backward dynamic programming operates on continuous unsegmented alignment lattices with latent alignment paths. Exact class-specific focal weighting requires per-frame alignment ground truth which CTC intrinsically leaves unobserved. Sequence-level weighting reduces to reweighted batch losses without altering token emission posteriors, failing to prevent blank dominance without custom C++/CUDA forward-backward kernels."
+  }
+}

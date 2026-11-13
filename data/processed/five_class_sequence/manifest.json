@@ -1,0 +1,492 @@
+[
+  {
+    "sequence_id": "s000_signer1_comb_your_hair",
+    "class_id": 0,
+    "sentence": "comb your hair",
+    "signer_id": 1,
+    "split": "train",
+    "frame_count": 18,
+    "feature_shape": [
+      18,
+      300
+    ],
+    "npz_file": "s000_signer1_comb_your_hair.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\comb your hair\\1"
+  },
+  {
+    "sequence_id": "s000_signer2_comb_your_hair",
+    "class_id": 0,
+    "sentence": "comb your hair",
+    "signer_id": 2,
+    "split": "test",
+    "frame_count": 13,
+    "feature_shape": [
+      13,
+      300
+    ],
+    "npz_file": "s000_signer2_comb_your_hair.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\comb your hair\\2"
+  },
+  {
+    "sequence_id": "s000_signer3_comb_your_hair",
+    "class_id": 0,
+    "sentence": "comb your hair",
+    "signer_id": 3,
+    "split": "train",
+    "frame_count": 20,
+    "feature_shape": [
+      20,
+      300
+    ],
+    "npz_file": "s000_signer3_comb_your_hair.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\comb your hair\\3"
+  },
+  {
+    "sequence_id": "s000_signer4_comb_your_hair",
+    "class_id": 0,
+    "sentence": "comb your hair",
+    "signer_id": 4,
+    "split": "train",
+    "frame_count": 22,
+    "feature_shape": [
+      22,
+      300
+    ],
+    "npz_file": "s000_signer4_comb_your_hair.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\comb your hair\\4"
+  },
+  {
+    "sequence_id": "s000_signer5_comb_your_hair",
+    "class_id": 0,
+    "sentence": "comb your hair",
+    "signer_id": 5,
+    "split": "train",
+    "frame_count": 32,
+    "feature_shape": [
+      32,
+      300
+    ],
+    "npz_file": "s000_signer5_comb_your_hair.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\comb your hair\\5"
+  },
+  {
+    "sequence_id": "s000_signer6_comb_your_hair",
+    "class_id": 0,
+    "sentence": "comb your hair",
+    "signer_id": 6,
+    "split": "train",
+    "frame_count": 23,
+    "feature_shape": [
+      23,
+      300
+    ],
+    "npz_file": "s000_signer6_comb_your_hair.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\comb your hair\\6"
+  },
+  {
+    "sequence_id": "s000_signer7_comb_your_hair",
+    "class_id": 0,
+    "sentence": "comb your hair",
+    "signer_id": 7,
+    "split": "validation",
+    "frame_count": 23,
+    "feature_shape": [
+      23,
+      300
+    ],
+    "npz_file": "s000_signer7_comb_your_hair.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\comb your hair\\7"
+  },
+  {
+    "sequence_id": "s001_signer1_help_me",
+    "class_id": 1,
+    "sentence": "help me",
+    "signer_id": 1,
+    "split": "train",
+    "frame_count": 11,
+    "feature_shape": [
+      11,
+      300
+    ],
+    "npz_file": "s001_signer1_help_me.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\help me\\1"
+  },
+  {
+    "sequence_id": "s001_signer2_help_me",
+    "class_id": 1,
+    "sentence": "help me",
+    "signer_id": 2,
+    "split": "test",
+    "frame_count": 11,
+    "feature_shape": [
+      11,
+      300
+    ],
+    "npz_file": "s001_signer2_help_me.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\help me\\2"
+  },
+  {
+    "sequence_id": "s001_signer3_help_me",
+    "class_id": 1,
+    "sentence": "help me",
+    "signer_id": 3,
+    "split": "train",
+    "frame_count": 42,
+    "feature_shape": [
+      42,
+      300
+    ],
+    "npz_file": "s001_signer3_help_me.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\help me\\3"
+  },
+  {
+    "sequence_id": "s001_signer4_help_me",
+    "class_id": 1,
+    "sentence": "help me",
+    "signer_id": 4,
+    "split": "train",
+    "frame_count": 34,
+    "feature_shape": [
+      34,
+      300
+    ],
+    "npz_file": "s001_signer4_help_me.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\help me\\4"
+  },
+  {
+    "sequence_id": "s001_signer5_help_me",
+    "class_id": 1,
+    "sentence": "help me",
+    "signer_id": 5,
+    "split": "train",
+    "frame_count": 31,
+    "feature_shape": [
+      31,
+      300
+    ],
+    "npz_file": "s001_signer5_help_me.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\help me\\5"
+  },
+  {
+    "sequence_id": "s001_signer6_help_me",
+    "class_id": 1,
+    "sentence": "help me",
+    "signer_id": 6,
+    "split": "train",
+    "frame_count": 29,
+    "feature_shape": [
+      29,
+      300
+    ],
+    "npz_file": "s001_signer6_help_me.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\help me\\6"
+  },
+  {
+    "sequence_id": "s001_signer7_help_me",
+    "class_id": 1,
+    "sentence": "help me",
+    "signer_id": 7,
+    "split": "validation",
+    "frame_count": 40,
+    "feature_shape": [
+      40,
+      300
+    ],
+    "npz_file": "s001_signer7_help_me.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\help me\\7"
+  },
+  {
+    "sequence_id": "s002_signer1_i_am_fine__thank_you_sir_",
+    "class_id": 2,
+    "sentence": "i am fine. thank you sir.",
+    "signer_id": 1,
+    "split": "train",
+    "frame_count": 13,
+    "feature_shape": [
+      13,
+      300
+    ],
+    "npz_file": "s002_signer1_i_am_fine__thank_you_sir_.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\i am fine. thank you sir\\1"
+  },
+  {
+    "sequence_id": "s002_signer2_i_am_fine__thank_you_sir_",
+    "class_id": 2,
+    "sentence": "i am fine. thank you sir.",
+    "signer_id": 2,
+    "split": "test",
+    "frame_count": 9,
+    "feature_shape": [
+      9,
+      300
+    ],
+    "npz_file": "s002_signer2_i_am_fine__thank_you_sir_.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\i am fine. thank you sir\\2"
+  },
+  {
+    "sequence_id": "s002_signer3_i_am_fine__thank_you_sir_",
+    "class_id": 2,
+    "sentence": "i am fine. thank you sir.",
+    "signer_id": 3,
+    "split": "train",
+    "frame_count": 22,
+    "feature_shape": [
+      22,
+      300
+    ],
+    "npz_file": "s002_signer3_i_am_fine__thank_you_sir_.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\i am fine. thank you sir\\3"
+  },
+  {
+    "sequence_id": "s002_signer4_i_am_fine__thank_you_sir_",
+    "class_id": 2,
+    "sentence": "i am fine. thank you sir.",
+    "signer_id": 4,
+    "split": "train",
+    "frame_count": 18,
+    "feature_shape": [
+      18,
+      300
+    ],
+    "npz_file": "s002_signer4_i_am_fine__thank_you_sir_.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\i am fine. thank you sir\\4"
+  },
+  {
+    "sequence_id": "s002_signer5_i_am_fine__thank_you_sir_",
+    "class_id": 2,
+    "sentence": "i am fine. thank you sir.",
+    "signer_id": 5,
+    "split": "train",
+    "frame_count": 23,
+    "feature_shape": [
+      23,
+      300
+    ],
+    "npz_file": "s002_signer5_i_am_fine__thank_you_sir_.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\i am fine. thank you sir\\5"
+  },
+  {
+    "sequence_id": "s002_signer6_i_am_fine__thank_you_sir_",
+    "class_id": 2,
+    "sentence": "i am fine. thank you sir.",
+    "signer_id": 6,
+    "split": "train",
+    "frame_count": 17,
+    "feature_shape": [
+      17,
+      300
+    ],
+    "npz_file": "s002_signer6_i_am_fine__thank_you_sir_.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\i am fine. thank you sir\\6"
+  },
+  {
+    "sequence_id": "s002_signer7_i_am_fine__thank_you_sir_",
+    "class_id": 2,
+    "sentence": "i am fine. thank you sir.",
+    "signer_id": 7,
+    "split": "validation",
+    "frame_count": 22,
+    "feature_shape": [
+      22,
+      300
+    ],
+    "npz_file": "s002_signer7_i_am_fine__thank_you_sir_.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\i am fine. thank you sir\\7"
+  },
+  {
+    "sequence_id": "s003_signer1_i_need_water",
+    "class_id": 3,
+    "sentence": "i need water",
+    "signer_id": 1,
+    "split": "train",
+    "frame_count": 31,
+    "feature_shape": [
+      31,
+      300
+    ],
+    "npz_file": "s003_signer1_i_need_water.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\i need water\\1"
+  },
+  {
+    "sequence_id": "s003_signer2_i_need_water",
+    "class_id": 3,
+    "sentence": "i need water",
+    "signer_id": 2,
+    "split": "test",
+    "frame_count": 31,
+    "feature_shape": [
+      31,
+      300
+    ],
+    "npz_file": "s003_signer2_i_need_water.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\i need water\\2"
+  },
+  {
+    "sequence_id": "s003_signer3_i_need_water",
+    "class_id": 3,
+    "sentence": "i need water",
+    "signer_id": 3,
+    "split": "train",
+    "frame_count": 50,
+    "feature_shape": [
+      50,
+      300
+    ],
+    "npz_file": "s003_signer3_i_need_water.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\i need water\\3"
+  },
+  {
+    "sequence_id": "s003_signer4_i_need_water",
+    "class_id": 3,
+    "sentence": "i need water",
+    "signer_id": 4,
+    "split": "train",
+    "frame_count": 40,
+    "feature_shape": [
+      40,
+      300
+    ],
+    "npz_file": "s003_signer4_i_need_water.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\i need water\\4"
+  },
+  {
+    "sequence_id": "s003_signer5_i_need_water",
+    "class_id": 3,
+    "sentence": "i need water",
+    "signer_id": 5,
+    "split": "train",
+    "frame_count": 43,
+    "feature_shape": [
+      43,
+      300
+    ],
+    "npz_file": "s003_signer5_i_need_water.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\i need water\\5"
+  },
+  {
+    "sequence_id": "s003_signer6_i_need_water",
+    "class_id": 3,
+    "sentence": "i need water",
+    "signer_id": 6,
+    "split": "train",
+    "frame_count": 54,
+    "feature_shape": [
+      54,
+      300
+    ],
+    "npz_file": "s003_signer6_i_need_water.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\i need water\\6"
+  },
+  {
+    "sequence_id": "s003_signer7_i_need_water",
+    "class_id": 3,
+    "sentence": "i need water",
+    "signer_id": 7,
+    "split": "validation",
+    "frame_count": 53,
+    "feature_shape": [
+      53,
+      300
+    ],
+    "npz_file": "s003_signer7_i_need_water.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\i need water\\7"
+  },
+  {
+    "sequence_id": "s004_signer1_who_are_you",
+    "class_id": 4,
+    "sentence": "who are you",
+    "signer_id": 1,
+    "split": "train",
+    "frame_count": 11,
+    "feature_shape": [
+      11,
+      300
+    ],
+    "npz_file": "s004_signer1_who_are_you.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\who are you\\1"
+  },
+  {
+    "sequence_id": "s004_signer2_who_are_you",
+    "class_id": 4,
+    "sentence": "who are you",
+    "signer_id": 2,
+    "split": "test",
+    "frame_count": 11,
+    "feature_shape": [
+      11,
+      300
+    ],
+    "npz_file": "s004_signer2_who_are_you.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\who are you\\2"
+  },
+  {
+    "sequence_id": "s004_signer3_who_are_you",
+    "class_id": 4,
+    "sentence": "who are you",
+    "signer_id": 3,
+    "split": "train",
+    "frame_count": 17,
+    "feature_shape": [
+      17,
+      300
+    ],
+    "npz_file": "s004_signer3_who_are_you.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\who are you\\3"
+  },
+  {
+    "sequence_id": "s004_signer4_who_are_you",
+    "class_id": 4,
+    "sentence": "who are you",
+    "signer_id": 4,
+    "split": "train",
+    "frame_count": 16,
+    "feature_shape": [
+      16,
+      300
+    ],
+    "npz_file": "s004_signer4_who_are_you.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\who are you\\4"
+  },
+  {
+    "sequence_id": "s004_signer5_who_are_you",
+    "class_id": 4,
+    "sentence": "who are you",
+    "signer_id": 5,
+    "split": "train",
+    "frame_count": 15,
+    "feature_shape": [
+      15,
+      300
+    ],
+    "npz_file": "s004_signer5_who_are_you.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\who are you\\5"
+  },
+  {
+    "sequence_id": "s004_signer6_who_are_you",
+    "class_id": 4,
+    "sentence": "who are you",
+    "signer_id": 6,
+    "split": "train",
+    "frame_count": 18,
+    "feature_shape": [
+      18,
+      300
+    ],
+    "npz_file": "s004_signer6_who_are_you.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\who are you\\6"
+  },
+  {
+    "sequence_id": "s004_signer7_who_are_you",
+    "class_id": 4,
+    "sentence": "who are you",
+    "signer_id": 7,
+    "split": "validation",
+    "frame_count": 22,
+    "feature_shape": [
+      22,
+      300
+    ],
+    "npz_file": "s004_signer7_who_are_you.npz",
+    "raw_folder": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Frames_Sentence_Level\\who are you\\7"
+  }
+]

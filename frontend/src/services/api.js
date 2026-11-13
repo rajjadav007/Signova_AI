@@ -3,6 +3,9 @@
  * Handles communication with FastAPI backend endpoints:
  * - /api/v1/recognize/isolated/video (Isolated sign recognition)
  * - /api/v1/recognize/isolated/landmarks (Direct landmark array)
+ * - /api/v1/recognize/sentence/video (Continuous ISL sentence video recognition)
+ * - /api/v1/recognize/sentence/landmarks (Continuous ISL sentence landmark sequence)
+ * - /api/v1/recognize/sentence/sentences (Continuous ISL 101 sentence vocabulary)
  * - /api/v1/translate (Sarvam translation - FE-08)
  * - /api/v1/translate/languages (Supported languages)
  * - /api/v1/speech/synthesize (Sarvam Bulbul TTS - FE-08)
@@ -15,6 +18,7 @@
  */
 
 const API_BASE = "/api/v1";
+export const API_BASE_URL = API_BASE;
 const DEFAULT_TIMEOUT_MS = 20000;
 
 // Track active in-flight requests to prevent duplicate network calls
@@ -131,6 +135,230 @@ export async function recognizeIsolatedLandmarks(landmarks, category = null, top
     }),
   });
 }
+
+/**
+ * Send pre-extracted landmark sequence to backend for Continuous ISL Sentence Recognition (101 Sentences).
+ */
+export async function recognizeSentenceLandmarks(landmarks, options = {}) {
+  const payload = {
+    landmarks,
+    timestamps_ms: options.timestamps !== undefined ? options.timestamps : (options.timestamps_ms || null),
+    fps: options.fps || 25,
+    top_k: options.top_k || options.topK || 3,
+  };
+
+  return requestWithTimeout(`${API_BASE_URL}/recognize/sentence/landmarks`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  }, 25000);
+}
+
+/**
+ * Send uploaded video file to backend for Continuous ISL Sentence Recognition (101 Sentences).
+ */
+export async function recognizeSentenceVideo(videoFile, onProgress = null) {
+  const formData = new FormData();
+  formData.append("video", videoFile, videoFile.name || "sentence.mp4");
+
+  if (onProgress && typeof XMLHttpRequest !== "undefined") {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", `${API_BASE_URL}/recognize/sentence/video`);
+      xhr.timeout = 45000;
+
+      xhr.upload.onprogress = (event) => {
+        if (event.lengthComputable && onProgress) {
+          const percent = Math.round((event.loaded / event.total) * 100);
+          onProgress(percent, event.loaded, event.total);
+        }
+      };
+
+      xhr.onload = () => {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          try {
+            const data = JSON.parse(xhr.responseText);
+            resolve(data);
+          } catch {
+            reject(new Error("Failed to parse JSON response"));
+          }
+        } else {
+          try {
+            const errData = JSON.parse(xhr.responseText);
+            reject(new Error(errData.detail || errData.error?.message || `Upload failed with status ${xhr.status}`));
+          } catch {
+            reject(new Error(`Upload failed with status ${xhr.status}`));
+          }
+        }
+      };
+
+      xhr.onerror = () => reject(new Error("Network error during video upload"));
+      xhr.ontimeout = () => reject(new Error("Video upload timed out"));
+      xhr.send(formData);
+    });
+  }
+
+  return requestWithTimeout(
+    `${API_BASE_URL}/recognize/sentence/video`,
+    {
+      method: "POST",
+      body: formData,
+    },
+    45000
+  );
+}
+
+/**
+ * Fetch the 101 ISL continuous sentence vocabulary and sentences from backend.
+ */
+export async function fetchSentenceVocabulary() {
+  return requestWithTimeout(`${API_BASE_URL}/recognize/sentence/sentences`);
+}
+
+/**
+ * Fetch the 5 supported continuous ISL sentence classes for Hackathon Demo Mode.
+ */
+export async function fetchDemoSentenceClasses() {
+  return requestWithTimeout(`${API_BASE_URL}/recognize/sentence/demo/classes`);
+}
+
+/**
+ * Send uploaded video file to backend for 5-Class Hackathon Demo Sentence Recognition.
+ */
+export async function recognizeDemoSentenceVideo(videoFile, options = {}) {
+  const formData = new FormData();
+  formData.append("video", videoFile, videoFile.name || "demo_sentence.mp4");
+
+  const queryParams = new URLSearchParams();
+  if (options.threshold !== undefined) {
+    queryParams.set("threshold", options.threshold);
+  }
+  if (options.min_margin !== undefined) {
+    queryParams.set("min_margin", options.min_margin);
+  }
+
+  const queryString = queryParams.toString();
+  const url = `${API_BASE_URL}/recognize/sentence/demo/video${queryString ? `?${queryString}` : ""}`;
+
+  return requestWithTimeout(
+    url,
+    {
+      method: "POST",
+      body: formData,
+    },
+    90000 // 90s timeout for MediaPipe video landmark extraction
+  );
+}
+
+/**
+ * Fetch the 5 supported ISL sentence classes for the 5-class sequence models.
+ */
+export async function fetchFiveClassClasses() {
+  return requestWithTimeout(`${API_BASE_URL}/recognize/sentence/five-class/classes`);
+}
+
+/**
+ * Send recorded webcam or uploaded video file to backend for 5-Class Sentence Recognition.
+ * Supports selectable models: "bigru" (BiGRU Attention) or "dtw" (DTW-KNN).
+ */
+export async function recognizeFiveClassSentenceVideo(videoFile, model = "bigru", options = {}, onProgress = null) {
+  const progressCallback = typeof options === "function" ? options : (onProgress || options?.onProgress || null);
+  const opts = typeof options === "object" && options !== null ? options : {};
+
+  const formData = new FormData();
+  formData.append("video", videoFile, videoFile.name || "webcam_gesture.webm");
+
+  const queryParams = new URLSearchParams();
+  queryParams.set("model", model);
+  if (opts.confidenceThreshold !== undefined) {
+    queryParams.set("confidence_threshold", opts.confidenceThreshold);
+  }
+
+  const queryString = queryParams.toString();
+  const url = `${API_BASE_URL}/recognize/sentence/five-class/video?${queryString}`;
+
+  if (progressCallback && typeof XMLHttpRequest !== "undefined") {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", url);
+      xhr.timeout = 90000;
+
+      xhr.upload.onprogress = (event) => {
+        if (event.lengthComputable && progressCallback) {
+          const percent = Math.round((event.loaded / event.total) * 100);
+          progressCallback(percent, event.loaded, event.total);
+        }
+      };
+
+      xhr.onload = () => {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          try {
+            const data = JSON.parse(xhr.responseText);
+            resolve(data);
+          } catch {
+            reject(new Error("Failed to parse JSON response"));
+          }
+        } else {
+          try {
+            const errData = JSON.parse(xhr.responseText);
+            reject(new Error(errData.detail || errData.error?.message || `Upload failed with status ${xhr.status}`));
+          } catch {
+            reject(new Error(`Upload failed with status ${xhr.status}`));
+          }
+        }
+      };
+
+      xhr.onerror = () => reject(new Error("Network error during video upload"));
+      xhr.ontimeout = () => reject(new Error("Video upload timed out"));
+      xhr.send(formData);
+    });
+  }
+
+  return requestWithTimeout(
+    url,
+    {
+      method: "POST",
+      body: formData,
+    },
+    90000 // 90s timeout for video decoding and MediaPipe extraction
+  );
+}
+
+/**
+ * Send pre-extracted landmark sequence directly for 5-Class Sentence Recognition.
+ */
+export async function recognizeFiveClassSentenceLandmarks(landmarks, model = "bigru", options = {}) {
+  const queryParams = new URLSearchParams();
+  queryParams.set("model", model);
+  if (options.confidenceThreshold !== undefined) {
+    queryParams.set("confidence_threshold", options.confidenceThreshold);
+  }
+
+  const queryString = queryParams.toString();
+  const url = `${API_BASE_URL}/recognize/sentence/five-class/landmarks?${queryString}`;
+
+  const payload = {
+    landmarks,
+    timestamps_ms: options.timestamps !== undefined ? options.timestamps : (options.timestamps_ms || null),
+    fps: options.fps || 25,
+    top_k: options.top_k || options.topK || 5,
+  };
+
+  return requestWithTimeout(
+    url,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    },
+    25000
+  );
+}
+
 
 /**
  * Translate text into target language using Sarvam AI (FE-08).

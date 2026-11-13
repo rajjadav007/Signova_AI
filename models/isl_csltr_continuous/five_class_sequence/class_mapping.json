@@ -1,0 +1,25 @@
+{
+  "classes": [
+    {
+      "class_id": 0,
+      "sentence": "comb your hair"
+    },
+    {
+      "class_id": 1,
+      "sentence": "help me"
+    },
+    {
+      "class_id": 2,
+      "sentence": "i am fine. thank you sir."
+    },
+    {
+      "class_id": 3,
+      "sentence": "i need water"
+    },
+    {
+      "class_id": 4,
+      "sentence": "who are you"
+    }
+  ],
+  "num_classes": 5
+}

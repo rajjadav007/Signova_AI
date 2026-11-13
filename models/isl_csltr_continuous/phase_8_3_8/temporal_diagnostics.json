@@ -1,0 +1,163 @@
+{
+  "description": "Phase 8.3.8 Step A Fast Temporal Feature Audit",
+  "train_audit": {
+    "split": "train",
+    "video_count": 499,
+    "total_frames": 49102,
+    "frame_length_stats": {
+      "min": 25,
+      "mean": 98.4,
+      "median": 97,
+      "max": 192
+    },
+    "confidence_stats": {
+      "pose_mean": 0.7482,
+      "lh_mean": 1.0,
+      "rh_mean": 1.0
+    },
+    "quintile_temporal_analysis": {
+      "Q1_0-20%": {
+        "frame_count": 9982,
+        "lh_missing_pct": 81.01,
+        "rh_missing_pct": 79.08,
+        "both_hands_missing_pct": 70.66,
+        "mean_pose_motion": 0.03509,
+        "mean_lh_motion": 0.02002,
+        "mean_rh_motion": 0.05817,
+        "mean_active_hand_motion": 0.07513
+      },
+      "Q2_20-40%": {
+        "frame_count": 9817,
+        "lh_missing_pct": 71.73,
+        "rh_missing_pct": 27.44,
+        "both_hands_missing_pct": 18.56,
+        "mean_pose_motion": 0.03879,
+        "mean_lh_motion": 0.05024,
+        "mean_rh_motion": 0.09488,
+        "mean_active_hand_motion": 0.13631
+      },
+      "Q3_40-60%": {
+        "frame_count": 9822,
+        "lh_missing_pct": 55.59,
+        "rh_missing_pct": 19.71,
+        "both_hands_missing_pct": 9.48,
+        "mean_pose_motion": 0.04167,
+        "mean_lh_motion": 0.07738,
+        "mean_rh_motion": 0.08696,
+        "mean_active_hand_motion": 0.14793
+      },
+      "Q4_60-80%": {
+        "frame_count": 9817,
+        "lh_missing_pct": 43.51,
+        "rh_missing_pct": 19.41,
+        "both_hands_missing_pct": 8.42,
+        "mean_pose_motion": 0.04357,
+        "mean_lh_motion": 0.08233,
+        "mean_rh_motion": 0.09162,
+        "mean_active_hand_motion": 0.15443
+      },
+      "Q5_80-100%": {
+        "frame_count": 9664,
+        "lh_missing_pct": 52.44,
+        "rh_missing_pct": 39.46,
+        "both_hands_missing_pct": 28.36,
+        "mean_pose_motion": 0.04182,
+        "mean_lh_motion": 0.07017,
+        "mean_rh_motion": 0.09801,
+        "mean_active_hand_motion": 0.14882
+      }
+    }
+  },
+  "validation_audit": {
+    "split": "validation",
+    "video_count": 85,
+    "total_frames": 9455,
+    "frame_length_stats": {
+      "min": 58,
+      "mean": 111.24,
+      "median": 106,
+      "max": 186
+    },
+    "confidence_stats": {
+      "pose_mean": 0.7802,
+      "lh_mean": 1.0,
+      "rh_mean": 1.0
+    },
+    "quintile_temporal_analysis": {
+      "Q1_0-20%": {
+        "frame_count": 1925,
+        "lh_missing_pct": 58.29,
+        "rh_missing_pct": 47.64,
+        "both_hands_missing_pct": 23.84,
+        "mean_pose_motion": 0.03242,
+        "mean_lh_motion": 0.02151,
+        "mean_rh_motion": 0.03759,
+        "mean_active_hand_motion": 0.05452
+      },
+      "Q2_20-40%": {
+        "frame_count": 1891,
+        "lh_missing_pct": 32.05,
+        "rh_missing_pct": 41.88,
+        "both_hands_missing_pct": 13.8,
+        "mean_pose_motion": 0.0429,
+        "mean_lh_motion": 0.06731,
+        "mean_rh_motion": 0.11684,
+        "mean_active_hand_motion": 0.16669
+      },
+      "Q3_40-60%": {
+        "frame_count": 1888,
+        "lh_missing_pct": 28.55,
+        "rh_missing_pct": 24.52,
+        "both_hands_missing_pct": 8.0,
+        "mean_pose_motion": 0.04599,
+        "mean_lh_motion": 0.06383,
+        "mean_rh_motion": 0.09183,
+        "mean_active_hand_motion": 0.14522
+      },
+      "Q4_60-80%": {
+        "frame_count": 1891,
+        "lh_missing_pct": 28.03,
+        "rh_missing_pct": 33.69,
+        "both_hands_missing_pct": 13.48,
+        "mean_pose_motion": 0.04969,
+        "mean_lh_motion": 0.09129,
+        "mean_rh_motion": 0.12423,
+        "mean_active_hand_motion": 0.1913
+      },
+      "Q5_80-100%": {
+        "frame_count": 1860,
+        "lh_missing_pct": 51.45,
+        "rh_missing_pct": 42.58,
+        "both_hands_missing_pct": 16.83,
+        "mean_pose_motion": 0.04031,
+        "mean_lh_motion": 0.07664,
+        "mean_rh_motion": 0.08018,
+        "mean_active_hand_motion": 0.13174
+      }
+    }
+  },
+  "middle_vs_endpoints_comparison": {
+    "train": {
+      "endpoints_mean_active_hand_motion": 0.11198,
+      "middle_mean_active_hand_motion": 0.14622,
+      "motion_ratio_middle_to_endpoints": 1.306,
+      "endpoints_both_hands_missing_pct": 49.51,
+      "middle_both_hands_missing_pct": 12.15,
+      "middle_frames_contain_signing_activity": true
+    },
+    "validation": {
+      "endpoints_mean_active_hand_motion": 0.09313,
+      "middle_mean_active_hand_motion": 0.16774,
+      "motion_ratio_middle_to_endpoints": 1.801,
+      "endpoints_both_hands_missing_pct": 20.34,
+      "middle_both_hands_missing_pct": 11.76,
+      "middle_frames_contain_signing_activity": true
+    }
+  },
+  "key_conclusions": [
+    "Train middle 60% active hand motion (0.14622) is 1.306x of endpoints (0.11198).",
+    "Validation middle 60% active hand motion (0.16774) is 1.801x of endpoints (0.09313).",
+    "Both hands missing in middle 60% is low (Train: 12.15%, Val: 11.76%).",
+    "CONCLUSION: The middle frames contain rich, active signing gesture dynamics. 100% blank argmax in middle frames is NOT due to absent or missing motion in features, but purely model temporal boundary collapse and temporal information loss."
+  ]
+}

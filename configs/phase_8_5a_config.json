@@ -1,0 +1,177 @@
+{
+  "phase": "8.5A",
+  "project": "Signova AI",
+  "task": "Continuous ISL Recognition Preparation",
+  "dataset": {
+    "corpus": "ISL-CSLTR",
+    "total_videos": 126,
+    "unique_sentences": 18,
+    "splits": {
+      "train": {
+        "video_count": 92,
+        "signers": [1, 3, 4, 5, 6]
+      },
+      "validation": {
+        "video_count": 17,
+        "signers": [7]
+      },
+      "test": {
+        "video_count": 17,
+        "signers": [2]
+      }
+    },
+    "absent_sentences_by_split": {
+      "validation": [94],
+      "test": [30]
+    }
+  },
+  "vocabulary": {
+    "num_classes": 21,
+    "blank_index": 0,
+    "gloss_to_id": {
+      "<blank>": 0,
+      "(AGE)": 1,
+      "ANGRY": 2,
+      "BAD": 3,
+      "CONGRATULATIIONS": 4,
+      "CRY": 5,
+      "DISAPPOINTED": 6,
+      "GOOD": 7,
+      "HELP": 8,
+      "HI": 9,
+      "HOW": 10,
+      "HUNGRY": 11,
+      "I": 12,
+      "ME": 13,
+      "PROMISE": 14,
+      "THINGS": 15,
+      "TIRED": 16,
+      "WELCOME": 17,
+      "WHO": 18,
+      "WHY": 19,
+      "YOU": 20
+    },
+    "original_annotation_glosses": [
+      "(AGE)",
+      "ANGRY",
+      "BAD",
+      "CONGRATULATIIONS",
+      "CRY",
+      "DISAPPOINTED",
+      "GOOD",
+      "HELP",
+      "HI",
+      "HOW",
+      "HUNGRY",
+      "I",
+      "ME",
+      "PROMISE",
+      "THINGS",
+      "TIRED",
+      "WELCOME",
+      "WHO",
+      "WHY",
+      "YOU"
+    ]
+  },
+  "feature_schema": {
+    "total_dimensions": 228,
+    "num_landmarks": 75,
+    "channels_per_landmark": 3,
+    "spatial_coordinates": "x, y, z",
+    "normalization": "shoulder_centered_torso_scaled",
+    "normalization_formula": "p'_i = (p_i - p_mid_shoulder) / ||p_left_shoulder - p_right_shoulder||_2",
+    "detection_mask_dim": 3,
+    "detection_mask_order": ["pose_detected", "left_hand_detected", "right_hand_detected"],
+    "missing_landmark_strategy": "zero_imputation",
+    "dtype": "float32",
+    "temporal_velocity_handling": "learned_dynamically_via_conv1d_kernel3"
+  },
+  "model_architecture": {
+    "type": "Temporal 1D-CNN + 2-layer Bi-GRU + CTC",
+    "input_dim": 228,
+    "temporal_encoder": {
+      "layer": "Conv1d",
+      "in_channels": 228,
+      "out_channels": 128,
+      "kernel_size": 3,
+      "stride": 1,
+      "padding": 1,
+      "activation": "ReLU"
+    },
+    "sequence_encoder": {
+      "layer": "GRU",
+      "input_size": 128,
+      "hidden_size": 128,
+      "num_layers": 2,
+      "bidirectional": true,
+      "batch_first": true,
+      "dropout": 0.3
+    },
+    "classifier": {
+      "layer": "Linear",
+      "in_features": 256,
+      "out_features": 21,
+      "dropout": 0.3
+    },
+    "total_parameters": 587669
+  },
+  "loss_configurations": {
+    "config_a": {
+      "name": "Standard CTC Baseline",
+      "loss_fn": "torch.nn.CTCLoss",
+      "params": {
+        "blank": 0,
+        "zero_infinity": true,
+        "reduction": "mean"
+      }
+    },
+    "config_b": {
+      "name": "CTC + Margin Blank Posterior Regularization",
+      "loss_fn": "RegularizedCTCLoss",
+      "params": {
+        "blank": 0,
+        "zero_infinity": true,
+        "reduction": "mean",
+        "lambda_blank": 0.5,
+        "tau_blank": 0.75
+      },
+      "formula": "L_total = L_ctc + lambda_blank * max(0, mean_P(blank) - tau_blank)"
+    },
+    "config_c": {
+      "name": "CTC + Sequence-Level Class Rarity Weighting",
+      "loss_fn": "ClassWeightedCTCLoss",
+      "params": {
+        "blank": 0,
+        "zero_infinity": true,
+        "reduction": "none",
+        "power_exponent": 0.33
+      },
+      "formula": "L_total = sum(w_i * L_ctc_i) / sum(w_i), where w_i = mean_g( (N_total / N_g)^0.33 )"
+    }
+  },
+  "training": {
+    "optimizer": "AdamW",
+    "learning_rate": 0.0003,
+    "weight_decay": 0.0001,
+    "gradient_clipping": 5.0,
+    "batch_size": 8,
+    "max_epochs": 50,
+    "patience": 15,
+    "monitor_metric": "val_wer",
+    "monitor_mode": "min",
+    "seed": 42,
+    "save_best_checkpoint": true
+  },
+  "evaluation_metrics": [
+    "WER",
+    "TER",
+    "Exact_Sentence_Match_Rate",
+    "Per_Gloss_Precision",
+    "Per_Gloss_Recall",
+    "Per_Gloss_F1",
+    "Blank_Posterior_Mean",
+    "Blank_Posterior_By_Quintile",
+    "Vocabulary_Diversity"
+  ]
+}

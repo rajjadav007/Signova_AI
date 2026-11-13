@@ -1,0 +1,27 @@
+{
+  "experiment_name": "Phase 8.3.8 Stride-1 Temporal Learning",
+  "architecture": {
+    "model_class": "ISLCSLTRStride1Model",
+    "input_dim": 300,
+    "proj_dim": 128,
+    "hidden_dim": 128,
+    "num_layers": 2,
+    "num_classes": 171,
+    "dropout": 0.3,
+    "temporal_conv": "Conv1D(kernel=3, stride=1, padding=1)",
+    "effective_temporal_resolution": "Full (T' = T, no downsampling)"
+  },
+  "training_hyperparameters": {
+    "batch_size": 16,
+    "optimizer": "AdamW",
+    "lr": 0.0003,
+    "weight_decay": 0.0001,
+    "scheduler": "CosineAnnealingLR(T_max=50, eta_min=1e-5)",
+    "gradient_clip": 5.0,
+    "max_epochs": 50,
+    "early_stopping_patience": 15,
+    "loss": "CTCLoss(blank=0, zero_infinity=True)",
+    "random_seed": 42,
+    "hardware": "CPU"
+  }
+}

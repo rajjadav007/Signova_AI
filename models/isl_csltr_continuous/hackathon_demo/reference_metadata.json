@@ -1,0 +1,175 @@
+{
+  "references": [
+    {
+      "demo_class_id": 0,
+      "original_sentence_id": 5,
+      "sentence": "comb your hair",
+      "isl_gloss": "COMB YOU HAIR",
+      "reference_index": 1,
+      "signer_id": 1,
+      "video_id": "s005_signer1_comb_your_hair",
+      "video_filename": "comb your hair.mp4",
+      "canonical_video_path": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Videos_Sentence_Level\\comb your hair\\comb your hair.mp4",
+      "missing_landmark_percentage": 12.32,
+      "duration_seconds": 3.0,
+      "feature_shape": [
+        38,
+        48
+      ]
+    },
+    {
+      "demo_class_id": 0,
+      "original_sentence_id": 5,
+      "sentence": "comb your hair",
+      "isl_gloss": "COMB YOU HAIR",
+      "reference_index": 2,
+      "signer_id": 3,
+      "video_id": "s005_signer3_comb",
+      "video_filename": "comb.MP4",
+      "canonical_video_path": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Videos_Sentence_Level\\comb your hair\\comb.MP4",
+      "missing_landmark_percentage": 15.97,
+      "duration_seconds": 5.12,
+      "feature_shape": [
+        64,
+        48
+      ]
+    },
+    {
+      "demo_class_id": 1,
+      "original_sentence_id": 23,
+      "sentence": "help me",
+      "isl_gloss": "HELP ME",
+      "reference_index": 1,
+      "signer_id": 6,
+      "video_id": "s023_signer6_help_me__5_",
+      "video_filename": "help me (5).MP4",
+      "canonical_video_path": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Videos_Sentence_Level\\help me\\help me (5).MP4",
+      "missing_landmark_percentage": 22.87,
+      "duration_seconds": 2.84,
+      "feature_shape": [
+        36,
+        48
+      ]
+    },
+    {
+      "demo_class_id": 1,
+      "original_sentence_id": 23,
+      "sentence": "help me",
+      "isl_gloss": "HELP ME",
+      "reference_index": 2,
+      "signer_id": 5,
+      "video_id": "s023_signer5_help_me__4_",
+      "video_filename": "help me (4).MP4",
+      "canonical_video_path": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Videos_Sentence_Level\\help me\\help me (4).MP4",
+      "missing_landmark_percentage": 25.42,
+      "duration_seconds": 3.04,
+      "feature_shape": [
+        38,
+        48
+      ]
+    },
+    {
+      "demo_class_id": 2,
+      "original_sentence_id": 35,
+      "sentence": "i am fine. thank you sir",
+      "isl_gloss": "I FINE. THANK YOU SIR",
+      "reference_index": 1,
+      "signer_id": 6,
+      "video_id": "s035_signer6_fine_thank__4_",
+      "video_filename": "fine thank (4).MP4",
+      "canonical_video_path": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Videos_Sentence_Level\\i am fine. thank you sir\\fine thank (4).MP4",
+      "missing_landmark_percentage": 7.69,
+      "duration_seconds": 4.08,
+      "feature_shape": [
+        51,
+        48
+      ]
+    },
+    {
+      "demo_class_id": 2,
+      "original_sentence_id": 35,
+      "sentence": "i am fine. thank you sir",
+      "isl_gloss": "I FINE. THANK YOU SIR",
+      "reference_index": 2,
+      "signer_id": 1,
+      "video_id": "s035_signer1_i_am_fine._thank_you_sir__2_",
+      "video_filename": "i am fine. thank you sir (2).mp4",
+      "canonical_video_path": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Videos_Sentence_Level\\i am fine. thank you sir\\i am fine. thank you sir (2).mp4",
+      "missing_landmark_percentage": 13.07,
+      "duration_seconds": 3.0,
+      "feature_shape": [
+        38,
+        48
+      ]
+    },
+    {
+      "demo_class_id": 3,
+      "original_sentence_id": 53,
+      "sentence": "i need water",
+      "isl_gloss": "I NEED WATER",
+      "reference_index": 1,
+      "signer_id": 1,
+      "video_id": "s053_signer1_i_need_water_1",
+      "video_filename": "i need water 1.mp4",
+      "canonical_video_path": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Videos_Sentence_Level\\i need water\\i need water 1.mp4",
+      "missing_landmark_percentage": 12.69,
+      "duration_seconds": 3.0,
+      "feature_shape": [
+        38,
+        48
+      ]
+    },
+    {
+      "demo_class_id": 3,
+      "original_sentence_id": 53,
+      "sentence": "i need water",
+      "isl_gloss": "I NEED WATER",
+      "reference_index": 2,
+      "signer_id": 4,
+      "video_id": "s053_signer4_i_need_water_4",
+      "video_filename": "i need water 4.MP4",
+      "canonical_video_path": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Videos_Sentence_Level\\i need water\\i need water 4.MP4",
+      "missing_landmark_percentage": 36.86,
+      "duration_seconds": 3.92,
+      "feature_shape": [
+        49,
+        48
+      ]
+    },
+    {
+      "demo_class_id": 4,
+      "original_sentence_id": 91,
+      "sentence": "who are you",
+      "isl_gloss": "WHO YOU",
+      "reference_index": 1,
+      "signer_id": 1,
+      "video_id": "s091_signer1_who_are_you__8_",
+      "video_filename": "who are you (8).mp4",
+      "canonical_video_path": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Videos_Sentence_Level\\who are you\\who are you (8).mp4",
+      "missing_landmark_percentage": 20.72,
+      "duration_seconds": 2.0,
+      "feature_shape": [
+        25,
+        48
+      ]
+    },
+    {
+      "demo_class_id": 4,
+      "original_sentence_id": 91,
+      "sentence": "who are you",
+      "isl_gloss": "WHO YOU",
+      "reference_index": 2,
+      "signer_id": 6,
+      "video_id": "s091_signer6_who_are_you__6_",
+      "video_filename": "who are you (6).MP4",
+      "canonical_video_path": "D:\\Datasets\\ISL-CSLTR\\isl-csltr-indian-sign-language-dataset\\ISL_CSLRT_Corpus\\ISL_CSLRT_Corpus\\Videos_Sentence_Level\\who are you\\who are you (6).MP4",
+      "missing_landmark_percentage": 33.15,
+      "duration_seconds": 3.48,
+      "feature_shape": [
+        44,
+        48
+      ]
+    }
+  ],
+  "total_references": 10
+}

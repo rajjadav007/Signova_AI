@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useImperativeHandle } from "react";
 import {
   Video,
   VideoOff,
@@ -18,13 +18,19 @@ import { useFrameBuffer } from "../../hooks/useFrameBuffer";
 import { useAutoRecognition } from "../../hooks/useAutoRecognition";
 import { RECOGNITION_STATE } from "../../utils/handPresence";
 
-export default function LiveWebcamPreview({
-  onSignRecognized,
-  onUncertainSuggestion,
-  initialAutoSpeak = true,
-  showSpeechToggle = true,
-  samplerIntervalMs = 200,
-} = {}) {
+const LiveWebcamPreview = React.forwardRef(function LiveWebcamPreview(
+  {
+    onSignRecognized,
+    onUncertainSuggestion,
+    onSentenceRecognized,
+    initialAutoSpeak = true,
+    showSpeechToggle = true,
+    samplerIntervalMs = 200,
+    recognitionMode = "isolated",
+    sentenceModel = "bigru",
+  } = {},
+  ref
+) {
   const [autoSpeak, setAutoSpeak] = useState(initialAutoSpeak);
 
   // FE-04 Webcam management
@@ -51,11 +57,14 @@ export default function LiveWebcamPreview({
     isReady: isSequenceReady,
     addFrame,
     reset: resetBuffer,
+    getFrames,
   } = useFrameBuffer({
     capacity: 64,
     isCameraActive: isActive,
     enabled: isActive,
   });
+
+  const isAutoEnabled = isActive;
 
   // FE-06 Automatic Hands-Free Recognition State Machine
   const {
@@ -72,12 +81,28 @@ export default function LiveWebcamPreview({
     videoRef,
     stream,
     isCameraActive: isActive,
-    enabled: isActive,
+    enabled: isAutoEnabled,
     autoSpeak,
+    recognitionMode,
+    sentenceModel,
     onResetSequence: resetBuffer,
     onSignRecognized,
     onUncertainSuggestion,
+    onSentenceRecognized,
   });
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      getFrames,
+      resetBuffer,
+      bufferCount,
+      isCameraActive: isActive,
+      stream,
+      videoRef,
+    }),
+    [getFrames, resetBuffer, bufferCount, isActive, stream, videoRef]
+  );
 
   // Synchronized frame handler
   const handleFrameSample = useCallback(
@@ -118,7 +143,10 @@ export default function LiveWebcamPreview({
 
   // Always extract and display Top-1 predicted ISL sign returned by model
   const rawPredictedSign =
+    recognitionResult?.predicted_sentence ||
+    recognitionResult?.sentence ||
     recognitionResult?.predicted_sign ||
+    recognitionResult?.top_predictions?.[0]?.sentence ||
     recognitionResult?.top_predictions?.[0]?.sign ||
     recognitionResult?.top_predictions?.[0]?.label ||
     (recognitionResult?.display_name
@@ -229,14 +257,17 @@ export default function LiveWebcamPreview({
                     Live Preview
                   </span>
 
-                  {/* Automatic Sign Recognition State Pill (Section 9 UI states) */}
+                  {/* Automatic Sign Recognition State Pill */}
                   <span
                     className={`state-pill ${autoState}`}
                     data-testid="auto-state-pill"
                     role="status"
                     aria-live="polite"
                   >
-                    <span className="camera-status-dot" aria-hidden="true" />
+                    <span
+                      className="camera-status-dot"
+                      aria-hidden="true"
+                    />
                     <span>{autoStateLabel}</span>
                   </span>
                 </div>
@@ -263,8 +294,28 @@ export default function LiveWebcamPreview({
                 aria-hidden="true"
               >
                 <span className={`guide-label ${isHandDetected ? "hand-active" : ""}`}>
-                  {autoState === RECOGNITION_STATE.RECORDING_GESTURE ||
-                  autoState === "COLLECTING_SEQUENCE"
+                  {recognitionMode === "sentence"
+                    ? autoState === RECOGNITION_STATE.RECORDING_GESTURE ||
+                      autoState === "COLLECTING_SEQUENCE"
+                      ? `Collecting frames (${autoFrameCount})`
+                      : autoState === RECOGNITION_STATE.GESTURE_ENDED ||
+                        autoState === RECOGNITION_STATE.VALIDATING_RECORDING ||
+                        autoState === RECOGNITION_STATE.RECOGNIZING
+                      ? "Processing sequence"
+                      : autoState === RECOGNITION_STATE.SUCCESS
+                      ? "Prediction available"
+                      : autoState === RECOGNITION_STATE.UNCERTAIN
+                      ? "Uncertain prediction"
+                      : autoState === RECOGNITION_STATE.NO_LANDMARKS
+                      ? "No valid landmarks detected"
+                      : autoState === RECOGNITION_STATE.RESET_SEQUENCE ||
+                        autoState === RECOGNITION_STATE.WAITING_FOR_NEXT_SIGN
+                      ? "Waiting for signing"
+                      : isHandDetected
+                      ? "Hands in View"
+                      : "Bring Hands into Camera View"
+                    : autoState === RECOGNITION_STATE.RECORDING_GESTURE ||
+                      autoState === "COLLECTING_SEQUENCE"
                     ? `Recording sign (${autoFrameCount})`
                     : autoState === RECOGNITION_STATE.GESTURE_ENDED ||
                       autoState === RECOGNITION_STATE.VALIDATING_RECORDING
@@ -349,7 +400,7 @@ export default function LiveWebcamPreview({
           )}
         </div>
 
-        {/* Real Backend Prediction Display Card (Section 8: Single Prediction Display) */}
+        {/* Real Backend Prediction Display Card */}
         {(hasResult || isRecognizing || hasError) && (
           <section
             className="auto-prediction-card"
@@ -365,7 +416,9 @@ export default function LiveWebcamPreview({
                   }`}
                   data-testid="prediction-status-badge"
                 >
-                  {isHighConfidence ? "✓ RECOGNIZED" : "⚠ UNCERTAIN"}
+                  {isHighConfidence
+                    ? (recognitionMode === "sentence" ? "✓ PREDICTION" : "✓ RECOGNIZED")
+                    : "⚠ UNCERTAIN"}
                 </span>
               ) : hasError ? (
                 <span
@@ -400,7 +453,9 @@ export default function LiveWebcamPreview({
                 <div className="prediction-main-row" data-testid="prediction-main-row">
                   <div className="prediction-prominent-display">
                     <div className="prediction-field-row">
-                      <span className="prediction-field-label">Predicted Sign:</span>
+                      <span className="prediction-field-label">
+                        {recognitionMode === "sentence" ? "Predicted Sentence:" : "Predicted Sign:"}
+                      </span>
                       <span
                         className="prediction-sign-name"
                         data-testid="prediction-sign-name"
@@ -422,8 +477,19 @@ export default function LiveWebcamPreview({
                           className={`confidence-tag ${isHighConfidence ? "high-confidence" : "low-confidence"}`}
                           data-testid="confidence-tag"
                         >
-                          {isHighConfidence ? "High Confidence" : "Low Confidence"}
+                          {isHighConfidence
+                            ? (recognitionMode === "sentence" ? "Prediction" : "High Confidence")
+                            : "Low Confidence"}
                         </span>
+                        {recognitionResult?.margin_to_second !== undefined && recognitionResult?.margin_to_second !== null && (
+                          <span
+                            className="sentence-margin-chip"
+                            data-testid="camera-margin-chip"
+                            style={{ fontSize: "0.74rem", padding: "2px 6px" }}
+                          >
+                            +{((recognitionResult.margin_to_second || 0) * 100).toFixed(1)}% vs 2nd
+                          </span>
+                        )}
                       </div>
                     </div>
 
@@ -454,7 +520,12 @@ export default function LiveWebcamPreview({
                     Status: Detected ({isHighConfidence ? "High Confidence" : "Low Confidence"}) &bull; Latency:{" "}
                     {recognitionResult.processing_time_ms ? `${recognitionResult.processing_time_ms} ms` : "--"}
                   </span>
-                  <span>Vocabulary: 10 Isolated ISL Signs</span>
+                  <span>
+                    Vocabulary:{" "}
+                    {recognitionMode === "sentence"
+                      ? `5 Continuous ISL Sentences (${sentenceModel === "bigru" ? "BiGRU Attention" : "DTW-KNN"})`
+                      : "10 Isolated ISL Signs"}
+                  </span>
                 </div>
               </>
             ) : null}
@@ -561,7 +632,9 @@ export default function LiveWebcamPreview({
                 }`}
                 data-testid="telemetry-sequence"
               >
-                {isSequenceReady || autoFrameCount >= autoCapacity
+                {autoState === RECOGNITION_STATE.NO_LANDMARKS
+                  ? "No valid landmarks"
+                  : isSequenceReady || autoFrameCount >= autoCapacity
                   ? "Ready for preprocessing"
                   : autoState === RECOGNITION_STATE.COLLECTING_SEQUENCE
                   ? "Collecting"
@@ -660,4 +733,6 @@ export default function LiveWebcamPreview({
       </aside>
     </div>
   );
-}
+});
+
+export default LiveWebcamPreview;

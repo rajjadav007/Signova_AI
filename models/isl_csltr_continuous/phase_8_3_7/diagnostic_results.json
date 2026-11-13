@@ -1,0 +1,229 @@
+{
+  "dataset_audit": {
+    "total_tokens_train": 1768,
+    "unique_glosses_train": 168,
+    "glosses_appearing_1x": 0,
+    "glosses_appearing_2x": 3,
+    "glosses_appearing_under_3x": 3,
+    "glosses_appearing_under_5x": 15,
+    "glosses_appearing_over_20x": 13,
+    "top_10_train_glosses": [
+      [
+        "YOU",
+        205
+      ],
+      [
+        "I",
+        161
+      ],
+      [
+        "DO",
+        78
+      ],
+      [
+        "WHAT",
+        46
+      ],
+      [
+        "NOT",
+        45
+      ],
+      [
+        "IT",
+        41
+      ],
+      [
+        "ME",
+        36
+      ],
+      [
+        "HOW",
+        30
+      ],
+      [
+        "HE",
+        27
+      ],
+      [
+        "HELP",
+        21
+      ]
+    ],
+    "bottom_10_train_glosses": [
+      [
+        "CAREER",
+        2
+      ],
+      [
+        "PLAN",
+        2
+      ],
+      [
+        "HAVE",
+        2
+      ],
+      [
+        "ANYTHING",
+        4
+      ],
+      [
+        "HAPPENED",
+        4
+      ],
+      [
+        "TRUTH",
+        4
+      ],
+      [
+        "NEVER",
+        4
+      ],
+      [
+        "ONWARDS",
+        4
+      ],
+      [
+        "NOW",
+        4
+      ],
+      [
+        "HAPPY",
+        4
+      ]
+    ],
+    "train_len_stats": {
+      "num_samples": 499,
+      "target_len_min": 1,
+      "target_len_mean": 3.5430861723446894,
+      "target_len_median": 3.0,
+      "target_len_max": 8,
+      "frame_len_min": 25,
+      "frame_len_mean": 98.40080160320642,
+      "frame_len_median": 97.0,
+      "frame_len_max": 192,
+      "subsampled_len_min": 13,
+      "subsampled_len_mean": 49.45891783567134,
+      "subsampled_len_max": 96,
+      "min_length_ratio_T_prime_over_S": 4.333333333333333,
+      "mean_length_ratio_T_prime_over_S": 15.482099914113942,
+      "ctc_length_valid_count": 499,
+      "ctc_length_valid_pct": 100.0,
+      "consecutive_identical_labels": 0
+    },
+    "val_len_stats": {
+      "num_samples": 85,
+      "target_len_min": 1,
+      "target_len_mean": 3.5764705882352943,
+      "target_len_median": 3.0,
+      "target_len_max": 8,
+      "frame_len_min": 58,
+      "frame_len_mean": 111.23529411764706,
+      "frame_len_median": 106.0,
+      "frame_len_max": 186,
+      "subsampled_len_min": 29,
+      "subsampled_len_mean": 55.84705882352941,
+      "subsampled_len_max": 93,
+      "min_length_ratio_T_prime_over_S": 6.333333333333333,
+      "mean_length_ratio_T_prime_over_S": 17.614607843137254,
+      "ctc_length_valid_count": 85,
+      "ctc_length_valid_pct": 100.0,
+      "consecutive_identical_labels": 0
+    },
+    "test_len_stats": {
+      "num_samples": 98,
+      "target_len_min": 1,
+      "target_len_mean": 3.561224489795918,
+      "target_len_median": 3.0,
+      "target_len_max": 8,
+      "frame_len_min": 25,
+      "frame_len_mean": 101.34693877551021,
+      "frame_len_median": 50.0,
+      "frame_len_max": 4500,
+      "subsampled_len_min": 13,
+      "subsampled_len_mean": 50.86734693877551,
+      "subsampled_len_max": 2250,
+      "min_length_ratio_T_prime_over_S": 1.8571428571428572,
+      "mean_length_ratio_T_prime_over_S": 13.527490281827017,
+      "ctc_length_valid_count": 98,
+      "ctc_length_valid_pct": 100.0,
+      "consecutive_identical_labels": 0
+    }
+  },
+  "baseline_posterior_audit": {
+    "posterior_stats": {
+      "mean": 0.9468463540538457,
+      "std": 0.16442845137733025,
+      "median": 0.9845436215400696,
+      "min": 0.004792420193552971,
+      "max": 0.9895409941673279,
+      "fraction_over_0_5": 0.9641879081525174,
+      "fraction_over_0_9": 0.9410153781335581,
+      "fraction_over_0_99": 0.0
+    },
+    "temporal_distribution": {
+      "Q1_0-20%": {
+        "mean_blank_posterior": 0.9151161652852028,
+        "blank_argmax_rate": 91.43730886850153,
+        "frame_count": 981
+      },
+      "Q2_20-40%": {
+        "mean_blank_posterior": 0.9861723341736472,
+        "blank_argmax_rate": 100.0,
+        "frame_count": 952
+      },
+      "Q3_40-60%": {
+        "mean_blank_posterior": 0.9858534653686871,
+        "blank_argmax_rate": 100.0,
+        "frame_count": 944
+      },
+      "Q4_60-80%": {
+        "mean_blank_posterior": 0.9857406506017476,
+        "blank_argmax_rate": 100.0,
+        "frame_count": 952
+      },
+      "Q5_80-100%": {
+        "mean_blank_posterior": 0.8595248929570857,
+        "blank_argmax_rate": 90.74074074074075,
+        "frame_count": 918
+      }
+    }
+  },
+  "baseline_prediction_audit": {
+    "pred_vs_ref_length": {
+      "mean_ref_length": 3.5764705882352943,
+      "mean_pred_length": 1.988235294117647,
+      "ratio_pred_to_ref": 0.555921052631579,
+      "empty_prediction_count": 0,
+      "empty_prediction_pct": 0.0
+    },
+    "hyp_gloss_counts": {
+      "I": 84,
+      "YOU": 85
+    },
+    "macro_f1": 0.0053,
+    "wer": 0.8257,
+    "exact_match_rate": 0.0,
+    "per_gloss_top_performers": {
+      "I": {
+        "tp": 27,
+        "fp": 57,
+        "fn": 4,
+        "ref_count": 31,
+        "hyp_count": 84,
+        "precision": 0.3214,
+        "recall": 0.871,
+        "f1": 0.4696
+      },
+      "YOU": {
+        "tp": 19,
+        "fp": 66,
+        "fn": 15,
+        "ref_count": 34,
+        "hyp_count": 85,
+        "precision": 0.2235,
+        "recall": 0.5588,
+        "f1": 0.3193
+      }
+    }
+  }
+}

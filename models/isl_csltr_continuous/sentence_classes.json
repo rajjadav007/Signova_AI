@@ -1,0 +1,1074 @@
+{
+  "num_classes": 101,
+  "classes": [
+    {
+      "sentence_id": 0,
+      "sentence": "are you free today",
+      "isl_gloss": "YOU FREE TODAY",
+      "tokens": [
+        "YOU",
+        "FREE",
+        "TODAY"
+      ]
+    },
+    {
+      "sentence_id": 1,
+      "sentence": "are you hiding something",
+      "isl_gloss": "YOU HIDE SOMETHING",
+      "tokens": [
+        "YOU",
+        "HIDE",
+        "SOMETHING"
+      ]
+    },
+    {
+      "sentence_id": 2,
+      "sentence": "bring water for me",
+      "isl_gloss": "BRING WATER ME",
+      "tokens": [
+        "BRING",
+        "WATER",
+        "ME"
+      ]
+    },
+    {
+      "sentence_id": 3,
+      "sentence": "can i help you",
+      "isl_gloss": "I HELP YOU",
+      "tokens": [
+        "I",
+        "HELP",
+        "YOU"
+      ]
+    },
+    {
+      "sentence_id": 4,
+      "sentence": "can you repeat that please",
+      "isl_gloss": "YOU REPEAT PLEASE",
+      "tokens": [
+        "YOU",
+        "REPEAT",
+        "PLEASE"
+      ]
+    },
+    {
+      "sentence_id": 5,
+      "sentence": "comb your hair",
+      "isl_gloss": "COMB YOU HAIR",
+      "tokens": [
+        "COMB",
+        "YOU",
+        "HAIR"
+      ]
+    },
+    {
+      "sentence_id": 6,
+      "sentence": "congratulations",
+      "isl_gloss": "CONGRATULATIIONS",
+      "tokens": [
+        "CONGRATULATIIONS"
+      ]
+    },
+    {
+      "sentence_id": 7,
+      "sentence": "could you please talk slower",
+      "isl_gloss": "YOU PLEASE TALK SLOWER",
+      "tokens": [
+        "YOU",
+        "PLEASE",
+        "TALK",
+        "SLOWER"
+      ]
+    },
+    {
+      "sentence_id": 8,
+      "sentence": "do me a favour",
+      "isl_gloss": "DO ME FAVOUR",
+      "tokens": [
+        "DO",
+        "ME",
+        "FAVOUR"
+      ]
+    },
+    {
+      "sentence_id": 9,
+      "sentence": "do not abuse him",
+      "isl_gloss": "DONOT ABUSE HIM",
+      "tokens": [
+        "DONOT",
+        "ABUSE",
+        "HIM"
+      ]
+    },
+    {
+      "sentence_id": 10,
+      "sentence": "do not be stubborn",
+      "isl_gloss": "DONOT BE STUBBORN",
+      "tokens": [
+        "DONOT",
+        "BE",
+        "STUBBORN"
+      ]
+    },
+    {
+      "sentence_id": 11,
+      "sentence": "do not hurt me",
+      "isl_gloss": "DONOT HURT ME",
+      "tokens": [
+        "DONOT",
+        "HURT",
+        "ME"
+      ]
+    },
+    {
+      "sentence_id": 12,
+      "sentence": "do not make me angry",
+      "isl_gloss": "DO NOT MAKE ME ANGRY",
+      "tokens": [
+        "DO",
+        "NOT",
+        "MAKE",
+        "ME",
+        "ANGRY"
+      ]
+    },
+    {
+      "sentence_id": 13,
+      "sentence": "do not take it to the heart",
+      "isl_gloss": "DO NOT TAKE IT HEART",
+      "tokens": [
+        "DO",
+        "NOT",
+        "TAKE",
+        "IT",
+        "HEART"
+      ]
+    },
+    {
+      "sentence_id": 14,
+      "sentence": "do not worry",
+      "isl_gloss": "DO NOT WORRY",
+      "tokens": [
+        "DO",
+        "NOT",
+        "WORRY"
+      ]
+    },
+    {
+      "sentence_id": 15,
+      "sentence": "do you need something",
+      "isl_gloss": "DO YOU NEED SOMETHING",
+      "tokens": [
+        "DO",
+        "YOU",
+        "NEED",
+        "SOMETHING"
+      ]
+    },
+    {
+      "sentence_id": 16,
+      "sentence": "go and sleep",
+      "isl_gloss": "GO SLEEP",
+      "tokens": [
+        "GO",
+        "SLEEP"
+      ]
+    },
+    {
+      "sentence_id": 17,
+      "sentence": "had your food",
+      "isl_gloss": "YOUR FOOD",
+      "tokens": [
+        "YOUR",
+        "FOOD"
+      ]
+    },
+    {
+      "sentence_id": 18,
+      "sentence": "he came by train",
+      "isl_gloss": "HE CAME TRAIN",
+      "tokens": [
+        "HE",
+        "CAME",
+        "TRAIN"
+      ]
+    },
+    {
+      "sentence_id": 19,
+      "sentence": "He is going into the room",
+      "isl_gloss": "HE GO  INTO  ROOM",
+      "tokens": [
+        "HE",
+        "GO",
+        "INTO",
+        "ROOM"
+      ]
+    },
+    {
+      "sentence_id": 20,
+      "sentence": "he is on the way",
+      "isl_gloss": "HE ON WAY",
+      "tokens": [
+        "HE",
+        "ON",
+        "WAY"
+      ]
+    },
+    {
+      "sentence_id": 21,
+      "sentence": "he she is my friend",
+      "isl_gloss": "HE SHE MY FRIEND",
+      "tokens": [
+        "HE",
+        "SHE",
+        "MY",
+        "FRIEND"
+      ]
+    },
+    {
+      "sentence_id": 22,
+      "sentence": "he would be coming today",
+      "isl_gloss": "HE COMING TODAY",
+      "tokens": [
+        "HE",
+        "COMING",
+        "TODAY"
+      ]
+    },
+    {
+      "sentence_id": 23,
+      "sentence": "help me",
+      "isl_gloss": "HELP ME",
+      "tokens": [
+        "HELP",
+        "ME"
+      ]
+    },
+    {
+      "sentence_id": 24,
+      "sentence": "hi how are you",
+      "isl_gloss": "HI HOW YOU",
+      "tokens": [
+        "HI",
+        "HOW",
+        "YOU"
+      ]
+    },
+    {
+      "sentence_id": 25,
+      "sentence": "how are things",
+      "isl_gloss": "HOW THINGS",
+      "tokens": [
+        "HOW",
+        "THINGS"
+      ]
+    },
+    {
+      "sentence_id": 26,
+      "sentence": "how can i help you",
+      "isl_gloss": "HOW I HELP YOU",
+      "tokens": [
+        "HOW",
+        "I",
+        "HELP",
+        "YOU"
+      ]
+    },
+    {
+      "sentence_id": 27,
+      "sentence": "how can i trust you",
+      "isl_gloss": "HOW I TRUST YOU",
+      "tokens": [
+        "HOW",
+        "I",
+        "TRUST",
+        "YOU"
+      ]
+    },
+    {
+      "sentence_id": 28,
+      "sentence": "how dare you",
+      "isl_gloss": "HOW DARE YOU",
+      "tokens": [
+        "HOW",
+        "DARE",
+        "YOU"
+      ]
+    },
+    {
+      "sentence_id": 29,
+      "sentence": "how old are you",
+      "isl_gloss": "HOW OLD YOU",
+      "tokens": [
+        "HOW",
+        "OLD",
+        "YOU"
+      ]
+    },
+    {
+      "sentence_id": 30,
+      "sentence": "i am (age)",
+      "isl_gloss": "I (AGE)",
+      "tokens": [
+        "I",
+        "(AGE)"
+      ]
+    },
+    {
+      "sentence_id": 31,
+      "sentence": "i am afraid of that",
+      "isl_gloss": "I AFRAID THAT",
+      "tokens": [
+        "I",
+        "AFRAID",
+        "THAT"
+      ]
+    },
+    {
+      "sentence_id": 32,
+      "sentence": "i am crying",
+      "isl_gloss": "I CRY",
+      "tokens": [
+        "I",
+        "CRY"
+      ]
+    },
+    {
+      "sentence_id": 33,
+      "sentence": "i am feeling bored",
+      "isl_gloss": "I FEELING BORED",
+      "tokens": [
+        "I",
+        "FEELING",
+        "BORED"
+      ]
+    },
+    {
+      "sentence_id": 34,
+      "sentence": "i am feeling cold",
+      "isl_gloss": "I FEELING COLD",
+      "tokens": [
+        "I",
+        "FEELING",
+        "COLD"
+      ]
+    },
+    {
+      "sentence_id": 35,
+      "sentence": "i am fine. thank you sir",
+      "isl_gloss": "I FINE. THANK YOU SIR",
+      "tokens": [
+        "I",
+        "FINE",
+        "THANK",
+        "YOU",
+        "SIR"
+      ]
+    },
+    {
+      "sentence_id": 36,
+      "sentence": "i am hungry",
+      "isl_gloss": "I HUNGRY",
+      "tokens": [
+        "I",
+        "HUNGRY"
+      ]
+    },
+    {
+      "sentence_id": 37,
+      "sentence": "i am in dilemma what to do",
+      "isl_gloss": "I IN DILEMMA WHAT TO DO",
+      "tokens": [
+        "I",
+        "IN",
+        "DILEMMA",
+        "WHAT",
+        "TO",
+        "DO"
+      ]
+    },
+    {
+      "sentence_id": 38,
+      "sentence": "i am not really sure",
+      "isl_gloss": "I NOT REALLY SURE",
+      "tokens": [
+        "I",
+        "NOT",
+        "REALLY",
+        "SURE"
+      ]
+    },
+    {
+      "sentence_id": 39,
+      "sentence": "i am really grateful",
+      "isl_gloss": "I REALLY GRATEFUL",
+      "tokens": [
+        "I",
+        "REALLY",
+        "GRATEFUL"
+      ]
+    },
+    {
+      "sentence_id": 40,
+      "sentence": "i am sitting in the class",
+      "isl_gloss": "I SITTING IN THE CLASS",
+      "tokens": [
+        "I",
+        "SITTING",
+        "IN",
+        "THE",
+        "CLASS"
+      ]
+    },
+    {
+      "sentence_id": 41,
+      "sentence": "i am so sorry to hear that",
+      "isl_gloss": "I AM SO SORRY TO HEAR THAT",
+      "tokens": [
+        "I",
+        "AM",
+        "SO",
+        "SORRY",
+        "TO",
+        "HEAR",
+        "THAT"
+      ]
+    },
+    {
+      "sentence_id": 42,
+      "sentence": "i am suffering from fever",
+      "isl_gloss": "I SUFFERING FROM FEVER",
+      "tokens": [
+        "I",
+        "SUFFERING",
+        "FROM",
+        "FEVER"
+      ]
+    },
+    {
+      "sentence_id": 43,
+      "sentence": "i am tired",
+      "isl_gloss": "I TIRED",
+      "tokens": [
+        "I",
+        "TIRED"
+      ]
+    },
+    {
+      "sentence_id": 44,
+      "sentence": "i am very happy",
+      "isl_gloss": "I VERY HAPPY",
+      "tokens": [
+        "I",
+        "VERY",
+        "HAPPY"
+      ]
+    },
+    {
+      "sentence_id": 45,
+      "sentence": "i can not help you there",
+      "isl_gloss": "I NOT HELP YOU THERE",
+      "tokens": [
+        "I",
+        "NOT",
+        "HELP",
+        "YOU",
+        "THERE"
+      ]
+    },
+    {
+      "sentence_id": 46,
+      "sentence": "i do not agree",
+      "isl_gloss": "I DONOT AGREE",
+      "tokens": [
+        "I",
+        "DONOT",
+        "AGREE"
+      ]
+    },
+    {
+      "sentence_id": 47,
+      "sentence": "i do not like it",
+      "isl_gloss": "I DO NOT LIKE IT",
+      "tokens": [
+        "I",
+        "DO",
+        "NOT",
+        "LIKE",
+        "IT"
+      ]
+    },
+    {
+      "sentence_id": 48,
+      "sentence": "i do not mean it",
+      "isl_gloss": "I DO NOT MEAN IT",
+      "tokens": [
+        "I",
+        "DO",
+        "NOT",
+        "MEAN",
+        "IT"
+      ]
+    },
+    {
+      "sentence_id": 49,
+      "sentence": "i dont agree",
+      "isl_gloss": "I DONT AGREE",
+      "tokens": [
+        "I",
+        "DONT",
+        "AGREE"
+      ]
+    },
+    {
+      "sentence_id": 50,
+      "sentence": "i enjoyed a lot",
+      "isl_gloss": "I ENJOYED A LOT",
+      "tokens": [
+        "I",
+        "ENJOYED",
+        "A",
+        "LOT"
+      ]
+    },
+    {
+      "sentence_id": 51,
+      "sentence": "i got hurt",
+      "isl_gloss": "I GOT HURT",
+      "tokens": [
+        "I",
+        "GOT",
+        "HURT"
+      ]
+    },
+    {
+      "sentence_id": 52,
+      "sentence": "i like you i love you",
+      "isl_gloss": "I LIKE YOU I LOVE YOU",
+      "tokens": [
+        "I",
+        "LIKE",
+        "YOU",
+        "I",
+        "LOVE",
+        "YOU"
+      ]
+    },
+    {
+      "sentence_id": 53,
+      "sentence": "i need water",
+      "isl_gloss": "I NEED WATER",
+      "tokens": [
+        "I",
+        "NEED",
+        "WATER"
+      ]
+    },
+    {
+      "sentence_id": 54,
+      "sentence": "i promise",
+      "isl_gloss": "I PROMISE",
+      "tokens": [
+        "I",
+        "PROMISE"
+      ]
+    },
+    {
+      "sentence_id": 55,
+      "sentence": "i really appreciate it",
+      "isl_gloss": "I REALLY APPRECIATE IT",
+      "tokens": [
+        "I",
+        "REALLY",
+        "APPRECIATE",
+        "IT"
+      ]
+    },
+    {
+      "sentence_id": 56,
+      "sentence": "i somehow got to know about it",
+      "isl_gloss": "I SOMEHOW GOT KNOW ABOUT IT",
+      "tokens": [
+        "I",
+        "SOMEHOW",
+        "GOT",
+        "KNOW",
+        "ABOUT",
+        "IT"
+      ]
+    },
+    {
+      "sentence_id": 57,
+      "sentence": "i was stopped by some one",
+      "isl_gloss": "I STOPPED BY SOMEONE",
+      "tokens": [
+        "I",
+        "STOPPED",
+        "BY",
+        "SOMEONE"
+      ]
+    },
+    {
+      "sentence_id": 58,
+      "sentence": "it does not make any difference to me",
+      "isl_gloss": "IT DO NOT MAKE ANY DIFFERENCE TO ME",
+      "tokens": [
+        "IT",
+        "DO",
+        "NOT",
+        "MAKE",
+        "ANY",
+        "DIFFERENCE",
+        "TO",
+        "ME"
+      ]
+    },
+    {
+      "sentence_id": 59,
+      "sentence": "it was nice chatting with you",
+      "isl_gloss": "IT NICE CHAT WITH YOU",
+      "tokens": [
+        "IT",
+        "NICE",
+        "CHAT",
+        "WITH",
+        "YOU"
+      ]
+    },
+    {
+      "sentence_id": 60,
+      "sentence": "let him take time",
+      "isl_gloss": "LET HIM TAKE TIME",
+      "tokens": [
+        "LET",
+        "HIM",
+        "TAKE",
+        "TIME"
+      ]
+    },
+    {
+      "sentence_id": 61,
+      "sentence": "my name is xxxxxxxx",
+      "isl_gloss": "MY NAME XXXXXXXX",
+      "tokens": [
+        "MY",
+        "NAME",
+        "XXXXXXXX"
+      ]
+    },
+    {
+      "sentence_id": 62,
+      "sentence": "nice to meet you",
+      "isl_gloss": "NICE MEET YOU",
+      "tokens": [
+        "NICE",
+        "MEET",
+        "YOU"
+      ]
+    },
+    {
+      "sentence_id": 63,
+      "sentence": "No need to worry dont worry",
+      "isl_gloss": "NO NEED WORRY DONT WORRY",
+      "tokens": [
+        "NO",
+        "NEED",
+        "WORRY",
+        "DONT",
+        "WORRY"
+      ]
+    },
+    {
+      "sentence_id": 64,
+      "sentence": "now onwards he will never hurt you",
+      "isl_gloss": "NOW ONWARDS HE NEVER HURT YOU",
+      "tokens": [
+        "NOW",
+        "ONWARDS",
+        "HE",
+        "NEVER",
+        "HURT",
+        "YOU"
+      ]
+    },
+    {
+      "sentence_id": 65,
+      "sentence": "pour some more water into the glass",
+      "isl_gloss": "POUR SOME MORE WATER INTO THE GLASS",
+      "tokens": [
+        "POUR",
+        "SOME",
+        "MORE",
+        "WATER",
+        "INTO",
+        "THE",
+        "GLASS"
+      ]
+    },
+    {
+      "sentence_id": 66,
+      "sentence": "prepare the bed",
+      "isl_gloss": "PREPARE BED",
+      "tokens": [
+        "PREPARE",
+        "BED"
+      ]
+    },
+    {
+      "sentence_id": 67,
+      "sentence": "serve the food",
+      "isl_gloss": "SERVE FOOD",
+      "tokens": [
+        "SERVE",
+        "FOOD"
+      ]
+    },
+    {
+      "sentence_id": 68,
+      "sentence": "shall we go outside",
+      "isl_gloss": "WE GO OUTSIDE",
+      "tokens": [
+        "WE",
+        "GO",
+        "OUTSIDE"
+      ]
+    },
+    {
+      "sentence_id": 69,
+      "sentence": "speak softly",
+      "isl_gloss": "SPEAK SOFTLY",
+      "tokens": [
+        "SPEAK",
+        "SOFTLY"
+      ]
+    },
+    {
+      "sentence_id": 70,
+      "sentence": "take care of yourself",
+      "isl_gloss": "TAKE CARE OF YOURSELF",
+      "tokens": [
+        "TAKE",
+        "CARE",
+        "OF",
+        "YOURSELF"
+      ]
+    },
+    {
+      "sentence_id": 71,
+      "sentence": "tell me truth",
+      "isl_gloss": "TELL ME TRUTH",
+      "tokens": [
+        "TELL",
+        "ME",
+        "TRUTH"
+      ]
+    },
+    {
+      "sentence_id": 72,
+      "sentence": "thank you so much",
+      "isl_gloss": "THANK YOU SO MUCH",
+      "tokens": [
+        "THANK",
+        "YOU",
+        "SO",
+        "MUCH"
+      ]
+    },
+    {
+      "sentence_id": 73,
+      "sentence": "that is so kind of you",
+      "isl_gloss": "THAT KIND YOU",
+      "tokens": [
+        "THAT",
+        "KIND",
+        "YOU"
+      ]
+    },
+    {
+      "sentence_id": 74,
+      "sentence": "This place is beautiful",
+      "isl_gloss": "THIS PLACE BEAUTIFUL",
+      "tokens": [
+        "THIS",
+        "PLACE",
+        "BEAUTIFUL"
+      ]
+    },
+    {
+      "sentence_id": 75,
+      "sentence": "try to understand",
+      "isl_gloss": "TRY TO UNDERSTAND",
+      "tokens": [
+        "TRY",
+        "TO",
+        "UNDERSTAND"
+      ]
+    },
+    {
+      "sentence_id": 76,
+      "sentence": "turn on light turn off light",
+      "isl_gloss": "TURN ON LIGHT TURN OFF LIGHT",
+      "tokens": [
+        "TURN",
+        "ON",
+        "LIGHT",
+        "TURN",
+        "OFF",
+        "LIGHT"
+      ]
+    },
+    {
+      "sentence_id": 77,
+      "sentence": "we are all with you",
+      "isl_gloss": "WE ALL WITH YOU",
+      "tokens": [
+        "WE",
+        "ALL",
+        "WITH",
+        "YOU"
+      ]
+    },
+    {
+      "sentence_id": 78,
+      "sentence": "wear the shirt",
+      "isl_gloss": "WEAR SHIRT",
+      "tokens": [
+        "WEAR",
+        "SHIRT"
+      ]
+    },
+    {
+      "sentence_id": 79,
+      "sentence": "what are you doing",
+      "isl_gloss": "WHAT YOU DO",
+      "tokens": [
+        "WHAT",
+        "YOU",
+        "DO"
+      ]
+    },
+    {
+      "sentence_id": 80,
+      "sentence": "what did you tell him",
+      "isl_gloss": "WHAT YOU TELL HIM",
+      "tokens": [
+        "WHAT",
+        "YOU",
+        "TELL",
+        "HIM"
+      ]
+    },
+    {
+      "sentence_id": 81,
+      "sentence": "what do you do",
+      "isl_gloss": "WHAT YOU DO",
+      "tokens": [
+        "WHAT",
+        "YOU",
+        "DO"
+      ]
+    },
+    {
+      "sentence_id": 82,
+      "sentence": "what do you think",
+      "isl_gloss": "WHAT DO YOU THINK",
+      "tokens": [
+        "WHAT",
+        "DO",
+        "YOU",
+        "THINK"
+      ]
+    },
+    {
+      "sentence_id": 83,
+      "sentence": "what do you want to become",
+      "isl_gloss": "WHAT DO YOU WANT BECOME",
+      "tokens": [
+        "WHAT",
+        "DO",
+        "YOU",
+        "WANT",
+        "BECOME"
+      ]
+    },
+    {
+      "sentence_id": 84,
+      "sentence": "what happened",
+      "isl_gloss": "WHAT HAPPENED",
+      "tokens": [
+        "WHAT",
+        "HAPPENED"
+      ]
+    },
+    {
+      "sentence_id": 85,
+      "sentence": "what have you planned for your career",
+      "isl_gloss": "WHAT HAVE YOU PLAN YOUR CAREER",
+      "tokens": [
+        "WHAT",
+        "HAVE",
+        "YOU",
+        "PLAN",
+        "YOUR",
+        "CAREER"
+      ]
+    },
+    {
+      "sentence_id": 86,
+      "sentence": "what is your phone number",
+      "isl_gloss": "WHAT YOUR PHONE NUMBER",
+      "tokens": [
+        "WHAT",
+        "YOUR",
+        "PHONE",
+        "NUMBER"
+      ]
+    },
+    {
+      "sentence_id": 87,
+      "sentence": "what you want",
+      "isl_gloss": "WHAT YOU WANT",
+      "tokens": [
+        "WHAT",
+        "YOU",
+        "WANT"
+      ]
+    },
+    {
+      "sentence_id": 88,
+      "sentence": "when will the train leave",
+      "isl_gloss": "WHEN TRAIN LEAVE",
+      "tokens": [
+        "WHEN",
+        "TRAIN",
+        "LEAVE"
+      ]
+    },
+    {
+      "sentence_id": 89,
+      "sentence": "where are you from",
+      "isl_gloss": "WHERE YOU FROM",
+      "tokens": [
+        "WHERE",
+        "YOU",
+        "FROM"
+      ]
+    },
+    {
+      "sentence_id": 90,
+      "sentence": "which college school are you from",
+      "isl_gloss": "WHICH COLLEGE SCHOOL YOU FROM",
+      "tokens": [
+        "WHICH",
+        "COLLEGE",
+        "SCHOOL",
+        "YOU",
+        "FROM"
+      ]
+    },
+    {
+      "sentence_id": 91,
+      "sentence": "who are you",
+      "isl_gloss": "WHO YOU",
+      "tokens": [
+        "WHO",
+        "YOU"
+      ]
+    },
+    {
+      "sentence_id": 92,
+      "sentence": "why are you angry",
+      "isl_gloss": "WHY YOU ANGRY",
+      "tokens": [
+        "WHY",
+        "YOU",
+        "ANGRY"
+      ]
+    },
+    {
+      "sentence_id": 93,
+      "sentence": "why are you crying",
+      "isl_gloss": "WHY YOU CRY",
+      "tokens": [
+        "WHY",
+        "YOU",
+        "CRY"
+      ]
+    },
+    {
+      "sentence_id": 94,
+      "sentence": "why are you disappointed",
+      "isl_gloss": "WHY YOU DISAPPOINTED",
+      "tokens": [
+        "WHY",
+        "YOU",
+        "DISAPPOINTED"
+      ]
+    },
+    {
+      "sentence_id": 95,
+      "sentence": "you are bad",
+      "isl_gloss": "YOU BAD",
+      "tokens": [
+        "YOU",
+        "BAD"
+      ]
+    },
+    {
+      "sentence_id": 96,
+      "sentence": "you are good",
+      "isl_gloss": "YOU GOOD",
+      "tokens": [
+        "YOU",
+        "GOOD"
+      ]
+    },
+    {
+      "sentence_id": 97,
+      "sentence": "you are welcome",
+      "isl_gloss": "YOU WELCOME",
+      "tokens": [
+        "YOU",
+        "WELCOME"
+      ]
+    },
+    {
+      "sentence_id": 98,
+      "sentence": "you can do it",
+      "isl_gloss": "YOU DO IT",
+      "tokens": [
+        "YOU",
+        "DO",
+        "IT"
+      ]
+    },
+    {
+      "sentence_id": 99,
+      "sentence": "you do anything, i do not care",
+      "isl_gloss": "YOU DO ANYTHING, I DO NOT CARE",
+      "tokens": [
+        "YOU",
+        "DO",
+        "ANYTHING",
+        "I",
+        "DO",
+        "NOT",
+        "CARE"
+      ]
+    },
+    {
+      "sentence_id": 100,
+      "sentence": "you need a medicine, take this one",
+      "isl_gloss": "YOU NEED A MEDICINE, TAKE THIS ONE",
+      "tokens": [
+        "YOU",
+        "NEED",
+        "A",
+        "MEDICINE",
+        "TAKE",
+        "THIS",
+        "ONE"
+      ]
+    }
+  ]
+}

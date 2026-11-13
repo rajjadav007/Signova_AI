@@ -1,0 +1,9 @@
+{
+  "input_dim": 300,
+  "proj_dim": 128,
+  "hidden_dim": 128,
+  "num_layers": 2,
+  "num_classes": 171,
+  "dropout": 0.3,
+  "total_parameters": 626859
+}

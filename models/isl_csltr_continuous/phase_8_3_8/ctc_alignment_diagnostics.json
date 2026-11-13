@@ -1,0 +1,95 @@
+{
+  "description": "Phase 8.3.8 Step B CTC Alignment Investigation",
+  "conv1d_formula_verification": {
+    "baseline_stride_2": {
+      "kernel_size": 3,
+      "stride": 2,
+      "padding": 1,
+      "dilation": 1,
+      "formula": "floor((T + 2*1 - 1*(3-1) - 1)/2) + 1",
+      "mismatches_in_191_tests": 0,
+      "verified": true
+    },
+    "alternative_stride_1": {
+      "kernel_size": 3,
+      "stride": 1,
+      "padding": 1,
+      "dilation": 1,
+      "formula": "floor((T + 2*1 - 1*(3-1) - 1)/1) + 1",
+      "mismatches_in_191_tests": 0,
+      "verified": true
+    }
+  },
+  "sequence_lengths": {
+    "t_prime_min": 29,
+    "t_prime_mean": 55.85,
+    "t_prime_max": 93,
+    "target_length_min": 1,
+    "target_length_mean": 3.58,
+    "target_length_max": 8,
+    "ratio_t_prime_to_s_min": 6.33,
+    "ratio_t_prime_to_s_mean": 17.61,
+    "ratio_t_prime_to_s_max": 46.5,
+    "ctc_feasibility_violation_count": 0
+  },
+  "temporal_quintile_emissions": {
+    "Q1": {
+      "total_frames": 981,
+      "non_blank_emissions": 84,
+      "non_blank_rate_pct": 8.56,
+      "mean_blank_posterior": 0.9151
+    },
+    "Q2": {
+      "total_frames": 952,
+      "non_blank_emissions": 0,
+      "non_blank_rate_pct": 0.0,
+      "mean_blank_posterior": 0.9862
+    },
+    "Q3": {
+      "total_frames": 944,
+      "non_blank_emissions": 0,
+      "non_blank_rate_pct": 0.0,
+      "mean_blank_posterior": 0.9859
+    },
+    "Q4": {
+      "total_frames": 952,
+      "non_blank_emissions": 0,
+      "non_blank_rate_pct": 0.0,
+      "mean_blank_posterior": 0.9857
+    },
+    "Q5": {
+      "total_frames": 918,
+      "non_blank_emissions": 85,
+      "non_blank_rate_pct": 9.26,
+      "mean_blank_posterior": 0.8595
+    }
+  },
+  "emitted_gloss_distribution": {
+    "I": 84,
+    "YOU": 85
+  },
+  "static_shortcut_patterns": [
+    {
+      "sequence": [
+        "I",
+        "YOU"
+      ],
+      "count": 84,
+      "percentage": 98.82
+    },
+    {
+      "sequence": [
+        "YOU"
+      ],
+      "count": 1,
+      "percentage": 1.18
+    }
+  ],
+  "key_findings": [
+    "Conv1D formula floor((T + 2P - K)/S) + 1 exactly matches PyTorch Conv1d output across all tested sequence lengths (0 mismatches).",
+    "Zero CTC feasibility violations (min ratio T'/S = 6.33 > 1.0).",
+    "Non-blank emissions in middle 60% (Q2, Q3, Q4) = 0 (0.0%).",
+    "100% of non-blank emissions are restricted to Q1 (84) and Q5 (85).",
+    "Static shortcut confirmed: 84 out of 85 validation sentences (98.82%) predicted identical degenerate sequence ['I', 'YOU']."
+  ]
+}

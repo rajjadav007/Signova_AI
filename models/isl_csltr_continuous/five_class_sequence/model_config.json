@@ -1,0 +1,10 @@
+{
+  "model_type": "FiveClassBiGRUAttentionModel",
+  "input_dim": 300,
+  "proj_dim": 128,
+  "hidden_dim": 64,
+  "num_layers": 1,
+  "num_classes": 5,
+  "dropout": 0.3,
+  "parameter_count": 130181
+}

@@ -1,0 +1,1472 @@
+[
+  {
+    "video_id": "s000_signer2_are_you_free_today__2_",
+    "signer_id": 2,
+    "sentence": "are you free today",
+    "true_label": 0,
+    "predicted_label": 6,
+    "top3_labels": [
+      6,
+      34,
+      51
+    ],
+    "confidence": 0.0374,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s001_signer2_are_you_hiding_something__2_",
+    "signer_id": 2,
+    "sentence": "are you hiding something",
+    "true_label": 1,
+    "predicted_label": 3,
+    "top3_labels": [
+      3,
+      40,
+      67
+    ],
+    "confidence": 0.0395,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s002_signer2_bring_water_for_me__6_",
+    "signer_id": 2,
+    "sentence": "bring water for me",
+    "true_label": 2,
+    "predicted_label": 69,
+    "top3_labels": [
+      69,
+      41,
+      56
+    ],
+    "confidence": 0.0448,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s003_signer2_can_i_help_you__2_",
+    "signer_id": 2,
+    "sentence": "can i help you",
+    "true_label": 3,
+    "predicted_label": 23,
+    "top3_labels": [
+      23,
+      11,
+      13
+    ],
+    "confidence": 0.0302,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s004_signer2_can_you_repeat_that_please__7_",
+    "signer_id": 2,
+    "sentence": "can you repeat that please",
+    "true_label": 4,
+    "predicted_label": 32,
+    "top3_labels": [
+      32,
+      17,
+      91
+    ],
+    "confidence": 0.0411,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s005_signer2_comb_your_hair__2_",
+    "signer_id": 2,
+    "sentence": "comb your hair",
+    "true_label": 5,
+    "predicted_label": 66,
+    "top3_labels": [
+      66,
+      59,
+      3
+    ],
+    "confidence": 0.0377,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s006_signer2_congratulations",
+    "signer_id": 2,
+    "sentence": "congratulations",
+    "true_label": 6,
+    "predicted_label": 11,
+    "top3_labels": [
+      11,
+      23,
+      6
+    ],
+    "confidence": 0.031,
+    "is_correct": false,
+    "is_top3_correct": true
+  },
+  {
+    "video_id": "s007_signer2_could_you_please_talk_slower__1_",
+    "signer_id": 2,
+    "sentence": "could you please talk slower",
+    "true_label": 7,
+    "predicted_label": 43,
+    "top3_labels": [
+      43,
+      33,
+      37
+    ],
+    "confidence": 0.022,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s008_signer2_do_me_a_favour",
+    "signer_id": 2,
+    "sentence": "do me a favour",
+    "true_label": 8,
+    "predicted_label": 66,
+    "top3_labels": [
+      66,
+      23,
+      67
+    ],
+    "confidence": 0.0234,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s009_signer2_do_not_abuse_him__2_",
+    "signer_id": 2,
+    "sentence": "do not abuse him",
+    "true_label": 9,
+    "predicted_label": 67,
+    "top3_labels": [
+      67,
+      3,
+      60
+    ],
+    "confidence": 0.0281,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s010_signer2_do_not_be_stubborn__2_",
+    "signer_id": 2,
+    "sentence": "do not be stubborn",
+    "true_label": 10,
+    "predicted_label": 66,
+    "top3_labels": [
+      66,
+      60,
+      78
+    ],
+    "confidence": 0.0405,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s011_signer2_do_not_hurt_me__2_",
+    "signer_id": 2,
+    "sentence": "do not hurt me",
+    "true_label": 11,
+    "predicted_label": 34,
+    "top3_labels": [
+      34,
+      32,
+      6
+    ],
+    "confidence": 0.0369,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s012_signer2_do_not_make_me_angry__2_",
+    "signer_id": 2,
+    "sentence": "do not make me angry",
+    "true_label": 12,
+    "predicted_label": 80,
+    "top3_labels": [
+      80,
+      91,
+      17
+    ],
+    "confidence": 0.0403,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s013_signer2_do_not_take_it_to_the_heart__2_",
+    "signer_id": 2,
+    "sentence": "do not take it to the heart",
+    "true_label": 13,
+    "predicted_label": 3,
+    "top3_labels": [
+      3,
+      60,
+      67
+    ],
+    "confidence": 0.0354,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s014_signer2_do_not_worry__2_",
+    "signer_id": 2,
+    "sentence": "do not worry",
+    "true_label": 14,
+    "predicted_label": 3,
+    "top3_labels": [
+      3,
+      66,
+      60
+    ],
+    "confidence": 0.0418,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s015_signer2_do_you_need_something__2_",
+    "signer_id": 2,
+    "sentence": "do you need something",
+    "true_label": 15,
+    "predicted_label": 3,
+    "top3_labels": [
+      3,
+      66,
+      60
+    ],
+    "confidence": 0.0385,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s016_signer2_go_and_sleep__2_",
+    "signer_id": 2,
+    "sentence": "go and sleep",
+    "true_label": 16,
+    "predicted_label": 66,
+    "top3_labels": [
+      66,
+      59,
+      50
+    ],
+    "confidence": 0.0292,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s017_signer2_had_your_food__2_",
+    "signer_id": 2,
+    "sentence": "had your food",
+    "true_label": 17,
+    "predicted_label": 32,
+    "top3_labels": [
+      32,
+      17,
+      91
+    ],
+    "confidence": 0.0427,
+    "is_correct": false,
+    "is_top3_correct": true
+  },
+  {
+    "video_id": "s018_signer2_he_came_by_train",
+    "signer_id": 2,
+    "sentence": "he came by train",
+    "true_label": 18,
+    "predicted_label": 59,
+    "top3_labels": [
+      59,
+      67,
+      3
+    ],
+    "confidence": 0.0299,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s019_signer2_he_is_going_into_the_room__2_",
+    "signer_id": 2,
+    "sentence": "He is going into the room",
+    "true_label": 19,
+    "predicted_label": 66,
+    "top3_labels": [
+      66,
+      59,
+      3
+    ],
+    "confidence": 0.0418,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s020_signer2_he_is_on_the_way__2_",
+    "signer_id": 2,
+    "sentence": "he is on the way",
+    "true_label": 20,
+    "predicted_label": 67,
+    "top3_labels": [
+      67,
+      3,
+      59
+    ],
+    "confidence": 0.028,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s021_signer2_heshe_is_my_friend",
+    "signer_id": 2,
+    "sentence": "he she is my friend",
+    "true_label": 21,
+    "predicted_label": 3,
+    "top3_labels": [
+      3,
+      67,
+      60
+    ],
+    "confidence": 0.0359,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s022_signer2_he_would_be_coming_today__2_",
+    "signer_id": 2,
+    "sentence": "he would be coming today",
+    "true_label": 22,
+    "predicted_label": 75,
+    "top3_labels": [
+      75,
+      84,
+      73
+    ],
+    "confidence": 0.0211,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s022_signer2_today__2_",
+    "signer_id": 2,
+    "sentence": "he would be coming today",
+    "true_label": 22,
+    "predicted_label": 60,
+    "top3_labels": [
+      60,
+      3,
+      40
+    ],
+    "confidence": 0.0452,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s023_signer2_help_me__6_",
+    "signer_id": 2,
+    "sentence": "help me",
+    "true_label": 23,
+    "predicted_label": 3,
+    "top3_labels": [
+      3,
+      60,
+      40
+    ],
+    "confidence": 0.0348,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s024_signer2_hi_how_are_you__1_",
+    "signer_id": 2,
+    "sentence": "hi how are you",
+    "true_label": 24,
+    "predicted_label": 80,
+    "top3_labels": [
+      80,
+      27,
+      94
+    ],
+    "confidence": 0.0288,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s025_signer2_how_are_things__2_",
+    "signer_id": 2,
+    "sentence": "how are things",
+    "true_label": 25,
+    "predicted_label": 11,
+    "top3_labels": [
+      11,
+      23,
+      13
+    ],
+    "confidence": 0.0286,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s026_signer2_how_can_i_help_you__1_",
+    "signer_id": 2,
+    "sentence": "how can i help you",
+    "true_label": 26,
+    "predicted_label": 52,
+    "top3_labels": [
+      52,
+      66,
+      50
+    ],
+    "confidence": 0.022,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s027_signer2_how_can_i_trust_you__2_",
+    "signer_id": 2,
+    "sentence": "how can i trust you",
+    "true_label": 27,
+    "predicted_label": 67,
+    "top3_labels": [
+      67,
+      89,
+      90
+    ],
+    "confidence": 0.0271,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s028_signer2_how_dare_you__2_",
+    "signer_id": 2,
+    "sentence": "how dare you",
+    "true_label": 28,
+    "predicted_label": 32,
+    "top3_labels": [
+      32,
+      17,
+      80
+    ],
+    "confidence": 0.0386,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s029_signer2_how_old_are_you__1_",
+    "signer_id": 2,
+    "sentence": "how old are you",
+    "true_label": 29,
+    "predicted_label": 66,
+    "top3_labels": [
+      66,
+      60,
+      3
+    ],
+    "confidence": 0.0336,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s031_signer2_i_am_afraid_of_that",
+    "signer_id": 2,
+    "sentence": "i am afraid of that",
+    "true_label": 31,
+    "predicted_label": 6,
+    "top3_labels": [
+      6,
+      27,
+      34
+    ],
+    "confidence": 0.027,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s032_signer2_i_am_crying",
+    "signer_id": 2,
+    "sentence": "i am crying",
+    "true_label": 32,
+    "predicted_label": 69,
+    "top3_labels": [
+      69,
+      56,
+      53
+    ],
+    "confidence": 0.0453,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s033_signer2_i_am_feeling_bored__2_",
+    "signer_id": 2,
+    "sentence": "i am feeling bored",
+    "true_label": 33,
+    "predicted_label": 66,
+    "top3_labels": [
+      66,
+      78,
+      59
+    ],
+    "confidence": 0.0412,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s034_signer2_i_am_feeling_cold__2_",
+    "signer_id": 2,
+    "sentence": "i am feeling cold",
+    "true_label": 34,
+    "predicted_label": 32,
+    "top3_labels": [
+      32,
+      17,
+      91
+    ],
+    "confidence": 0.0407,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s035_signer2_i_am_fine._thank_you_sir",
+    "signer_id": 2,
+    "sentence": "i am fine. thank you sir",
+    "true_label": 35,
+    "predicted_label": 32,
+    "top3_labels": [
+      32,
+      17,
+      91
+    ],
+    "confidence": 0.0433,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s036_signer2_i_am_hungry____2_",
+    "signer_id": 2,
+    "sentence": "i am hungry",
+    "true_label": 36,
+    "predicted_label": 32,
+    "top3_labels": [
+      32,
+      17,
+      80
+    ],
+    "confidence": 0.0434,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s037_signer2_i_am_in_dilemma_what_to_do__2_",
+    "signer_id": 2,
+    "sentence": "i am in dilemma what to do",
+    "true_label": 37,
+    "predicted_label": 66,
+    "top3_labels": [
+      66,
+      78,
+      59
+    ],
+    "confidence": 0.0412,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s038_signer2_i_am_not_really_sure__2_",
+    "signer_id": 2,
+    "sentence": "i am not really sure",
+    "true_label": 38,
+    "predicted_label": 23,
+    "top3_labels": [
+      23,
+      13,
+      38
+    ],
+    "confidence": 0.0239,
+    "is_correct": false,
+    "is_top3_correct": true
+  },
+  {
+    "video_id": "s039_signer2_i_am_really_grateful__2_",
+    "signer_id": 2,
+    "sentence": "i am really grateful",
+    "true_label": 39,
+    "predicted_label": 6,
+    "top3_labels": [
+      6,
+      34,
+      51
+    ],
+    "confidence": 0.036,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s040_signer2_i_am_sitting_in_the_class__2_",
+    "signer_id": 2,
+    "sentence": "i am sitting in the class",
+    "true_label": 40,
+    "predicted_label": 66,
+    "top3_labels": [
+      66,
+      59,
+      78
+    ],
+    "confidence": 0.0369,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s041_signer2_i_am_so_sorry_to_hear_that__2_",
+    "signer_id": 2,
+    "sentence": "i am so sorry to hear that",
+    "true_label": 41,
+    "predicted_label": 56,
+    "top3_labels": [
+      56,
+      41,
+      69
+    ],
+    "confidence": 0.0397,
+    "is_correct": false,
+    "is_top3_correct": true
+  },
+  {
+    "video_id": "s042_signer2_i_am_suffering_from_fever__2_",
+    "signer_id": 2,
+    "sentence": "i am suffering from fever",
+    "true_label": 42,
+    "predicted_label": 39,
+    "top3_labels": [
+      39,
+      88,
+      42
+    ],
+    "confidence": 0.0233,
+    "is_correct": false,
+    "is_top3_correct": true
+  },
+  {
+    "video_id": "s043_signer2_i_am_tired__2_",
+    "signer_id": 2,
+    "sentence": "i am tired",
+    "true_label": 43,
+    "predicted_label": 66,
+    "top3_labels": [
+      66,
+      60,
+      3
+    ],
+    "confidence": 0.0456,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s044_signer2_i_am_very_happy__2_",
+    "signer_id": 2,
+    "sentence": "i am very happy",
+    "true_label": 44,
+    "predicted_label": 6,
+    "top3_labels": [
+      6,
+      11,
+      51
+    ],
+    "confidence": 0.0362,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s045_signer2_i_can_not_help_you_there__2_",
+    "signer_id": 2,
+    "sentence": "i can not help you there",
+    "true_label": 45,
+    "predicted_label": 66,
+    "top3_labels": [
+      66,
+      59,
+      3
+    ],
+    "confidence": 0.0313,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s046_signer2_i_do_not_agree__2_",
+    "signer_id": 2,
+    "sentence": "i do not agree",
+    "true_label": 46,
+    "predicted_label": 17,
+    "top3_labels": [
+      17,
+      69,
+      32
+    ],
+    "confidence": 0.0397,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s047_signer2_i_do_not_like_it__2_",
+    "signer_id": 2,
+    "sentence": "i do not like it",
+    "true_label": 47,
+    "predicted_label": 75,
+    "top3_labels": [
+      75,
+      27,
+      72
+    ],
+    "confidence": 0.0205,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s048_signer2_i_do_not_mean_it__3_",
+    "signer_id": 2,
+    "sentence": "i do not mean it",
+    "true_label": 48,
+    "predicted_label": 23,
+    "top3_labels": [
+      23,
+      8,
+      66
+    ],
+    "confidence": 0.0303,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s050_signer2_i_enjoyed_a_lot__2_",
+    "signer_id": 2,
+    "sentence": "i enjoyed a lot",
+    "true_label": 50,
+    "predicted_label": 3,
+    "top3_labels": [
+      3,
+      60,
+      67
+    ],
+    "confidence": 0.0399,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s051_signer2_i_got_hurt",
+    "signer_id": 2,
+    "sentence": "i got hurt",
+    "true_label": 51,
+    "predicted_label": 6,
+    "top3_labels": [
+      6,
+      11,
+      34
+    ],
+    "confidence": 0.0406,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s052_signer2_i_love_you__2_",
+    "signer_id": 2,
+    "sentence": "i like you i love you",
+    "true_label": 52,
+    "predicted_label": 66,
+    "top3_labels": [
+      66,
+      3,
+      60
+    ],
+    "confidence": 0.0365,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s053_signer2_i_need_water_2",
+    "signer_id": 2,
+    "sentence": "i need water",
+    "true_label": 53,
+    "predicted_label": 17,
+    "top3_labels": [
+      17,
+      32,
+      41
+    ],
+    "confidence": 0.0402,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s054_signer2_i_promise__2_",
+    "signer_id": 2,
+    "sentence": "i promise",
+    "true_label": 54,
+    "predicted_label": 3,
+    "top3_labels": [
+      3,
+      60,
+      66
+    ],
+    "confidence": 0.0369,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s055_signer2_i_really_appreciate_it__1_",
+    "signer_id": 2,
+    "sentence": "i really appreciate it",
+    "true_label": 55,
+    "predicted_label": 80,
+    "top3_labels": [
+      80,
+      32,
+      86
+    ],
+    "confidence": 0.028,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s056_signer2_i_somehow_got_to_know_about_it",
+    "signer_id": 2,
+    "sentence": "i somehow got to know about it",
+    "true_label": 56,
+    "predicted_label": 17,
+    "top3_labels": [
+      17,
+      69,
+      80
+    ],
+    "confidence": 0.0358,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s057_signer2_i_was_stopped_by_someone__2_",
+    "signer_id": 2,
+    "sentence": "i was stopped by some one",
+    "true_label": 57,
+    "predicted_label": 23,
+    "top3_labels": [
+      23,
+      13,
+      26
+    ],
+    "confidence": 0.03,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s058_signer2_it_does_not_make_any_difference_to_me",
+    "signer_id": 2,
+    "sentence": "it does not make any difference to me",
+    "true_label": 58,
+    "predicted_label": 66,
+    "top3_labels": [
+      66,
+      3,
+      60
+    ],
+    "confidence": 0.0386,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s059_signer2_it_was_nice_chatting_with_you",
+    "signer_id": 2,
+    "sentence": "it was nice chatting with you",
+    "true_label": 59,
+    "predicted_label": 3,
+    "top3_labels": [
+      3,
+      60,
+      66
+    ],
+    "confidence": 0.042,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s060_signer2_let_him_take_time__2_",
+    "signer_id": 2,
+    "sentence": "let him take time",
+    "true_label": 60,
+    "predicted_label": 100,
+    "top3_labels": [
+      100,
+      88,
+      90
+    ],
+    "confidence": 0.0277,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s061_signer2_my_name_is_xxxxxxxx__6_",
+    "signer_id": 2,
+    "sentence": "my name is xxxxxxxx",
+    "true_label": 61,
+    "predicted_label": 67,
+    "top3_labels": [
+      67,
+      61,
+      3
+    ],
+    "confidence": 0.0235,
+    "is_correct": false,
+    "is_top3_correct": true
+  },
+  {
+    "video_id": "s062_signer2_nice_to_meet_you__7_",
+    "signer_id": 2,
+    "sentence": "nice to meet you",
+    "true_label": 62,
+    "predicted_label": 32,
+    "top3_labels": [
+      32,
+      17,
+      91
+    ],
+    "confidence": 0.0389,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s065_signer2_pour_some_more_water_into_the_glass__2_",
+    "signer_id": 2,
+    "sentence": "pour some more water into the glass",
+    "true_label": 65,
+    "predicted_label": 66,
+    "top3_labels": [
+      66,
+      3,
+      59
+    ],
+    "confidence": 0.0375,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s066_signer2_prepare_the_bed__2_",
+    "signer_id": 2,
+    "sentence": "prepare the bed",
+    "true_label": 66,
+    "predicted_label": 59,
+    "top3_labels": [
+      59,
+      66,
+      3
+    ],
+    "confidence": 0.033,
+    "is_correct": false,
+    "is_top3_correct": true
+  },
+  {
+    "video_id": "s067_signer2_serve_the_food__2_",
+    "signer_id": 2,
+    "sentence": "serve the food",
+    "true_label": 67,
+    "predicted_label": 67,
+    "top3_labels": [
+      67,
+      3,
+      59
+    ],
+    "confidence": 0.0302,
+    "is_correct": true,
+    "is_top3_correct": true
+  },
+  {
+    "video_id": "s068_signer2_shall_we_go_outside__2_",
+    "signer_id": 2,
+    "sentence": "shall we go outside",
+    "true_label": 68,
+    "predicted_label": 66,
+    "top3_labels": [
+      66,
+      3,
+      60
+    ],
+    "confidence": 0.0399,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s069_signer2_speak_softly__2_",
+    "signer_id": 2,
+    "sentence": "speak softly",
+    "true_label": 69,
+    "predicted_label": 66,
+    "top3_labels": [
+      66,
+      59,
+      78
+    ],
+    "confidence": 0.0404,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s070_signer2_take_care_of_yourself__2_",
+    "signer_id": 2,
+    "sentence": "take care of yourself",
+    "true_label": 70,
+    "predicted_label": 27,
+    "top3_labels": [
+      27,
+      73,
+      80
+    ],
+    "confidence": 0.0218,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s071_signer2_tell_me_truth__2_",
+    "signer_id": 2,
+    "sentence": "tell me truth",
+    "true_label": 71,
+    "predicted_label": 32,
+    "top3_labels": [
+      32,
+      17,
+      80
+    ],
+    "confidence": 0.0417,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s072_signer2_thank_you_so_much__7_",
+    "signer_id": 2,
+    "sentence": "thank you so much",
+    "true_label": 72,
+    "predicted_label": 66,
+    "top3_labels": [
+      66,
+      59,
+      3
+    ],
+    "confidence": 0.0408,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s073_signer2_that_is_so_kind_of_you__2_",
+    "signer_id": 2,
+    "sentence": "that is so kind of you",
+    "true_label": 73,
+    "predicted_label": 53,
+    "top3_labels": [
+      53,
+      56,
+      76
+    ],
+    "confidence": 0.0594,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s074_signer2_this_place_is_beautiful__2_",
+    "signer_id": 2,
+    "sentence": "This place is beautiful",
+    "true_label": 74,
+    "predicted_label": 66,
+    "top3_labels": [
+      66,
+      78,
+      59
+    ],
+    "confidence": 0.0387,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s075_signer2_try_to_understand__2_",
+    "signer_id": 2,
+    "sentence": "try to understand",
+    "true_label": 75,
+    "predicted_label": 32,
+    "top3_labels": [
+      32,
+      17,
+      80
+    ],
+    "confidence": 0.0416,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s076_signer2_turn_on_lightturn_off_light",
+    "signer_id": 2,
+    "sentence": "turn on light turn off light",
+    "true_label": 76,
+    "predicted_label": 32,
+    "top3_labels": [
+      32,
+      80,
+      17
+    ],
+    "confidence": 0.0392,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s077_signer2_we_are_all_with_you__2_",
+    "signer_id": 2,
+    "sentence": "we are all with you",
+    "true_label": 77,
+    "predicted_label": 66,
+    "top3_labels": [
+      66,
+      59,
+      3
+    ],
+    "confidence": 0.0367,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s078_signer2_wear_the_shirt__2_",
+    "signer_id": 2,
+    "sentence": "wear the shirt",
+    "true_label": 78,
+    "predicted_label": 5,
+    "top3_labels": [
+      5,
+      19,
+      37
+    ],
+    "confidence": 0.0659,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s079_signer2_what_are_you_doing__7_",
+    "signer_id": 2,
+    "sentence": "what are you doing",
+    "true_label": 79,
+    "predicted_label": 3,
+    "top3_labels": [
+      3,
+      66,
+      60
+    ],
+    "confidence": 0.0363,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s080_signer2_what_did_you_tell_him__2_",
+    "signer_id": 2,
+    "sentence": "what did you tell him",
+    "true_label": 80,
+    "predicted_label": 80,
+    "top3_labels": [
+      80,
+      27,
+      55
+    ],
+    "confidence": 0.0279,
+    "is_correct": true,
+    "is_top3_correct": true
+  },
+  {
+    "video_id": "s081_signer2_what_do_you_do__7_",
+    "signer_id": 2,
+    "sentence": "what do you do",
+    "true_label": 81,
+    "predicted_label": 32,
+    "top3_labels": [
+      32,
+      17,
+      91
+    ],
+    "confidence": 0.0426,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s082_signer2_what_do_you_think__7_",
+    "signer_id": 2,
+    "sentence": "what do you think",
+    "true_label": 82,
+    "predicted_label": 17,
+    "top3_labels": [
+      17,
+      32,
+      95
+    ],
+    "confidence": 0.039,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s083_signer2_what_do_you_want_to_become__2_",
+    "signer_id": 2,
+    "sentence": "what do you want to become",
+    "true_label": 83,
+    "predicted_label": 6,
+    "top3_labels": [
+      6,
+      34,
+      27
+    ],
+    "confidence": 0.0385,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s084_signer2_what_happened",
+    "signer_id": 2,
+    "sentence": "what happened",
+    "true_label": 84,
+    "predicted_label": 66,
+    "top3_labels": [
+      66,
+      3,
+      67
+    ],
+    "confidence": 0.0256,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s085_signer2_what_have_you_planned_for_your_career__2_",
+    "signer_id": 2,
+    "sentence": "what have you planned for your career",
+    "true_label": 85,
+    "predicted_label": 67,
+    "top3_labels": [
+      67,
+      3,
+      60
+    ],
+    "confidence": 0.0332,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s086_signer2_what_is_your_phone_number__7_",
+    "signer_id": 2,
+    "sentence": "what is your phone number",
+    "true_label": 86,
+    "predicted_label": 17,
+    "top3_labels": [
+      17,
+      32,
+      86
+    ],
+    "confidence": 0.0394,
+    "is_correct": false,
+    "is_top3_correct": true
+  },
+  {
+    "video_id": "s087_signer2_what_you_want__7_",
+    "signer_id": 2,
+    "sentence": "what you want",
+    "true_label": 87,
+    "predicted_label": 6,
+    "top3_labels": [
+      6,
+      34,
+      27
+    ],
+    "confidence": 0.0339,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s088_signer2_when_will_the_train_leave__2_",
+    "signer_id": 2,
+    "sentence": "when will the train leave",
+    "true_label": 88,
+    "predicted_label": 32,
+    "top3_labels": [
+      32,
+      80,
+      91
+    ],
+    "confidence": 0.0379,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s089_signer2_where_are_you_from__6_",
+    "signer_id": 2,
+    "sentence": "where are you from",
+    "true_label": 89,
+    "predicted_label": 6,
+    "top3_labels": [
+      6,
+      11,
+      4
+    ],
+    "confidence": 0.0275,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s090_signer2_which_collegeschool_are_you_from__2_",
+    "signer_id": 2,
+    "sentence": "which college school are you from",
+    "true_label": 90,
+    "predicted_label": 3,
+    "top3_labels": [
+      3,
+      60,
+      66
+    ],
+    "confidence": 0.0433,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s091_signer2_who_are_you__7_",
+    "signer_id": 2,
+    "sentence": "who are you",
+    "true_label": 91,
+    "predicted_label": 94,
+    "top3_labels": [
+      94,
+      72,
+      55
+    ],
+    "confidence": 0.0204,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s092_signer2_why_are_you_angry__2_",
+    "signer_id": 2,
+    "sentence": "why are you angry",
+    "true_label": 92,
+    "predicted_label": 17,
+    "top3_labels": [
+      17,
+      32,
+      80
+    ],
+    "confidence": 0.0383,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s093_signer2_why_are_you_crying__2_",
+    "signer_id": 2,
+    "sentence": "why are you crying",
+    "true_label": 93,
+    "predicted_label": 17,
+    "top3_labels": [
+      17,
+      69,
+      32
+    ],
+    "confidence": 0.0396,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s094_signer2_why_are_you_disappointed__2_",
+    "signer_id": 2,
+    "sentence": "why are you disappointed",
+    "true_label": 94,
+    "predicted_label": 66,
+    "top3_labels": [
+      66,
+      59,
+      10
+    ],
+    "confidence": 0.0303,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s095_signer2_you_are_bad__2_",
+    "signer_id": 2,
+    "sentence": "you are bad",
+    "true_label": 95,
+    "predicted_label": 80,
+    "top3_labels": [
+      80,
+      32,
+      27
+    ],
+    "confidence": 0.0351,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s096_signer2_you_are_good__2_",
+    "signer_id": 2,
+    "sentence": "you are good",
+    "true_label": 96,
+    "predicted_label": 11,
+    "top3_labels": [
+      11,
+      38,
+      6
+    ],
+    "confidence": 0.0236,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s097_signer2_you_are_welcome__2_",
+    "signer_id": 2,
+    "sentence": "you are welcome",
+    "true_label": 97,
+    "predicted_label": 66,
+    "top3_labels": [
+      66,
+      59,
+      78
+    ],
+    "confidence": 0.034,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s098_signer2_you_can_do_it__2_",
+    "signer_id": 2,
+    "sentence": "you can do it",
+    "true_label": 98,
+    "predicted_label": 32,
+    "top3_labels": [
+      32,
+      17,
+      80
+    ],
+    "confidence": 0.0425,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s099_signer2_you_do_anything__i_do_not_care__2_",
+    "signer_id": 2,
+    "sentence": "you do anything, i do not care",
+    "true_label": 99,
+    "predicted_label": 50,
+    "top3_labels": [
+      50,
+      42,
+      90
+    ],
+    "confidence": 0.0248,
+    "is_correct": false,
+    "is_top3_correct": false
+  },
+  {
+    "video_id": "s100_signer2_you_need_a_medicine__take_this_one.",
+    "signer_id": 2,
+    "sentence": "you need a medicine, take this one",
+    "true_label": 100,
+    "predicted_label": 67,
+    "top3_labels": [
+      67,
+      90,
+      10
+    ],
+    "confidence": 0.0216,
+    "is_correct": false,
+    "is_top3_correct": false
+  }
+]

@@ -1,0 +1,1879 @@
+{
+  "loss": 4.5726,
+  "total_samples": 98,
+  "wer": 0.8883,
+  "ter": 0.8883,
+  "exact_match_rate": 0.0,
+  "macro_f1": 0.0009,
+  "substitutions": 59,
+  "deletions": 251,
+  "insertions": 0,
+  "total_reference_tokens": 349,
+  "blank_frame_rate_pct": 98.26,
+  "mean_blank_posterior": 0.9579,
+  "distinct_glosses_emitted": 1,
+  "mean_predicted_length": 1.0,
+  "mean_reference_length": 3.56,
+  "emitted_gloss_counts": {
+    "YOU": 98
+  },
+  "per_gloss_metrics": {
+    "A": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "ABOUT": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "ABUSE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "AFRAID": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "AGREE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "ALL": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "AM": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "ANGRY": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "ANY": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "ANYTHING": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "APPRECIATE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "BAD": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "BE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "BEAUTIFUL": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "BECOME": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "BED": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "BORED": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "BRING": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "BY": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "CAME": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "CARE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "CAREER": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "CHAT": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "CLASS": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "COLD": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "COLLEGE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "COMB": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "COMING": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "CONGRATULATIIONS": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "CRY": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "DARE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "DIFFERENCE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "DILEMMA": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "DISAPPOINTED": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "DO": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 16,
+      "ref_count": 16,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "DONOT": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 4,
+      "ref_count": 4,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "ENJOYED": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "FAVOUR": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "FEELING": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "FEVER": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "FINE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "FOOD": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "FREE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "FRIEND": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "FROM": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 3,
+      "ref_count": 3,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "GLASS": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "GO": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 3,
+      "ref_count": 3,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "GOOD": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "GOT": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "GRATEFUL": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "HAIR": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "HAPPENED": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "HAPPY": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "HAVE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "HE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 6,
+      "ref_count": 6,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "HEAR": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "HEART": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "HELP": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 4,
+      "ref_count": 4,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "HI": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "HIDE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "HIM": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 3,
+      "ref_count": 3,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "HOW": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 6,
+      "ref_count": 6,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "HUNGRY": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "HURT": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "I": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 31,
+      "ref_count": 31,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "IN": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "INTO": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "IT": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 8,
+      "ref_count": 8,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "KIND": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "KNOW": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "LEAVE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "LET": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "LIGHT": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "LIKE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "LOT": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "LOVE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "MAKE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "ME": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 7,
+      "ref_count": 7,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "MEAN": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "MEDICINE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "MEET": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "MORE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "MUCH": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "MY": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "NAME": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "NEED": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 3,
+      "ref_count": 3,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "NICE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "NOT": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 9,
+      "ref_count": 9,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "NUMBER": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "OF": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "OFF": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "OLD": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "ON": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "ONE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "OUTSIDE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "PHONE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "PLACE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "PLAN": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "PLEASE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "POUR": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "PREPARE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "PROMISE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "REALLY": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 3,
+      "ref_count": 3,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "REPEAT": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "ROOM": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "SCHOOL": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "SERVE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "SHE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "SHIRT": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "SIR": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "SITTING": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "SLEEP": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "SLOWER": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "SO": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "SOFTLY": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "SOME": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "SOMEHOW": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "SOMEONE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "SOMETHING": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "SORRY": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "SPEAK": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "STOPPED": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "STUBBORN": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "SUFFERING": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "SURE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "TAKE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 4,
+      "ref_count": 4,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "TALK": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "TELL": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "THANK": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "THAT": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 3,
+      "ref_count": 3,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "THE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "THERE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "THINGS": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "THINK": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "THIS": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "TIME": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "TIRED": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "TO": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 4,
+      "ref_count": 4,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "TODAY": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 3,
+      "ref_count": 3,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "TRAIN": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "TRUST": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "TRUTH": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "TRY": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "TURN": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "UNDERSTAND": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "VERY": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "WANT": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "WATER": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 3,
+      "ref_count": 3,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "WAY": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "WE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "WEAR": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "WELCOME": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "WHAT": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 10,
+      "ref_count": 10,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "WHEN": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "WHERE": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "WHICH": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "WHO": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "WHY": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 3,
+      "ref_count": 3,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "WITH": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "ref_count": 2,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "WORRY": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "XXXXXXXX": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "YOU": {
+      "tp": 10,
+      "fp": 88,
+      "fn": 30,
+      "ref_count": 40,
+      "hyp_count": 98,
+      "precision": 0.102,
+      "recall": 0.25,
+      "f1": 0.1449
+    },
+    "YOUR": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 3,
+      "ref_count": 3,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "YOURSELF": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "ref_count": 1,
+      "hyp_count": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    }
+  },
+  "sample_predictions": [
+    {
+      "video_id": "s000_signer2_are_you_free_today__2_",
+      "signer_id": 2,
+      "resolution": "320x240",
+      "reference": [
+        "YOU",
+        "FREE",
+        "TODAY"
+      ],
+      "hypothesis": [
+        "YOU"
+      ],
+      "exact_match": false
+    },
+    {
+      "video_id": "s001_signer2_are_you_hiding_something__2_",
+      "signer_id": 2,
+      "resolution": "320x240",
+      "reference": [
+        "YOU",
+        "HIDE",
+        "SOMETHING"
+      ],
+      "hypothesis": [
+        "YOU"
+      ],
+      "exact_match": false
+    },
+    {
+      "video_id": "s002_signer2_bring_water_for_me__6_",
+      "signer_id": 2,
+      "resolution": "320x240",
+      "reference": [
+        "BRING",
+        "WATER",
+        "ME"
+      ],
+      "hypothesis": [
+        "YOU"
+      ],
+      "exact_match": false
+    },
+    {
+      "video_id": "s003_signer2_can_i_help_you__2_",
+      "signer_id": 2,
+      "resolution": "320x240",
+      "reference": [
+        "I",
+        "HELP",
+        "YOU"
+      ],
+      "hypothesis": [
+        "YOU"
+      ],
+      "exact_match": false
+    },
+    {
+      "video_id": "s004_signer2_can_you_repeat_that_please__7_",
+      "signer_id": 2,
+      "resolution": "320x240",
+      "reference": [
+        "YOU",
+        "REPEAT",
+        "PLEASE"
+      ],
+      "hypothesis": [
+        "YOU"
+      ],
+      "exact_match": false
+    },
+    {
+      "video_id": "s005_signer2_comb_your_hair__2_",
+      "signer_id": 2,
+      "resolution": "320x240",
+      "reference": [
+        "COMB",
+        "YOU",
+        "HAIR"
+      ],
+      "hypothesis": [
+        "YOU"
+      ],
+      "exact_match": false
+    },
+    {
+      "video_id": "s006_signer2_congratulations",
+      "signer_id": 2,
+      "resolution": "320x240",
+      "reference": [
+        "CONGRATULATIIONS"
+      ],
+      "hypothesis": [
+        "YOU"
+      ],
+      "exact_match": false
+    },
+    {
+      "video_id": "s007_signer2_could_you_please_talk_slower__1_",
+      "signer_id": 2,
+      "resolution": "320x240",
+      "reference": [
+        "YOU",
+        "PLEASE",
+        "TALK",
+        "SLOWER"
+      ],
+      "hypothesis": [
+        "YOU"
+      ],
+      "exact_match": false
+    },
+    {
+      "video_id": "s008_signer2_do_me_a_favour",
+      "signer_id": 2,
+      "resolution": "320x240",
+      "reference": [
+        "DO",
+        "ME",
+        "FAVOUR"
+      ],
+      "hypothesis": [
+        "YOU"
+      ],
+      "exact_match": false
+    },
+    {
+      "video_id": "s009_signer2_do_not_abuse_him__2_",
+      "signer_id": 2,
+      "resolution": "320x240",
+      "reference": [
+        "DONOT",
+        "ABUSE",
+        "HIM"
+      ],
+      "hypothesis": [
+        "YOU"
+      ],
+      "exact_match": false
+    },
+    {
+      "video_id": "s010_signer2_do_not_be_stubborn__2_",
+      "signer_id": 2,
+      "resolution": "320x240",
+      "reference": [
+        "DONOT",
+        "BE",
+        "STUBBORN"
+      ],
+      "hypothesis": [
+        "YOU"
+      ],
+      "exact_match": false
+    },
+    {
+      "video_id": "s011_signer2_do_not_hurt_me__2_",
+      "signer_id": 2,
+      "resolution": "320x240",
+      "reference": [
+        "DONOT",
+        "HURT",
+        "ME"
+      ],
+      "hypothesis": [
+        "YOU"
+      ],
+      "exact_match": false
+    },
+    {
+      "video_id": "s012_signer2_do_not_make_me_angry__2_",
+      "signer_id": 2,
+      "resolution": "320x240",
+      "reference": [
+        "DO",
+        "NOT",
+        "MAKE",
+        "ME",
+        "ANGRY"
+      ],
+      "hypothesis": [
+        "YOU"
+      ],
+      "exact_match": false
+    },
+    {
+      "video_id": "s013_signer2_do_not_take_it_to_the_heart__2_",
+      "signer_id": 2,
+      "resolution": "320x240",
+      "reference": [
+        "DO",
+        "NOT",
+        "TAKE",
+        "IT",
+        "HEART"
+      ],
+      "hypothesis": [
+        "YOU"
+      ],
+      "exact_match": false
+    },
+    {
+      "video_id": "s014_signer2_do_not_worry__2_",
+      "signer_id": 2,
+      "resolution": "320x240",
+      "reference": [
+        "DO",
+        "NOT",
+        "WORRY"
+      ],
+      "hypothesis": [
+        "YOU"
+      ],
+      "exact_match": false
+    }
+  ],
+  "evaluated_checkpoint": "D:\\Projects\\Signova AI\\models\\isl_csltr_continuous\\phase_8_3_8\\best_checkpoint.pt",
+  "selected_model_is_new": false
+}

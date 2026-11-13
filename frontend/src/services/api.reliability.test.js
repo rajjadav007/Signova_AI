@@ -5,6 +5,9 @@ import {
   transcribeAndTranslateSpeech,
   fetchSupportedLanguages,
   recognizeIsolatedLandmarks,
+  recognizeSentenceLandmarks,
+  recognizeSentenceVideo,
+  fetchSentenceVocabulary,
   requestWithTimeout,
   _clearInflightRequests,
 } from "./api";
@@ -168,5 +171,101 @@ describe("Phase 6 Reliability and Error Handling Tests", () => {
     expect(r2.translated_text).toBe("નમસ્તે");
     // Network fetch must only have been invoked ONCE
     expect(callCount).toBe(1);
+  });
+
+  // Focus 13: Continuous ISL Sentence Recognition API Endpoints
+  it("recognizeSentenceLandmarks sends correctly formatted JSON payload to /recognize/sentence/landmarks", async () => {
+    let capturedUrl = null;
+    let capturedOptions = null;
+
+    global.fetch = vi.fn().mockImplementation((url, options) => {
+      capturedUrl = url;
+      capturedOptions = options;
+      return Promise.resolve({
+        ok: true,
+        json: () =>
+          Promise.resolve({
+            success: true,
+            status: "recognized",
+            sentence: "are you free today",
+            confidence: 0.942,
+            gloss_tokens: ["YOU", "FREE", "TODAY"],
+            top_predictions: [
+              { sentence: "are you free today", confidence: 0.942, gloss: "YOU FREE TODAY" },
+            ],
+          }),
+      });
+    });
+
+    const dummyLandmarks = Array.from({ length: 25 }, () => new Array(300).fill(0));
+    const timestamps = Array.from({ length: 25 }, (_, i) => i * 40);
+
+    const res = await recognizeSentenceLandmarks(dummyLandmarks, {
+      timestamps,
+      fps: 25,
+      top_k: 3,
+    });
+
+    expect(capturedUrl).toBe("/api/v1/recognize/sentence/landmarks");
+    expect(capturedOptions.method).toBe("POST");
+    expect(capturedOptions.headers["Content-Type"]).toBe("application/json");
+
+    const sentBody = JSON.parse(capturedOptions.body);
+    expect(sentBody.landmarks.length).toBe(25);
+    expect(sentBody.timestamps_ms).toEqual(timestamps);
+    expect(sentBody.fps).toBe(25);
+    expect(sentBody.top_k).toBe(3);
+
+    expect(res.success).toBe(true);
+    expect(res.sentence).toBe("are you free today");
+  });
+
+  it("recognizeSentenceVideo sends FormData to /recognize/sentence/video", async () => {
+    let capturedUrl = null;
+    let capturedOptions = null;
+
+    global.fetch = vi.fn().mockImplementation((url, options) => {
+      capturedUrl = url;
+      capturedOptions = options;
+      return Promise.resolve({
+        ok: true,
+        json: () =>
+          Promise.resolve({
+            success: true,
+            status: "recognized",
+            sentence: "are you hiding something",
+            confidence: 0.91,
+          }),
+      });
+    });
+
+    const dummyFile = new Blob(["video_bytes"], { type: "video/mp4" });
+    const res = await recognizeSentenceVideo(dummyFile);
+
+    expect(capturedUrl).toBe("/api/v1/recognize/sentence/video");
+    expect(capturedOptions.method).toBe("POST");
+    expect(capturedOptions.body instanceof FormData).toBe(true);
+    expect(res.sentence).toBe("are you hiding something");
+  });
+
+  it("fetchSentenceVocabulary requests GET /recognize/sentence/sentences", async () => {
+    let capturedUrl = null;
+
+    global.fetch = vi.fn().mockImplementation((url) => {
+      capturedUrl = url;
+      return Promise.resolve({
+        ok: true,
+        json: () =>
+          Promise.resolve({
+            success: true,
+            total_sentences: 101,
+            sentences: [{ sentence_id: 0, sentence: "are you free today", isl_gloss: "YOU FREE TODAY" }],
+          }),
+      });
+    });
+
+    const res = await fetchSentenceVocabulary();
+    expect(capturedUrl).toBe("/api/v1/recognize/sentence/sentences");
+    expect(res.total_sentences).toBe(101);
   });
 });

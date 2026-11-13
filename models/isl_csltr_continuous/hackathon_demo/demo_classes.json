@@ -1,0 +1,60 @@
+{
+  "classes": [
+    {
+      "demo_class_id": 0,
+      "original_sentence_id": 5,
+      "sentence": "comb your hair",
+      "isl_gloss": "COMB YOU HAIR",
+      "tokens": [
+        "COMB",
+        "YOU",
+        "HAIR"
+      ]
+    },
+    {
+      "demo_class_id": 1,
+      "original_sentence_id": 23,
+      "sentence": "help me",
+      "isl_gloss": "HELP ME",
+      "tokens": [
+        "HELP",
+        "ME"
+      ]
+    },
+    {
+      "demo_class_id": 2,
+      "original_sentence_id": 35,
+      "sentence": "i am fine. thank you sir",
+      "isl_gloss": "I FINE. THANK YOU SIR",
+      "tokens": [
+        "I",
+        "FINE",
+        "THANK",
+        "YOU",
+        "SIR"
+      ]
+    },
+    {
+      "demo_class_id": 3,
+      "original_sentence_id": 53,
+      "sentence": "i need water",
+      "isl_gloss": "I NEED WATER",
+      "tokens": [
+        "I",
+        "NEED",
+        "WATER"
+      ]
+    },
+    {
+      "demo_class_id": 4,
+      "original_sentence_id": 91,
+      "sentence": "who are you",
+      "isl_gloss": "WHO YOU",
+      "tokens": [
+        "WHO",
+        "YOU"
+      ]
+    }
+  ],
+  "num_classes": 5
+}

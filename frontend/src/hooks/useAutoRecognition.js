@@ -2,11 +2,12 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import {
   RECOGNITION_STATE,
   RECOGNITION_STATE_LABELS,
+  SENTENCE_STATE_LABELS,
   HandPresenceTracker,
   detectHandPresenceInCanvas,
   DEFAULT_FOCUS_ZONE,
 } from "../utils/handPresence";
-import { recognizeIsolatedVideo } from "../services/api";
+import { recognizeIsolatedVideo, recognizeFiveClassSentenceVideo } from "../services/api";
 
 export const MIN_GESTURE_DURATION_MS = 800; // 0.8s minimum gesture duration
 export const MAX_GESTURE_DURATION_MS = 6000; // 6.0s duration safety cap
@@ -21,9 +22,12 @@ export function useAutoRecognition({
   enabled = true,
   autoSpeak = true,
   focusZone = DEFAULT_FOCUS_ZONE,
+  recognitionMode = "isolated",
+  sentenceModel = "bigru",
   onResetSequence = null,
   onSignRecognized = null,
   onUncertainSuggestion = null,
+  onSentenceRecognized = null,
 } = {}) {
   const stateMachineRef = useRef(
     isCameraActive ? RECOGNITION_STATE.NO_HAND : RECOGNITION_STATE.NO_HAND
@@ -46,11 +50,13 @@ export function useAutoRecognition({
   const resetTimerRef = useRef(null);
   const onSignRecognizedRef = useRef(onSignRecognized);
   const onUncertainSuggestionRef = useRef(onUncertainSuggestion);
+  const onSentenceRecognizedRef = useRef(onSentenceRecognized);
 
   useEffect(() => {
     onSignRecognizedRef.current = onSignRecognized;
     onUncertainSuggestionRef.current = onUncertainSuggestion;
-  }, [onSignRecognized, onUncertainSuggestion]);
+    onSentenceRecognizedRef.current = onSentenceRecognized;
+  }, [onSignRecognized, onUncertainSuggestion, onSentenceRecognized]);
 
   const transitionState = useCallback((newState) => {
     stateMachineRef.current = newState;
@@ -120,41 +126,82 @@ export function useAutoRecognition({
       }
 
       try {
-        const response = await recognizeIsolatedVideo(
-          videoBlob,
-          "auto_gesture.webm",
-          null,
-          1 // Request single highest-confidence candidate
-        );
+        let response;
+        if (recognitionMode === "sentence") {
+          const file = new File([videoBlob], "auto_sentence.webm", {
+            type: videoBlob.type || "video/webm",
+          });
+          response = await recognizeFiveClassSentenceVideo(file, sentenceModel);
+        } else {
+          response = await recognizeIsolatedVideo(
+            videoBlob,
+            "auto_gesture.webm",
+            null,
+            1 // Request single highest-confidence candidate
+          );
+        }
 
         if (!isMountedRef.current) return;
 
         setResult(response);
 
-        if (response.status === "recognized" && response.confidence >= (response.rejection_threshold || 0.80)) {
-          transitionState(RECOGNITION_STATE.SUCCESS);
-          if (autoSpeak && response.predicted_sign) {
-            speakPrediction(response.display_name || response.predicted_sign);
-          }
-          if (typeof onSignRecognizedRef.current === "function") {
-            try {
-              onSignRecognizedRef.current(response.display_name || response.predicted_sign, response);
-            } catch {
-              // ignore
+        if (recognitionMode === "sentence") {
+          if (response.status === "NO_VALID_LANDMARKS") {
+            transitionState(RECOGNITION_STATE.NO_LANDMARKS);
+            if (typeof onSentenceRecognizedRef.current === "function") {
+              onSentenceRecognizedRef.current(response);
+            }
+          } else if (response.status === "INSUFFICIENT_FRAMES") {
+            transitionState(RECOGNITION_STATE.RESET_SEQUENCE);
+            if (typeof onSentenceRecognizedRef.current === "function") {
+              onSentenceRecognizedRef.current(response);
+            }
+          } else if (response.is_recognized) {
+            transitionState(RECOGNITION_STATE.SUCCESS);
+            if (autoSpeak && response.predicted_sentence) {
+              speakPrediction(response.predicted_sentence);
+            }
+            if (typeof onSentenceRecognizedRef.current === "function") {
+              onSentenceRecognizedRef.current(response);
+            }
+            if (typeof onSignRecognizedRef.current === "function") {
+              onSignRecognizedRef.current(response.predicted_sentence, response);
+            }
+          } else {
+            transitionState(RECOGNITION_STATE.UNCERTAIN);
+            if (typeof onSentenceRecognizedRef.current === "function") {
+              onSentenceRecognizedRef.current(response);
+            }
+            if (typeof onUncertainSuggestionRef.current === "function" && response.predicted_sentence) {
+              onUncertainSuggestionRef.current(response.predicted_sentence, response);
             }
           }
         } else {
-          transitionState(RECOGNITION_STATE.UNCERTAIN);
-          if (
-            response.predicted_sign &&
-            response.predicted_sign !== "unknown" &&
-            response.predicted_sign !== "uncertain" &&
-            typeof onUncertainSuggestionRef.current === "function"
-          ) {
-            try {
-              onUncertainSuggestionRef.current(response.display_name || response.predicted_sign, response);
-            } catch {
-              // ignore
+          if (response.status === "recognized" && response.confidence >= (response.rejection_threshold || 0.80)) {
+            transitionState(RECOGNITION_STATE.SUCCESS);
+            if (autoSpeak && response.predicted_sign) {
+              speakPrediction(response.display_name || response.predicted_sign);
+            }
+            if (typeof onSignRecognizedRef.current === "function") {
+              try {
+                onSignRecognizedRef.current(response.display_name || response.predicted_sign, response);
+              } catch {
+                // ignore
+              }
+            }
+          } else {
+            transitionState(RECOGNITION_STATE.UNCERTAIN);
+            if (
+              response.predicted_sign &&
+              response.predicted_sign !== "unknown" &&
+              response.predicted_sign !== "uncertain" &&
+              typeof onUncertainSuggestionRef.current === "function"
+            ) {
+              try {
+                onUncertainSuggestionRef.current(response.display_name || response.predicted_sign, response);
+              } catch {
+                // ignore
+              }
             }
           }
         }
@@ -282,7 +329,7 @@ export function useAutoRecognition({
   // Main frame processing hook called by useFrameSampler on every frame
   const processFrame = useCallback(
     async (frameData) => {
-      if (!isCameraActive || !enabled || !frameData || !frameData.canvas) {
+      if (!isCameraActive || !frameData || !frameData.canvas) {
         return;
       }
 
@@ -293,6 +340,11 @@ export function useAutoRecognition({
       if (isMountedRef.current) {
         setDetectedHands(trackerUpdate.hands);
         setHandConfidence(detection.confidence);
+      }
+
+      // If automated gesture recording is disabled (e.g. continuous sentence mode), stop here
+      if (!enabled) {
+        return;
       }
 
       const currentState = stateMachineRef.current;
@@ -396,7 +448,10 @@ export function useAutoRecognition({
 
   return {
     state,
-    stateLabel: RECOGNITION_STATE_LABELS[state] || "Waiting for hand",
+    stateLabel:
+      recognitionMode === "sentence"
+        ? SENTENCE_STATE_LABELS[state] || RECOGNITION_STATE_LABELS[state] || "Waiting for signing"
+        : RECOGNITION_STATE_LABELS[state] || "Waiting for hand",
     result,
     error,
     frameCount,
