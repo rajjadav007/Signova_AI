@@ -23,12 +23,17 @@ export function useAutoRecognition({
   autoSpeak = true,
   focusZone = DEFAULT_FOCUS_ZONE,
   recognitionMode = "isolated",
+  activeRecognitionMode = null,
   sentenceModel = "bigru",
   onResetSequence = null,
   onSignRecognized = null,
   onUncertainSuggestion = null,
   onSentenceRecognized = null,
 } = {}) {
+  const currentMode = activeRecognitionMode || recognitionMode || "isolated";
+  const isContinuousMode = currentMode === "continuous" || currentMode === "sentence";
+  const isWordMode = !isContinuousMode;
+
   const stateMachineRef = useRef(
     isCameraActive ? RECOGNITION_STATE.NO_HAND : RECOGNITION_STATE.NO_HAND
   );
@@ -51,12 +56,74 @@ export function useAutoRecognition({
   const onSignRecognizedRef = useRef(onSignRecognized);
   const onUncertainSuggestionRef = useRef(onUncertainSuggestion);
   const onSentenceRecognizedRef = useRef(onSentenceRecognized);
+  const prevModeRef = useRef(currentMode);
+  const activeModeRef = useRef(currentMode);
+  activeModeRef.current = currentMode;
+  const abortControllerRef = useRef(null);
+  const modeRequestIdRef = useRef(0);
 
   useEffect(() => {
     onSignRecognizedRef.current = onSignRecognized;
     onUncertainSuggestionRef.current = onUncertainSuggestion;
     onSentenceRecognizedRef.current = onSentenceRecognized;
   }, [onSignRecognized, onUncertainSuggestion, onSentenceRecognized]);
+
+  // Mode switching cleanup: stop previous pipeline, cancel in-flight, reset buffers and timers
+  useEffect(() => {
+    if (prevModeRef.current !== currentMode) {
+      prevModeRef.current = currentMode;
+
+      // 1. Cancel in-flight inference requests immediately
+      if (abortControllerRef.current) {
+        try {
+          abortControllerRef.current.abort();
+        } catch {}
+        abortControllerRef.current = null;
+      }
+      modeRequestIdRef.current++;
+
+      // 2. Stop active recorder immediately without dispatching
+      if (mediaRecorderRef.current) {
+        mediaRecorderRef.current.onstop = null;
+        mediaRecorderRef.current.ondataavailable = null;
+        if (mediaRecorderRef.current.state === "recording") {
+          try {
+            mediaRecorderRef.current.stop();
+          } catch {}
+        }
+        mediaRecorderRef.current = null;
+      }
+      recordedChunksRef.current = [];
+      recordingStartTimeRef.current = null;
+      frameCountRef.current = 0;
+
+      // 3. Clear previous mode's frame buffer
+      if (typeof onResetSequence === "function") {
+        try {
+          onResetSequence();
+        } catch {}
+      }
+
+      // 4. Clear old predictions, temporary results, and errors
+      setResult(null);
+      setError(null);
+      setFrameCount(0);
+      setDetectedHands([]);
+      isRecognizingRef.current = false;
+
+      // 5. Reset relevant timers and recording states
+      if (nextSignTimerRef.current) {
+        clearTimeout(nextSignTimerRef.current);
+        nextSignTimerRef.current = null;
+      }
+      if (resetTimerRef.current) {
+        clearTimeout(resetTimerRef.current);
+        resetTimerRef.current = null;
+      }
+      trackerRef.current.reset();
+      transitionState(RECOGNITION_STATE.NO_HAND);
+    }
+  }, [currentMode, onResetSequence]);
 
   const transitionState = useCallback((newState) => {
     stateMachineRef.current = newState;
@@ -112,12 +179,16 @@ export function useAutoRecognition({
     }
   }, [stopRecorder, onResetSequence]);
 
-  // Execute isolated video recognition
+  // Execute isolated video recognition or continuous sentence recognition exclusively
   const dispatchRecognition = useCallback(
     async (videoBlob) => {
       if (isRecognizingRef.current || !videoBlob || videoBlob.size === 0) {
         return;
       }
+
+      const modeAtStart = activeModeRef.current;
+      const isContinuousAtStart = modeAtStart === "continuous" || modeAtStart === "sentence";
+      const requestId = ++modeRequestIdRef.current;
 
       isRecognizingRef.current = true;
       transitionState(RECOGNITION_STATE.RECOGNIZING);
@@ -125,27 +196,43 @@ export function useAutoRecognition({
         setError(null);
       }
 
+      const controller = typeof AbortController !== "undefined" ? new AbortController() : null;
+      abortControllerRef.current = controller;
+
       try {
         let response;
-        if (recognitionMode === "sentence") {
+        if (isContinuousAtStart) {
+          // CONTINUOUS SENTENCE MODE: ONLY five-class BiGRU sentence pipeline
           const file = new File([videoBlob], "auto_sentence.webm", {
             type: videoBlob.type || "video/webm",
           });
-          response = await recognizeFiveClassSentenceVideo(file, sentenceModel);
+          response = await recognizeFiveClassSentenceVideo(file, sentenceModel, { signal: controller?.signal });
         } else {
+          // WORD RECOGNITION MODE: ONLY isolated-word recognition pipeline
           response = await recognizeIsolatedVideo(
             videoBlob,
             "auto_gesture.webm",
             null,
-            1 // Request single highest-confidence candidate
+            1,
+            { signal: controller?.signal }
           );
         }
 
-        if (!isMountedRef.current) return;
+        // Prevent asynchronous responses from previous mode from updating new mode's UI
+        if (
+          !isMountedRef.current ||
+          activeModeRef.current !== modeAtStart ||
+          requestId !== modeRequestIdRef.current
+        ) {
+          return;
+        }
 
         setResult(response);
 
-        if (recognitionMode === "sentence") {
+        if (isContinuousAtStart) {
+          // CONTINUOUS SENTENCE MODE:
+          // Emit one predicted English sentence after the sequence is processed.
+          // Disable individual word recognition completely: DO NOT call onSignRecognized or onUncertainSuggestion!
           if (response.status === "NO_VALID_LANDMARKS") {
             transitionState(RECOGNITION_STATE.NO_LANDMARKS);
             if (typeof onSentenceRecognizedRef.current === "function") {
@@ -164,19 +251,16 @@ export function useAutoRecognition({
             if (typeof onSentenceRecognizedRef.current === "function") {
               onSentenceRecognizedRef.current(response);
             }
-            if (typeof onSignRecognizedRef.current === "function") {
-              onSignRecognizedRef.current(response.predicted_sentence, response);
-            }
           } else {
             transitionState(RECOGNITION_STATE.UNCERTAIN);
             if (typeof onSentenceRecognizedRef.current === "function") {
               onSentenceRecognizedRef.current(response);
             }
-            if (typeof onUncertainSuggestionRef.current === "function" && response.predicted_sentence) {
-              onUncertainSuggestionRef.current(response.predicted_sentence, response);
-            }
           }
         } else {
+          // WORD RECOGNITION MODE:
+          // Emit individual word prediction.
+          // Disable continuous sentence inference: DO NOT call onSentenceRecognized!
           if (response.status === "recognized" && response.confidence >= (response.rejection_threshold || 0.80)) {
             transitionState(RECOGNITION_STATE.SUCCESS);
             if (autoSpeak && response.predicted_sign) {
@@ -211,6 +295,7 @@ export function useAutoRecognition({
           clearTimeout(nextSignTimerRef.current);
         }
         nextSignTimerRef.current = setTimeout(() => {
+          if (activeModeRef.current !== modeAtStart || !isMountedRef.current) return;
           transitionState(RECOGNITION_STATE.RESET_SEQUENCE);
           resetSequence();
 
@@ -218,35 +303,49 @@ export function useAutoRecognition({
             clearTimeout(resetTimerRef.current);
           }
           resetTimerRef.current = setTimeout(() => {
+            if (activeModeRef.current !== modeAtStart || !isMountedRef.current) return;
             transitionState(RECOGNITION_STATE.WAITING_FOR_NEXT_SIGN);
           }, RESET_SEQUENCE_DURATION_MS);
         }, RESULT_DISPLAY_DURATION_MS);
       } catch (err) {
-        if (isMountedRef.current) {
-          setResult(null);
-          setError(err.message || "Recognition service unavailable.");
-          transitionState(RECOGNITION_STATE.ERROR);
-
-          if (nextSignTimerRef.current) {
-            clearTimeout(nextSignTimerRef.current);
-          }
-          nextSignTimerRef.current = setTimeout(() => {
-            transitionState(RECOGNITION_STATE.RESET_SEQUENCE);
-            resetSequence();
-
-            if (resetTimerRef.current) {
-              clearTimeout(resetTimerRef.current);
-            }
-            resetTimerRef.current = setTimeout(() => {
-              transitionState(RECOGNITION_STATE.WAITING_FOR_NEXT_SIGN);
-            }, RESET_SEQUENCE_DURATION_MS);
-          }, RESULT_DISPLAY_DURATION_MS);
+        if (
+          !isMountedRef.current ||
+          activeModeRef.current !== modeAtStart ||
+          requestId !== modeRequestIdRef.current
+        ) {
+          return;
         }
+        if (err.name === "AbortError" || err.message?.includes("aborted")) {
+          return;
+        }
+        setResult(null);
+        setError(err.message || "Recognition service unavailable.");
+        transitionState(RECOGNITION_STATE.ERROR);
+
+        if (nextSignTimerRef.current) {
+          clearTimeout(nextSignTimerRef.current);
+        }
+        nextSignTimerRef.current = setTimeout(() => {
+          if (activeModeRef.current !== modeAtStart || !isMountedRef.current) return;
+          transitionState(RECOGNITION_STATE.RESET_SEQUENCE);
+          resetSequence();
+
+          if (resetTimerRef.current) {
+            clearTimeout(resetTimerRef.current);
+          }
+          resetTimerRef.current = setTimeout(() => {
+            if (activeModeRef.current !== modeAtStart || !isMountedRef.current) return;
+            transitionState(RECOGNITION_STATE.WAITING_FOR_NEXT_SIGN);
+          }, RESET_SEQUENCE_DURATION_MS);
+        }, RESULT_DISPLAY_DURATION_MS);
       } finally {
-        isRecognizingRef.current = false;
+        if (requestId === modeRequestIdRef.current) {
+          isRecognizingRef.current = false;
+          abortControllerRef.current = null;
+        }
       }
     },
-    [autoSpeak, speakPrediction, resetSequence, transitionState]
+    [autoSpeak, speakPrediction, resetSequence, transitionState, sentenceModel]
   );
 
   // Handle recorder stop event: validate duration and size, then dispatch
@@ -449,9 +548,12 @@ export function useAutoRecognition({
   return {
     state,
     stateLabel:
-      recognitionMode === "sentence"
+      isContinuousMode
         ? SENTENCE_STATE_LABELS[state] || RECOGNITION_STATE_LABELS[state] || "Waiting for signing"
         : RECOGNITION_STATE_LABELS[state] || "Waiting for hand",
+    activeRecognitionMode: isContinuousMode ? "continuous" : "word",
+    isContinuousMode,
+    isWordMode,
     result,
     error,
     frameCount,

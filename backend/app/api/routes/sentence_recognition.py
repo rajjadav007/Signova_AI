@@ -23,10 +23,15 @@ try:
         DemoSentenceRecognitionResponse,
         DemoRankingItem,
         FiveClassSentenceRecognitionResponse,
+        TwentyFiveClassCandidateItem,
+        TwentyFiveClassSentenceRecognitionResponse,
+        TwentyFiveClassItem,
+        TwentyFiveClassesResponse,
     )
     from app.services.sentence_inference_service import sentence_inference_service
     from app.services.hackathon_demo_service import hackathon_demo_service
     from app.services.five_class_bigru_service import five_class_bigru_service
+    from app.services.twenty_five_class_bigru_service import get_twenty_five_class_bigru_service
 except ModuleNotFoundError:
     from backend.app.schemas.sentence import (
         SentenceLandmarkRequest,
@@ -39,10 +44,15 @@ except ModuleNotFoundError:
         DemoSentenceRecognitionResponse,
         DemoRankingItem,
         FiveClassSentenceRecognitionResponse,
+        TwentyFiveClassCandidateItem,
+        TwentyFiveClassSentenceRecognitionResponse,
+        TwentyFiveClassItem,
+        TwentyFiveClassesResponse,
     )
     from backend.app.services.sentence_inference_service import sentence_inference_service
     from backend.app.services.hackathon_demo_service import hackathon_demo_service
     from backend.app.services.five_class_bigru_service import five_class_bigru_service
+    from backend.app.services.twenty_five_class_bigru_service import get_twenty_five_class_bigru_service
 
 logger = logging.getLogger("signova.routes.sentence")
 
@@ -680,5 +690,222 @@ def recognize_five_class_landmarks(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Inference execution failed: {str(exc)}",
         )
+
+
+CANONICAL_TWENTY_FIVE_CLASSES = {
+    0: "comb your hair",
+    1: "help me",
+    2: "i am fine. thank you sir.",
+    3: "i need water",
+    4: "who are you",
+    5: "are you free today",
+    6: "congratulations",
+    7: "do not worry",
+    8: "go and sleep",
+    9: "had your food",
+    10: "he came by train",
+    11: "he she is my friend",
+    12: "hi how are you",
+    13: "how old are you",
+    14: "i am crying",
+    15: "i am feeling bored",
+    16: "i am feeling cold",
+    17: "i am hungry",
+    18: "i am sitting in the class",
+    19: "i like you i love you",
+    20: "i promise",
+    21: "shall we go outside",
+    22: "take care of yourself",
+    23: "thank you so much",
+    24: "what are you doing",
+}
+
+
+@router.get("/twenty-five-class/classes", response_model=TwentyFiveClassesResponse)
+def get_twenty_five_class_classes() -> TwentyFiveClassesResponse:
+    """
+    Return all 25 supported ISL continuous sentence classes.
+    """
+    classes_list = [
+        TwentyFiveClassItem(class_id=cid, sentence=name)
+        for cid, name in CANONICAL_TWENTY_FIVE_CLASSES.items()
+    ]
+    return TwentyFiveClassesResponse(total=len(classes_list), classes=classes_list)
+
+
+@router.post("/twenty-five-class/video", response_model=TwentyFiveClassSentenceRecognitionResponse)
+def recognize_twenty_five_class_video(
+    video: UploadFile = File(..., description="Uploaded or live webcam recorded video (.mp4, .webm, .avi, .mov)"),
+    confidence_threshold: float = Query(0.25, ge=0.01, le=1.0, description="Softmax confidence uncertainty threshold (default 0.25)"),
+) -> TwentyFiveClassSentenceRecognitionResponse:
+    """
+    Recognize 25-class ISL sentence from live webcam recording or uploaded video.
+    Uses separate 25-class BiGRU Attention model.
+    Guarantees strict 25-class output mapping, zero silent fallbacks, and always displays top prediction.
+    """
+    filename = video.filename or "webcam_gesture.webm"
+    suffix = Path(filename).suffix.lower()
+
+    if suffix not in ALLOWED_VIDEO_EXTENSIONS:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Unsupported video format '{suffix}'. Allowed: {sorted(ALLOWED_VIDEO_EXTENSIONS)}",
+        )
+
+    try:
+        video_bytes = video.file.read()
+    except Exception as exc:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Failed to read uploaded video stream: {exc}",
+        )
+
+    if len(video_bytes) == 0:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Uploaded video file is empty.",
+        )
+
+    if len(video_bytes) > MAX_FILE_SIZE_BYTES:
+        raise HTTPException(
+            status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+            detail=f"File size exceeds {MAX_FILE_SIZE_BYTES // (1024 * 1024)}MB limit.",
+        )
+
+    try:
+        svc = get_twenty_five_class_bigru_service()
+        raw_result = svc.predict_video(
+            video_bytes=video_bytes,
+            filename=filename,
+            confidence_threshold=confidence_threshold,
+        )
+
+        if not raw_result.get("success", False):
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail=raw_result.get("error", "25-Class video processing failed."),
+            )
+
+        pred_id = raw_result.get("predicted_class_id")
+        pred_sentence = CANONICAL_TWENTY_FIVE_CLASSES.get(pred_id, raw_result.get("predicted_sentence", ""))
+        class_probs = raw_result.get("class_probabilities", {})
+
+        top5_items = [
+            TwentyFiveClassCandidateItem(
+                class_id=c["class_id"],
+                sentence=CANONICAL_TWENTY_FIVE_CLASSES.get(c["class_id"], c["sentence"]),
+                probability=c["probability"]
+            )
+            for c in raw_result.get("top5_candidates", [])
+        ]
+
+        logger.info(
+            "[25-CLASS] Video Inference:\n"
+            "  File: %s\n"
+            "  Frames: %d\n"
+            "  Predicted: %s (ID %s)\n"
+            "  Confidence: %.4f\n"
+            "  Confident: %s",
+            filename,
+            raw_result.get("frame_count", 0),
+            pred_sentence,
+            str(pred_id),
+            raw_result.get("confidence", 0.0),
+            raw_result.get("is_confident", False),
+        )
+
+        return TwentyFiveClassSentenceRecognitionResponse(
+            success=True,
+            is_recognized=True,
+            is_confident=raw_result.get("is_confident", False),
+            status="SUCCESS" if raw_result.get("is_confident", False) else "LOW_CONFIDENCE",
+            predicted_sentence=pred_sentence,
+            predicted_class_id=pred_id,
+            confidence=raw_result.get("confidence", 0.0),
+            class_probabilities=class_probs,
+            top5_candidates=top5_items,
+            uncertainty_warning=raw_result.get("uncertainty_warning"),
+            frame_count=raw_result.get("frame_count", 0),
+            processing_time_ms=raw_result.get("latency_ms", 0.0),
+            model_inference_latency_ms=raw_result.get("latency_ms"),
+            model_used="TwentyFiveClassBiGRUAttentionModel",
+            model_identifier="bigru_25class",
+        )
+    except HTTPException:
+        raise
+    except Exception as exc:
+        logger.error("25-class video recognition error for '%s': %s", filename, exc, exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Inference execution failed: {str(exc)}",
+        )
+
+
+@router.post("/twenty-five-class/landmarks", response_model=TwentyFiveClassSentenceRecognitionResponse)
+def recognize_twenty_five_class_landmarks(
+    request: SentenceLandmarkRequest,
+    confidence_threshold: float = Query(0.25, ge=0.01, le=1.0, description="Softmax confidence uncertainty threshold (default 0.25)"),
+) -> TwentyFiveClassSentenceRecognitionResponse:
+    """
+    Recognize 25-class ISL sentence from pre-extracted landmark sequence array.
+    """
+    if not request.landmarks or len(request.landmarks) == 0:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Landmark sequence cannot be empty.",
+        )
+
+    try:
+        svc = get_twenty_five_class_bigru_service()
+        raw_result = svc.predict_landmarks(
+            landmarks_sequence=request.landmarks,
+            confidence_threshold=confidence_threshold,
+        )
+
+        if not raw_result.get("success", False):
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail=raw_result.get("error", "25-Class landmark processing failed."),
+            )
+
+        pred_id = raw_result.get("predicted_class_id")
+        pred_sentence = CANONICAL_TWENTY_FIVE_CLASSES.get(pred_id, raw_result.get("predicted_sentence", ""))
+        class_probs = raw_result.get("class_probabilities", {})
+
+        top5_items = [
+            TwentyFiveClassCandidateItem(
+                class_id=c["class_id"],
+                sentence=CANONICAL_TWENTY_FIVE_CLASSES.get(c["class_id"], c["sentence"]),
+                probability=c["probability"]
+            )
+            for c in raw_result.get("top5_candidates", [])
+        ]
+
+        return TwentyFiveClassSentenceRecognitionResponse(
+            success=True,
+            is_recognized=True,
+            is_confident=raw_result.get("is_confident", False),
+            status="SUCCESS" if raw_result.get("is_confident", False) else "LOW_CONFIDENCE",
+            predicted_sentence=pred_sentence,
+            predicted_class_id=pred_id,
+            confidence=raw_result.get("confidence", 0.0),
+            class_probabilities=class_probs,
+            top5_candidates=top5_items,
+            uncertainty_warning=raw_result.get("uncertainty_warning"),
+            frame_count=raw_result.get("frame_count", 0),
+            processing_time_ms=raw_result.get("latency_ms", 0.0),
+            model_inference_latency_ms=raw_result.get("latency_ms"),
+            model_used="TwentyFiveClassBiGRUAttentionModel",
+            model_identifier="bigru_25class",
+        )
+    except HTTPException:
+        raise
+    except Exception as exc:
+        logger.error("25-class landmark recognition error: %s", exc, exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Inference execution failed: {str(exc)}",
+        )
+
 
 

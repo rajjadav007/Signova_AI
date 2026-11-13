@@ -26,6 +26,10 @@ try:
         DemoRankingItem,
         DemoSentenceRecognitionResponse,
         FiveClassSentenceRecognitionResponse,
+        TwentyFiveClassCandidateItem,
+        TwentyFiveClassSentenceRecognitionResponse,
+        TwentyFiveClassItem,
+        TwentyFiveClassesResponse,
     )
 except ModuleNotFoundError:
     from backend.app.schemas.health import HealthResponse
@@ -55,6 +59,10 @@ except ModuleNotFoundError:
         DemoRankingItem,
         DemoSentenceRecognitionResponse,
         FiveClassSentenceRecognitionResponse,
+        TwentyFiveClassCandidateItem,
+        TwentyFiveClassSentenceRecognitionResponse,
+        TwentyFiveClassItem,
+        TwentyFiveClassesResponse,
     )
 
 __all__ = [
@@ -80,4 +88,9 @@ __all__ = [
     "DemoClassesResponse",
     "DemoRankingItem",
     "DemoSentenceRecognitionResponse",
+    "FiveClassSentenceRecognitionResponse",
+    "TwentyFiveClassCandidateItem",
+    "TwentyFiveClassSentenceRecognitionResponse",
+    "TwentyFiveClassItem",
+    "TwentyFiveClassesResponse",
 ]

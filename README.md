@@ -8,6 +8,8 @@
 [![MediaPipe](https://img.shields.io/badge/Computer%20Vision-MediaPipe-0078D4?style=flat&logo=google&logoColor=white)](https://developers.google.com/mediapipe)
 [![Sarvam AI](https://img.shields.io/badge/Cloud%20AI-Sarvam%20AI%20(Translation%20%26%20Bulbul%20TTS)-7928CA?style=flat)](https://sarvam.ai/)
 [![Tests](https://img.shields.io/badge/Tests-143%20Vitest%20%7C%2063%2B%20Pytest%20Passing-success?style=flat)](file:///d:/Projects/Signova%20AI/docs/PROGRESS_TRACKER.md)
+[![Team](https://img.shields.io/badge/Team-The%20Nexus-8A2BE2?style=flat)](#-the-team--hackathon-credentials)
+[![Pitch Deck](https://img.shields.io/badge/Pitch%20Deck-PPTX%20%26%20HTML5-06B6D4?style=flat)](#-the-team--hackathon-credentials)
 [![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=flat&logo=python&logoColor=white)](https://python.org)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
@@ -15,6 +17,7 @@
 
 ## 📖 Table of Contents
 
+- [The Team & Pitch Deck](#-the-team--hackathon-credentials)
 - [Overview](#-overview)
 - [Key Features](#-key-features)
 - [Two-Way Communication Paradigm](#-two-way-communication-paradigm)
@@ -35,6 +38,23 @@
 - [Roadmap](#-roadmap)
 - [Contributing](#-contributing)
 - [License](#-license)
+
+---
+
+## 👥 The Team • Hackathon Credentials
+
+| Role | Name | Focus Areas |
+| :--- | :--- | :--- |
+| **Team Name** | **The Nexus** | National Level Hackathon Project |
+| **Team Leader** | **Raj Jadav** | Full-Stack Architecture, AI Pipeline & System Integration |
+| **Team Member** | **Harsh Sanchaniya** | AI/ML Modeling, Bi-GRU Optimization & Feature Engineering |
+| **Team Member** | **Jaineel Khatri** | Frontend React Development, Two-Way UI & Accessibility |
+| **Team Member** | **Om Panday** | Cloud APIs, Sarvam AI Integration, Testing & Validation |
+
+### 📽️ Hackathon Presentation Decks
+- **PowerPoint Presentation (.pptx):** [Signova_AI_Hackathon_Pitch_The_Nexus.pptx](file:///d:/Projects/Signova%20AI/Signova_AI_Hackathon_Pitch_The_Nexus.pptx) *(11 slides, 16:9 widescreen, dark theme)*
+- **Interactive Browser Slide Deck (.html):** [docs/HACKATHON_PITCH_DECK.html](file:///d:/Projects/Signova%20AI/docs/HACKATHON_PITCH_DECK.html) *(Zero dependency, presenter arrows `←`/`→`/`Space`)*
+- **PPT Generator Script:** [scripts/generate_hackathon_ppt.py](file:///d:/Projects/Signova%20AI/scripts/generate_hackathon_ppt.py)
 
 ---
 
@@ -218,7 +238,9 @@ Signova AI/
 │   └── assets/                               # MediaPipe model bundles
 │
 ├── scripts/                                  # Data extraction, feature generation & training scripts
-├── docs/                                     # Comprehensive architecture, API docs & reports
+├── docs/                                     # Comprehensive architecture, API docs & pitch deck
+│   └── HACKATHON_PITCH_DECK.html             # Interactive HTML5 presentation slide deck
+├── Signova_AI_Hackathon_Pitch_The_Nexus.pptx # 11-Slide widescreen hackathon presentation
 ├── .env.example                              # Environment variable configuration template
 ├── pytest.ini                                # Pytest runner configuration
 └── README.md                                 # Project documentation

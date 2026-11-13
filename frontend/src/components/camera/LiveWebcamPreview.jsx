@@ -27,10 +27,15 @@ const LiveWebcamPreview = React.forwardRef(function LiveWebcamPreview(
     showSpeechToggle = true,
     samplerIntervalMs = 200,
     recognitionMode = "isolated",
+    activeRecognitionMode = null,
     sentenceModel = "bigru",
   } = {},
   ref
 ) {
+  const currentMode = activeRecognitionMode || recognitionMode || "isolated";
+  const isContinuousMode = currentMode === "continuous" || currentMode === "sentence";
+  const isWordMode = !isContinuousMode;
+
   const [autoSpeak, setAutoSpeak] = useState(initialAutoSpeak);
 
   // FE-04 Webcam management
@@ -64,6 +69,14 @@ const LiveWebcamPreview = React.forwardRef(function LiveWebcamPreview(
     enabled: isActive,
   });
 
+  const prevModeRef = React.useRef(currentMode);
+  React.useEffect(() => {
+    if (prevModeRef.current !== currentMode) {
+      prevModeRef.current = currentMode;
+      resetBuffer();
+    }
+  }, [currentMode, resetBuffer]);
+
   const isAutoEnabled = isActive;
 
   // FE-06 Automatic Hands-Free Recognition State Machine
@@ -83,12 +96,13 @@ const LiveWebcamPreview = React.forwardRef(function LiveWebcamPreview(
     isCameraActive: isActive,
     enabled: isAutoEnabled,
     autoSpeak,
-    recognitionMode,
+    recognitionMode: isContinuousMode ? "sentence" : "isolated",
+    activeRecognitionMode: isContinuousMode ? "continuous" : "word",
     sentenceModel,
     onResetSequence: resetBuffer,
-    onSignRecognized,
-    onUncertainSuggestion,
-    onSentenceRecognized,
+    onSignRecognized: isWordMode ? onSignRecognized : null,
+    onUncertainSuggestion: isWordMode ? onUncertainSuggestion : null,
+    onSentenceRecognized: isContinuousMode ? onSentenceRecognized : null,
   });
 
   useImperativeHandle(
@@ -206,6 +220,24 @@ const LiveWebcamPreview = React.forwardRef(function LiveWebcamPreview(
               <span className="camera-status-dot" aria-hidden="true" />
               <span>{statusLabel}</span>
             </div>
+
+            {/* Active Recognition Mode Clarity Badge */}
+            <div
+              className="camera-active-mode-tag"
+              data-testid="camera-active-mode-status"
+              style={{
+                fontSize: "0.78rem",
+                fontWeight: "600",
+                padding: "3px 8px",
+                borderRadius: "var(--radius-sm)",
+                backgroundColor: "rgba(15, 118, 110, 0.12)",
+                color: "var(--color-primary)",
+              }}
+            >
+              {isWordMode
+                ? "Word Recognition: Individual sign detection active."
+                : "Continuous Sentence Recognition: Full sentence detection active."}
+            </div>
           </div>
         </header>
 
@@ -293,8 +325,8 @@ const LiveWebcamPreview = React.forwardRef(function LiveWebcamPreview(
                 }`}
                 aria-hidden="true"
               >
-                <span className={`guide-label ${isHandDetected ? "hand-active" : ""}`}>
-                  {recognitionMode === "sentence"
+                <span className={`guide-label ${isHandDetected ? "hand-active" : ""}`} data-testid="camera-guide-label">
+                  {isContinuousMode
                     ? autoState === RECOGNITION_STATE.RECORDING_GESTURE ||
                       autoState === "COLLECTING_SEQUENCE"
                       ? `Collecting frames (${autoFrameCount})`
@@ -417,7 +449,7 @@ const LiveWebcamPreview = React.forwardRef(function LiveWebcamPreview(
                   data-testid="prediction-status-badge"
                 >
                   {isHighConfidence
-                    ? (recognitionMode === "sentence" ? "✓ PREDICTION" : "✓ RECOGNIZED")
+                    ? (isContinuousMode ? "✓ PREDICTION" : "✓ RECOGNIZED")
                     : "⚠ UNCERTAIN"}
                 </span>
               ) : hasError ? (
@@ -454,7 +486,7 @@ const LiveWebcamPreview = React.forwardRef(function LiveWebcamPreview(
                   <div className="prediction-prominent-display">
                     <div className="prediction-field-row">
                       <span className="prediction-field-label">
-                        {recognitionMode === "sentence" ? "Predicted Sentence:" : "Predicted Sign:"}
+                        {isContinuousMode ? "Predicted Sentence:" : "Predicted Sign:"}
                       </span>
                       <span
                         className="prediction-sign-name"
@@ -478,7 +510,7 @@ const LiveWebcamPreview = React.forwardRef(function LiveWebcamPreview(
                           data-testid="confidence-tag"
                         >
                           {isHighConfidence
-                            ? (recognitionMode === "sentence" ? "Prediction" : "High Confidence")
+                            ? (isContinuousMode ? "Prediction" : "High Confidence")
                             : "Low Confidence"}
                         </span>
                         {recognitionResult?.margin_to_second !== undefined && recognitionResult?.margin_to_second !== null && (
@@ -522,7 +554,7 @@ const LiveWebcamPreview = React.forwardRef(function LiveWebcamPreview(
                   </span>
                   <span>
                     Vocabulary:{" "}
-                    {recognitionMode === "sentence"
+                    {isContinuousMode
                       ? `5 Continuous ISL Sentences (${sentenceModel === "bigru" ? "BiGRU Attention" : "DTW-KNN"})`
                       : "10 Isolated ISL Signs"}
                   </span>

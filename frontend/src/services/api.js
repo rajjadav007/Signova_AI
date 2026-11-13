@@ -36,16 +36,34 @@ export async function requestWithTimeout(url, options = {}, timeoutMs = DEFAULT_
     return inflightRequests.get(dedupeKey);
   }
 
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+  const controller = typeof AbortController !== "undefined" ? new AbortController() : null;
+  const timeoutId = controller ? setTimeout(() => {
+    try { controller.abort(); } catch {}
+  }, timeoutMs) : null;
+
+  if (controller && options.signal && typeof options.signal.addEventListener === "function") {
+    if (options.signal.aborted) {
+      try { controller.abort(); } catch {}
+    } else {
+      options.signal.addEventListener("abort", () => {
+        try { controller.abort(); } catch {}
+      });
+    }
+  }
 
   const fetchPromise = (async () => {
     try {
-      const response = await fetch(url, {
-        ...options,
-        signal: controller.signal,
-      });
-      clearTimeout(timeoutId);
+      const fetchOpts = { ...options };
+      if (controller && controller.signal) {
+        // If options.signal is an instance of AbortSignal, prefer it; otherwise use controller.signal safely
+        try {
+          fetchOpts.signal = controller.signal;
+        } catch {
+          delete fetchOpts.signal;
+        }
+      }
+      const response = await fetch(url, fetchOpts);
+      if (timeoutId) clearTimeout(timeoutId);
 
       if (!response.ok) {
         const errorBody = await response.json().catch(() => ({}));
@@ -105,7 +123,7 @@ export async function requestWithTimeout(url, options = {}, timeoutMs = DEFAULT_
 /**
  * Send video file to backend for MediaPipe extraction and 10-class Isolated ISL recognition.
  */
-export async function recognizeIsolatedVideo(fileBlob, fileName = "recording.webm", category = null, topK = 3) {
+export async function recognizeIsolatedVideo(fileBlob, fileName = "recording.webm", category = null, topK = 3, options = {}) {
   const formData = new FormData();
   formData.append("video", fileBlob, fileName);
 
@@ -116,6 +134,7 @@ export async function recognizeIsolatedVideo(fileBlob, fileName = "recording.web
   return requestWithTimeout(`${API_BASE}/recognize/isolated/video?${queryParams.toString()}`, {
     method: "POST",
     body: formData,
+    signal: options?.signal,
   }, 25000);
 }
 
@@ -285,6 +304,13 @@ export async function recognizeFiveClassSentenceVideo(videoFile, model = "bigru"
       xhr.open("POST", url);
       xhr.timeout = 90000;
 
+      if (opts.signal && typeof opts.signal.addEventListener === "function") {
+        opts.signal.addEventListener("abort", () => {
+          try { xhr.abort(); } catch {}
+          reject(new Error("Request aborted"));
+        });
+      }
+
       xhr.upload.onprogress = (event) => {
         if (event.lengthComputable && progressCallback) {
           const percent = Math.round((event.loaded / event.total) * 100);
@@ -321,6 +347,7 @@ export async function recognizeFiveClassSentenceVideo(videoFile, model = "bigru"
     {
       method: "POST",
       body: formData,
+      signal: opts.signal,
     },
     90000 // 90s timeout for video decoding and MediaPipe extraction
   );
@@ -332,8 +359,9 @@ export async function recognizeFiveClassSentenceVideo(videoFile, model = "bigru"
 export async function recognizeFiveClassSentenceLandmarks(landmarks, model = "bigru", options = {}) {
   const queryParams = new URLSearchParams();
   queryParams.set("model", model);
-  if (options.confidenceThreshold !== undefined) {
-    queryParams.set("confidence_threshold", options.confidenceThreshold);
+  const thresh = typeof options === "number" ? options : options?.confidenceThreshold;
+  if (thresh !== undefined) {
+    queryParams.set("confidence_threshold", thresh);
   }
 
   const queryString = queryParams.toString();
@@ -341,9 +369,9 @@ export async function recognizeFiveClassSentenceLandmarks(landmarks, model = "bi
 
   const payload = {
     landmarks,
-    timestamps_ms: options.timestamps !== undefined ? options.timestamps : (options.timestamps_ms || null),
-    fps: options.fps || 25,
-    top_k: options.top_k || options.topK || 5,
+    timestamps_ms: options?.timestamps !== undefined ? options.timestamps : (options?.timestamps_ms || null),
+    fps: options?.fps || 25,
+    top_k: options?.top_k || options?.topK || 5,
   };
 
   return requestWithTimeout(
@@ -354,6 +382,121 @@ export async function recognizeFiveClassSentenceLandmarks(landmarks, model = "bi
         "Content-Type": "application/json",
       },
       body: JSON.stringify(payload),
+      signal: typeof options === "object" ? options?.signal : undefined,
+    },
+    25000
+  );
+}
+
+/**
+ * Fetch the 25 supported ISL sentence classes for the 25-class BiGRU model.
+ */
+export async function fetchTwentyFiveClassClasses() {
+  return requestWithTimeout(`${API_BASE_URL}/recognize/sentence/twenty-five-class/classes`);
+}
+
+/**
+ * Send recorded webcam or uploaded video file to backend for 25-Class Sentence Recognition.
+ */
+export async function recognizeTwentyFiveClassSentenceVideo(videoFile, options = {}, onProgress = null) {
+  const progressCallback = typeof options === "function" ? options : (onProgress || options?.onProgress || null);
+  const opts = typeof options === "object" && options !== null ? options : {};
+
+  const formData = new FormData();
+  formData.append("video", videoFile, videoFile.name || "webcam_gesture.webm");
+
+  const queryParams = new URLSearchParams();
+  if (opts.confidenceThreshold !== undefined) {
+    queryParams.set("confidence_threshold", opts.confidenceThreshold);
+  }
+
+  const queryString = queryParams.toString();
+  const url = `${API_BASE_URL}/recognize/sentence/twenty-five-class/video${queryString ? `?${queryString}` : ""}`;
+
+  if (progressCallback && typeof XMLHttpRequest !== "undefined") {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", url);
+      xhr.timeout = 90000;
+
+      if (opts.signal) {
+        opts.signal.addEventListener("abort", () => {
+          xhr.abort();
+          reject(new Error("Request aborted"));
+        });
+      }
+
+      xhr.upload.onprogress = (event) => {
+        if (event.lengthComputable && progressCallback) {
+          const percent = Math.round((event.loaded / event.total) * 100);
+          progressCallback(percent, event.loaded, event.total);
+        }
+      };
+
+      xhr.onload = () => {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          try {
+            const data = JSON.parse(xhr.responseText);
+            resolve(data);
+          } catch {
+            reject(new Error("Failed to parse JSON response"));
+          }
+        } else {
+          try {
+            const errData = JSON.parse(xhr.responseText);
+            reject(new Error(errData.detail || errData.error?.message || `Upload failed with status ${xhr.status}`));
+          } catch {
+            reject(new Error(`Upload failed with status ${xhr.status}`));
+          }
+        }
+      };
+
+      xhr.onerror = () => reject(new Error("Network error during video upload"));
+      xhr.ontimeout = () => reject(new Error("Video upload timed out"));
+      xhr.send(formData);
+    });
+  }
+
+  return requestWithTimeout(
+    url,
+    {
+      method: "POST",
+      body: formData,
+      signal: opts.signal,
+    },
+    90000
+  );
+}
+
+/**
+ * Send pre-extracted landmark sequence directly for 25-Class Sentence Recognition.
+ */
+export async function recognizeTwentyFiveClassSentenceLandmarks(landmarks, options = {}) {
+  const queryParams = new URLSearchParams();
+  const thresh = typeof options === "number" ? options : options?.confidenceThreshold;
+  if (thresh !== undefined) {
+    queryParams.set("confidence_threshold", thresh);
+  }
+
+  const queryString = queryParams.toString();
+  const url = `${API_BASE_URL}/recognize/sentence/twenty-five-class/landmarks${queryString ? `?${queryString}` : ""}`;
+
+  const payload = {
+    landmarks,
+    timestamps_ms: options?.timestamps !== undefined ? options.timestamps : (options?.timestamps_ms || null),
+    fps: options?.fps || 25,
+    top_k: options?.top_k || options?.topK || 5,
+  };
+
+  return requestWithTimeout(
+    url,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+      signal: typeof options === "object" ? options?.signal : undefined,
     },
     25000
   );

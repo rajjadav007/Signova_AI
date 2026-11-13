@@ -156,5 +156,49 @@ class FiveClassSentenceRecognitionResponse(BaseModel):
     rankings: Optional[List[DemoRankingItem]] = Field(default=None, description="Ranked list of all 5 classes")
 
 
+class TwentyFiveClassCandidateItem(BaseModel):
+    """Top candidate item for 25-class sentence recognition."""
+
+    class_id: int = Field(..., description="Sentence class ID (0 to 24)")
+    sentence: str = Field(..., description="Predicted English sentence")
+    probability: float = Field(..., description="Softmax class probability [0.0..1.0]")
+
+
+class TwentyFiveClassSentenceRecognitionResponse(BaseModel):
+    """Inference response from the 25-class BiGRU Attention sequence model."""
+
+    success: bool = Field(True, description="Whether inference completed successfully")
+    is_recognized: bool = Field(True, description="Whether a valid prediction was obtained")
+    is_confident: bool = Field(True, description="Whether confidence exceeds threshold (e.g. 0.25)")
+    status: str = Field("SUCCESS", description="'SUCCESS', 'LOW_CONFIDENCE', or error status")
+    predicted_sentence: Optional[str] = Field(None, description="Predicted sentence (always populated if valid inference)")
+    predicted_class_id: Optional[int] = Field(None, description="Predicted class ID (0 to 24)")
+    confidence: float = Field(0.0, description="Highest softmax class probability [0.0..1.0]")
+    class_probabilities: Dict[str, float] = Field(default_factory=dict, description="Softmax probabilities for all 25 classes")
+    top5_candidates: List[TwentyFiveClassCandidateItem] = Field(default_factory=list, description="Top-5 candidate sentences and their probabilities")
+    uncertainty_warning: Optional[str] = Field(None, description="Uncertainty warning when confidence is low")
+    frame_count: int = Field(0, description="Number of video frames processed")
+    processing_time_ms: float = Field(..., description="End-to-end processing latency in ms")
+    model_inference_latency_ms: Optional[float] = Field(None, description="Neural network forward pass latency in ms")
+    model_used: str = Field("TwentyFiveClassBiGRUAttentionModel", description="Model architecture used")
+    model_identifier: str = Field("bigru_25class", description="Model identifier")
+    reason: Optional[str] = Field(None, description="Failure or rejection reason if any")
+
+
+class TwentyFiveClassItem(BaseModel):
+    """25-class sentence class mapping item."""
+
+    class_id: int = Field(..., description="Class ID (0 to 24)")
+    sentence: str = Field(..., description="Sentence text")
+
+
+class TwentyFiveClassesResponse(BaseModel):
+    """Supported 25 continuous sentence classes."""
+
+    total: int = Field(25, description="Total number of classes")
+    classes: List[TwentyFiveClassItem] = Field(..., description="List of supported 25 sentence classes")
+
+
+
 
 
