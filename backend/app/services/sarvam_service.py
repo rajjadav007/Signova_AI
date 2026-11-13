@@ -71,6 +71,44 @@ class SarvamService:
             "Accept": "application/json",
         }
 
+    def _handle_upstream_error(self, response: httpx.Response, service_name: str) -> None:
+        """Parses upstream error and raises mapped HTTPException with sanitized message."""
+        logger.error("Sarvam %s API error status: %d", service_name, response.status_code)
+        try:
+            err_data = response.json()
+            detail_msg = (
+                err_data.get("detail")
+                or err_data.get("message")
+                or (err_data.get("error", {}).get("message") if isinstance(err_data.get("error"), dict) else None)
+                or f"Upstream error {response.status_code}"
+            )
+        except Exception:
+            detail_msg = f"Upstream {service_name} error with status code {response.status_code}."
+
+        lower_msg = str(detail_msg).lower()
+        # API credit exhaustion detection (HTTP 402 or keywords)
+        if response.status_code == 402 or any(k in lower_msg for k in ("credit", "quota", "balance", "insufficient_fund", "payment")):
+            raise HTTPException(
+                status_code=status.HTTP_402_PAYMENT_REQUIRED,
+                detail="Sarvam AI credit limit exhausted. Please top up API credits to continue.",
+            )
+        # Rate limit detection
+        if response.status_code == 429 or "rate limit" in lower_msg:
+            raise HTTPException(
+                status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+                detail="Sarvam AI rate limit exceeded. Please wait a moment before trying again.",
+            )
+        # Auth / key failure
+        if response.status_code in (401, 403):
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail="Sarvam AI authentication failed. Please verify your API key.",
+            )
+        raise HTTPException(
+            status_code=status.HTTP_502_BAD_GATEWAY,
+            detail=f"Sarvam AI {service_name} error: {detail_msg}",
+        )
+
     async def translate(self, request: TranslationRequest) -> TranslationResponse:
         """
         Translates input text using Sarvam Translate API.
@@ -80,6 +118,13 @@ class SarvamService:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Input text cannot be empty.",
+            )
+
+        source_lang = (request.source_language_code or "en-IN").strip()
+        if source_lang not in SUPPORTED_SARVAM_LANGUAGES:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Unsupported source language '{source_lang}'. Supported: {sorted(SUPPORTED_SARVAM_LANGUAGES.keys())}",
             )
 
         target_lang = request.target_language_code.strip()
@@ -92,7 +137,7 @@ class SarvamService:
         headers = self._get_headers()
         payload = {
             "input": text,
-            "source_language_code": request.source_language_code,
+            "source_language_code": source_lang,
             "target_language_code": target_lang,
             "model": request.model,
         }
@@ -119,22 +164,7 @@ class SarvamService:
         elapsed_ms = round((time.perf_counter() - t0) * 1000.0, 2)
 
         if response.status_code != 200:
-            logger.error("Sarvam translate API error status: %d", response.status_code)
-            # Safely extract error details without credentials
-            try:
-                err_data = response.json()
-                detail_msg = (
-                    err_data.get("detail")
-                    or err_data.get("message")
-                    or (err_data.get("error", {}).get("message") if isinstance(err_data.get("error"), dict) else None)
-                    or f"Upstream error {response.status_code}"
-                )
-            except Exception:
-                detail_msg = f"Upstream translation error with status code {response.status_code}."
-            raise HTTPException(
-                status_code=status.HTTP_502_BAD_GATEWAY,
-                detail=f"Sarvam AI translation error: {detail_msg}",
-            )
+            self._handle_upstream_error(response, "translation")
 
         data = response.json()
         translated_text = data.get("translated_text", "")
@@ -144,7 +174,7 @@ class SarvamService:
         return TranslationResponse(
             success=True,
             translated_text=translated_text,
-            source_language_code=data.get("source_language_code", request.source_language_code),
+            source_language_code=data.get("source_language_code", source_lang),
             target_language_code=target_lang,
             processing_time_ms=elapsed_ms,
         )
@@ -216,21 +246,7 @@ class SarvamService:
         elapsed_ms = round((time.perf_counter() - t0) * 1000.0, 2)
 
         if response.status_code != 200:
-            logger.error("Sarvam TTS API error status: %d", response.status_code)
-            try:
-                err_data = response.json()
-                detail_msg = (
-                    err_data.get("detail")
-                    or err_data.get("message")
-                    or (err_data.get("error", {}).get("message") if isinstance(err_data.get("error"), dict) else None)
-                    or f"Upstream error {response.status_code}"
-                )
-            except Exception:
-                detail_msg = f"Upstream TTS error with status code {response.status_code}."
-            raise HTTPException(
-                status_code=status.HTTP_502_BAD_GATEWAY,
-                detail=f"Sarvam AI TTS error: {detail_msg}",
-            )
+            self._handle_upstream_error(response, "text-to-speech")
 
         data = response.json()
         audios = data.get("audios") or []
@@ -317,21 +333,7 @@ class SarvamService:
         elapsed_ms = round((time.perf_counter() - t0) * 1000.0, 2)
 
         if response.status_code != 200:
-            logger.error("Sarvam STT API error status: %d", response.status_code)
-            try:
-                err_data = response.json()
-                detail_msg = (
-                    err_data.get("detail")
-                    or err_data.get("message")
-                    or (err_data.get("error", {}).get("message") if isinstance(err_data.get("error"), dict) else None)
-                    or f"Upstream error {response.status_code}"
-                )
-            except Exception:
-                detail_msg = f"Upstream STT error with status code {response.status_code}."
-            raise HTTPException(
-                status_code=status.HTTP_502_BAD_GATEWAY,
-                detail=f"Sarvam AI speech-to-text error: {detail_msg}",
-            )
+            self._handle_upstream_error(response, "speech-to-text")
 
         resp_data = response.json()
         transcript = resp_data.get("transcript", "").strip()
@@ -355,6 +357,17 @@ class SarvamService:
         """
         Executes unified speech-to-text followed by translation into target language.
         """
+        if source_language_code not in SUPPORTED_SARVAM_LANGUAGES:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Unsupported speech source language '{source_language_code}'. Supported: {sorted(SUPPORTED_SARVAM_LANGUAGES.keys())}",
+            )
+        if target_language_code not in SUPPORTED_SARVAM_LANGUAGES:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Unsupported target language '{target_language_code}'. Supported: {sorted(SUPPORTED_SARVAM_LANGUAGES.keys())}",
+            )
+
         t0 = time.perf_counter()
 
         stt_result = await self.speech_to_text(
@@ -370,7 +383,8 @@ class SarvamService:
             return TranscribeAndTranslateResponse(
                 success=False,
                 original_transcript="",
-                translated_text="No speech detected in audio recording.",
+                translated_text="",
+                error_message="No speech detected in audio recording. Please speak clearly into the microphone.",
                 source_language_code=source_language_code,
                 target_language_code=target_language_code,
                 processing_time_ms=elapsed_ms,

@@ -79,4 +79,5 @@ class TranscribeAndTranslateResponse(BaseModel):
     source_language_code: str = Field(..., description="Source spoken language code")
     target_language_code: str = Field(..., description="Target readable language code")
     processing_time_ms: float = Field(0.0, description="End-to-end processing time in milliseconds")
+    error_message: Optional[str] = Field(None, description="Optional error description when success is False")
 

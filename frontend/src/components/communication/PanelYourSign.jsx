@@ -121,6 +121,26 @@ export default function PanelYourSign({
   const audioRef = useRef(null);
   const lastProcessedSignRef = useRef({ sign: null, timestamp: 0 });
   const activeLangRef = useRef(otherLanguage);
+  const latestReqIdRef = useRef(0);
+
+  // Online / offline network detection
+  useEffect(() => {
+    const handleOnline = () => {
+      if (errorMessage && errorMessage.includes("offline")) {
+        setErrorMessage(null);
+      }
+    };
+    const handleOffline = () => {
+      setErrorMessage("Network disconnected. You are currently offline. Check your internet connection.");
+    };
+
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
+    return () => {
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+    };
+  }, [errorMessage]);
 
   useEffect(() => {
     activeLangRef.current = otherLanguage;
@@ -173,6 +193,7 @@ export default function PanelYourSign({
           setIsPlayingAudio(false);
           if (err && err.name === "NotAllowedError") {
             setAudioBlocked(true);
+            setErrorMessage("Audio playback was blocked by browser autoplay policy. Click 'Play Audio' to listen.");
           }
         });
       }
@@ -199,14 +220,19 @@ export default function PanelYourSign({
 
   const handleTranslateAndSpeak = useCallback(
     async (signName, targetLang) => {
-      if (!signName) return;
+      if (!signName || signName.toLowerCase() === "unknown" || signName.toLowerCase() === "uncertain") {
+        return;
+      }
       const cleanSign =
         VOCABULARY_SIGNS.find(
           (v) => v.toLowerCase() === signName.trim().toLowerCase()
         ) || signName.trim();
 
+      const reqId = ++latestReqIdRef.current;
+
       setCurrentSign(cleanSign);
       setErrorMessage(null);
+      setAudioBlocked(false);
 
       // Check static dictionary first
       let translated = "";
@@ -219,15 +245,20 @@ export default function PanelYourSign({
         setIsTranslating(true);
         try {
           const res = await translateText(cleanSign, targetLang, "en-IN");
+          if (reqId !== latestReqIdRef.current) return;
           translated = res.translated_text || cleanSign;
         } catch (err) {
+          if (reqId !== latestReqIdRef.current) return;
           translated = cleanSign;
           setErrorMessage(err.message || "Translation service unavailable; using original label.");
         } finally {
-          setIsTranslating(false);
+          if (reqId === latestReqIdRef.current) {
+            setIsTranslating(false);
+          }
         }
       }
 
+      if (reqId !== latestReqIdRef.current) return;
       setTranslatedText(translated);
 
       // Generate or retrieve audio from cache
@@ -240,17 +271,21 @@ export default function PanelYourSign({
       setIsSynthesizing(true);
       try {
         const ttsRes = await synthesizeSpeech(translated, targetLang, "priya");
+        if (reqId !== latestReqIdRef.current) return;
         if (ttsRes && ttsRes.audio_base64) {
           audioCache.set(cacheKey, ttsRes.audio_base64);
           playBase64Audio(ttsRes.audio_base64);
         } else {
           speakWithBrowserFallback(translated, targetLang);
         }
-      } catch {
-        // Fallback gracefully without throwing
+      } catch (err) {
+        if (reqId !== latestReqIdRef.current) return;
+        // Fallback gracefully to browser voice without throwing
         speakWithBrowserFallback(translated, targetLang);
       } finally {
-        setIsSynthesizing(false);
+        if (reqId === latestReqIdRef.current) {
+          setIsSynthesizing(false);
+        }
       }
     },
     [playBase64Audio, speakWithBrowserFallback]
@@ -522,8 +557,32 @@ export default function PanelYourSign({
           </div>
 
           {errorMessage && (
-            <div className="panel-error-notice" role="alert">
-              {errorMessage}
+            <div className="panel-error-notice" role="alert" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px" }}>
+              <span>{errorMessage}</span>
+              <button
+                type="button"
+                className="panel-retry-btn"
+                data-testid="panel-a-retry-btn"
+                onClick={() => currentSign && handleTranslateAndSpeak(currentSign, otherLanguage)}
+                aria-label="Retry translation"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "4px",
+                  padding: "3px 8px",
+                  borderRadius: "var(--radius-sm)",
+                  border: "1px solid rgba(239, 68, 68, 0.4)",
+                  backgroundColor: "rgba(239, 68, 68, 0.15)",
+                  color: "#DC2626",
+                  cursor: "pointer",
+                  fontSize: "0.78rem",
+                  fontWeight: "600",
+                  flexShrink: 0,
+                }}
+              >
+                <RotateCcw size={12} />
+                <span>Retry</span>
+              </button>
             </div>
           )}
         </section>

@@ -11,6 +11,7 @@ logger = logging.getLogger("signova.exceptions")
 HTTP_STATUS_CODES: Dict[int, str] = {
     400: "BAD_REQUEST",
     401: "UNAUTHORIZED",
+    402: "PAYMENT_REQUIRED",
     403: "FORBIDDEN",
     404: "NOT_FOUND",
     405: "METHOD_NOT_ALLOWED",
@@ -36,6 +37,7 @@ def http_exception_handler(request: Request, exc: StarletteHTTPException) -> JSO
 
     error_body: Dict[str, Any] = {
         "success": False,
+        "detail": message,
         "error": {
             "code": code,
             "message": message,

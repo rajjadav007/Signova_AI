@@ -23,6 +23,7 @@ export default function LiveWebcamPreview({
   onUncertainSuggestion,
   initialAutoSpeak = true,
   showSpeechToggle = true,
+  samplerIntervalMs = 200,
 } = {}) {
   const [autoSpeak, setAutoSpeak] = useState(initialAutoSpeak);
 
@@ -87,10 +88,10 @@ export default function LiveWebcamPreview({
     [addFrame, processFrame]
   );
 
-  // Controlled off-screen 5 FPS frame sampler
+  // Controlled off-screen frame sampler (default 200ms = 5 FPS for regression test compatibility)
   const { stats } = useFrameSampler(videoRef, {
     enabled: isActive,
-    intervalMs: 200,
+    intervalMs: samplerIntervalMs,
     onFrame: handleFrameSample,
   });
 
@@ -435,6 +436,16 @@ export default function LiveWebcamPreview({
                         Detected
                       </span>
                     </div>
+
+                    {recognitionResult.reason && (
+                      <div
+                        className="prediction-notice-reason"
+                        data-testid="prediction-notice-reason"
+                        style={{ fontSize: "0.8rem", color: "var(--color-text-muted)", marginTop: "4px" }}
+                      >
+                        Notice: {recognitionResult.reason}
+                      </div>
+                    )}
                   </div>
                 </div>
 

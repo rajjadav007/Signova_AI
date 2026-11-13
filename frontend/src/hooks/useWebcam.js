@@ -63,6 +63,7 @@ export function useWebcam({
     if (streamRef.current) {
       streamRef.current.getTracks().forEach((track) => {
         try {
+          track.onended = null;
           track.stop();
         } catch {
           // ignore already stopped tracks
@@ -89,7 +90,10 @@ export function useWebcam({
 
       // Clean up any existing stream first to avoid duplicate streams
       if (streamRef.current) {
-        streamRef.current.getTracks().forEach((track) => track.stop());
+        streamRef.current.getTracks().forEach((track) => {
+          track.onended = null;
+          track.stop();
+        });
         streamRef.current = null;
       }
 
@@ -101,7 +105,7 @@ export function useWebcam({
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
         if (isMountedRef.current) {
           setStatus(CAMERA_STATUS.NOT_AVAILABLE);
-          setErrorMessage("Browser does not support mediaDevices.getUserMedia.");
+          setErrorMessage("Browser does not support camera access (mediaDevices.getUserMedia).");
         }
         return;
       }
@@ -123,13 +127,16 @@ export function useWebcam({
       };
 
       try {
-        let stream;
+        let activeStream;
         try {
-          stream = await navigator.mediaDevices.getUserMedia(constraints);
+          activeStream = await navigator.mediaDevices.getUserMedia(constraints);
         } catch (initialErr) {
           // If exact device or ideal resolution fails, fallback to basic video constraints
-          if (initialErr.name === "OverconstrainedError" || initialErr.name === "ConstraintNotSatisfiedError") {
-            stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+          if (
+            initialErr.name === "OverconstrainedError" ||
+            initialErr.name === "ConstraintNotSatisfiedError"
+          ) {
+            activeStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
           } else {
             throw initialErr;
           }
@@ -137,17 +144,36 @@ export function useWebcam({
 
         if (!isMountedRef.current) {
           // Component unmounted while waiting for user prompt
-          stream.getTracks().forEach((t) => t.stop());
+          activeStream.getTracks().forEach((t) => t.stop());
           return;
         }
 
-        streamRef.current = stream;
-
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
+        // Attach disconnection handler on active video track
+        const videoTracks = activeStream.getVideoTracks
+          ? activeStream.getVideoTracks()
+          : (activeStream.getTracks ? activeStream.getTracks().filter((t) => t.kind === "video") : []);
+        const videoTrack = videoTracks[0];
+        if (videoTrack) {
+          videoTrack.onended = () => {
+            if (isMountedRef.current) {
+              if (videoRef.current) {
+                videoRef.current.srcObject = null;
+              }
+              streamRef.current = null;
+              setStream(null);
+              setStatus(CAMERA_STATUS.ERROR);
+              setErrorMessage("Camera was disconnected. Please reconnect your video device and click Retry.");
+            }
+          };
         }
 
-        setStream(stream);
+        streamRef.current = activeStream;
+
+        if (videoRef.current) {
+          videoRef.current.srcObject = activeStream;
+        }
+
+        setStream(activeStream);
         setStatus(CAMERA_STATUS.ACTIVE);
         setErrorMessage(null);
         await updateDevices();
@@ -156,10 +182,10 @@ export function useWebcam({
 
         if (err.name === "NotAllowedError" || err.name === "PermissionDeniedError") {
           setStatus(CAMERA_STATUS.PERMISSION_DENIED);
-          setErrorMessage("Camera access denied. Please grant camera permission in your browser.");
+          setErrorMessage("Camera access denied. Please grant camera permission in your browser and click Retry.");
         } else if (err.name === "NotFoundError" || err.name === "DevicesNotFoundError") {
           setStatus(CAMERA_STATUS.NOT_AVAILABLE);
-          setErrorMessage("No video input devices found on this device.");
+          setErrorMessage("No video input devices found on this device. Please plug in or enable a camera.");
         } else {
           setStatus(CAMERA_STATUS.ERROR);
           setErrorMessage(err.message || "Failed to start camera preview.");
@@ -179,7 +205,36 @@ export function useWebcam({
     [startCamera]
   );
 
-  // Auto-start exactly once on mount, clean up on unmount
+  // Device change listener for hardware connect / disconnect events
+  useEffect(() => {
+    if (!navigator.mediaDevices?.addEventListener) return;
+
+    const handleDeviceChange = async () => {
+      await updateDevices();
+      if (streamRef.current && isMountedRef.current) {
+        const tracks = streamRef.current.getVideoTracks
+          ? streamRef.current.getVideoTracks()
+          : (streamRef.current.getTracks ? streamRef.current.getTracks().filter((t) => t.kind === "video") : []);
+        const track = tracks[0];
+        if (!track || track.readyState === "ended") {
+          if (videoRef.current) {
+            videoRef.current.srcObject = null;
+          }
+          streamRef.current = null;
+          setStream(null);
+          setStatus(CAMERA_STATUS.ERROR);
+          setErrorMessage("Camera was disconnected. Please reconnect your video device and click Retry.");
+        }
+      }
+    };
+
+    navigator.mediaDevices.addEventListener("devicechange", handleDeviceChange);
+    return () => {
+      navigator.mediaDevices.removeEventListener("devicechange", handleDeviceChange);
+    };
+  }, [updateDevices]);
+
+  // Auto-start on mount, clean up on unmount
   useEffect(() => {
     isMountedRef.current = true;
     if (autoStart) {
@@ -192,7 +247,10 @@ export function useWebcam({
       isMountedRef.current = false;
       // Stop all tracks when user navigates away
       if (streamRef.current) {
-        streamRef.current.getTracks().forEach((t) => t.stop());
+        streamRef.current.getTracks().forEach((t) => {
+          t.onended = null;
+          t.stop();
+        });
         streamRef.current = null;
       }
       if (videoRef.current) {

@@ -139,3 +139,85 @@ def temporal_resample(
     if return_metadata:
         return resampled_landmarks, resampled_mask, resampled_timestamps_ms
     return resampled_landmarks
+
+
+def compute_hand_motion_energy(landmarks_75x4: np.ndarray) -> np.ndarray:
+    """
+    Calculate hand motion energy per frame using valid hand landmark coordinates (33..74).
+    Input: (T, 75, 4) where channels are [x, y, z, confidence].
+    Output: (T,) array of hand motion energy per frame.
+    """
+    T = landmarks_75x4.shape[0]
+    if T < 2:
+        return np.zeros(T, dtype=np.float32)
+
+    hand_pts = landmarks_75x4[:, 33:75, :3]
+    hand_conf = landmarks_75x4[:, 33:75, 3]
+    valid = hand_conf > 0.05
+
+    energy = np.zeros(T, dtype=np.float32)
+    for t in range(1, T):
+        pv = valid[t] & valid[t - 1]
+        if np.any(pv):
+            d = np.linalg.norm(hand_pts[t, pv] - hand_pts[t - 1, pv], axis=-1)
+            energy[t] = float(np.mean(d))
+        else:
+            energy[t] = 0.0
+
+    if T >= 3:
+        kernel = np.array([0.25, 0.5, 0.25], dtype=np.float32)
+        energy = np.convolve(energy, kernel, mode="same")
+    return energy.astype(np.float32)
+
+
+def detect_active_motion_window(
+    landmarks_75x4: np.ndarray,
+    min_motion_threshold: float = 0.015,
+    peak_ratio: float = 0.10,
+    context_padding: int = 20,
+    min_active_frames: int = 32,
+    min_resting_frames_to_trim: int = 10,
+) -> Tuple[int, int]:
+    """
+    Identify the active motion window [start, end) of meaningful hand movement.
+    Preserves context before and after gesture.
+    Handles low-motion signs and missing landmarks safely.
+    Returns (0, T) fallback if motion detection fails or clip has no significant resting frames.
+    """
+    try:
+        T = landmarks_75x4.shape[0]
+        if T <= min_active_frames:
+            return 0, T
+
+        energy = compute_hand_motion_energy(landmarks_75x4)
+        peak = float(np.max(energy))
+
+        # Handle low-motion signs or missing landmarks safely
+        if peak < min_motion_threshold:
+            return 0, T
+
+        thresh = max(min_motion_threshold, min(0.04, peak * peak_ratio))
+        active_indices = np.where(energy >= thresh)[0]
+
+        if len(active_indices) == 0:
+            return 0, T
+
+        first_active = int(active_indices[0])
+        last_active = int(active_indices[-1])
+
+        start_frame = max(0, first_active - context_padding)
+        end_frame = min(T, last_active + 1 + context_padding)
+
+        # Avoid micro-trimming if resting frames at edges are negligible
+        if start_frame < min_resting_frames_to_trim:
+            start_frame = 0
+        if (T - end_frame) < min_resting_frames_to_trim:
+            end_frame = T
+
+        if (end_frame - start_frame) < min_active_frames:
+            return 0, T
+
+        return start_frame, end_frame
+    except Exception:
+        # Fall back to existing processing path if anything goes wrong
+        return 0, landmarks_75x4.shape[0]

@@ -40,8 +40,14 @@ ISOLATED_IMPROVED_CHECKPOINT_PATH: Path = ISOLATED_CHECKPOINT_DIR / "isolated_10
 ISOLATED_BASELINE_CHECKPOINT_PATH: Path = ISOLATED_CHECKPOINT_DIR / "f022_isolated_10class_baseline.joblib"
 ISOLATED_LABELS_PATH: Path = PROJECT_ROOT / "models" / "labels" / "isolated_labels.json"
 
+# 20-Class Side-by-Side Model and Labels Paths (Rollback-safe)
+ISOLATED_20CLASS_CHECKPOINT_PATH: Path = ISOLATED_CHECKPOINT_DIR / "isolated_20class_best.joblib"
+ISOLATED_20CLASS_LABELS_PATH: Path = PROJECT_ROOT / "models" / "labels" / "isolated_20class_labels.json"
+ISOLATED_20CLASS_METADATA_PATH: Path = ISOLATED_CHECKPOINT_DIR / "model_metadata_20class.json"
+
 # Dataset Paths
 SPLITS_DIR: Path = PROJECT_ROOT / "datasets" / "splits"
 LANDMARKS_DIR: Path = PROJECT_ROOT / "datasets" / "landmarks"
 FEATURES_DIR: Path = PROJECT_ROOT / "datasets" / "features"
 MANIFEST_PATH: Path = PROJECT_ROOT / "datasets" / "manifests" / "isl_10class_manifest.csv"
+MANIFEST_20CLASS_PATH: Path = PROJECT_ROOT / "datasets" / "manifests" / "isl_20class_manifest.csv"

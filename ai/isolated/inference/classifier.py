@@ -4,6 +4,7 @@ Loads trained classifier checkpoint and executes prediction on landmark sequence
 """
 
 import logging
+import os
 from pathlib import Path
 import tempfile
 import time
@@ -13,12 +14,19 @@ import numpy as np
 from ai.isolated.config.isolated_settings import (
     DEFAULT_SEQUENCE_LENGTH,
     IDX_TO_CLASS,
+    ISOLATED_20CLASS_CHECKPOINT_PATH,
     ISOLATED_CHECKPOINT_PATH,
     ISOLATED_CLASSES,
     ISOLATED_IMPROVED_CHECKPOINT_PATH,
+    PROJECT_ROOT,
 )
 from ai.isolated.features.feature_extractor import extract_isolated_features
-from ai.isolated.preprocessing.normalizer import spatial_normalize, temporal_resample
+from ai.isolated.preprocessing.normalizer import (
+    compute_hand_motion_energy,
+    detect_active_motion_window,
+    spatial_normalize,
+    temporal_resample,
+)
 
 logger = logging.getLogger("signova.isolated_inference")
 
@@ -27,6 +35,7 @@ class IsolatedSignRecognizer:
     """
     Isolated Sign Language Recognition inference wrapper.
     Accepts raw video bytes or (T, 75, 4) landmark sequences and returns top-k predictions.
+    Supports dynamic class vocabularies (10-class or 20-class) and zero-downtime rollback.
     """
 
     def __init__(
@@ -36,6 +45,10 @@ class IsolatedSignRecognizer:
     ) -> None:
         if checkpoint_path is not None:
             self.checkpoint_path = Path(checkpoint_path).resolve()
+        elif os.environ.get("ISOLATED_MODEL_CHECKPOINT"):
+            self.checkpoint_path = Path(os.environ["ISOLATED_MODEL_CHECKPOINT"]).resolve()
+        elif os.environ.get("ISOLATED_MODEL_VERSION", "").lower() in ("20", "20class", "20_class") and ISOLATED_20CLASS_CHECKPOINT_PATH.exists():
+            self.checkpoint_path = ISOLATED_20CLASS_CHECKPOINT_PATH.resolve()
         elif ISOLATED_IMPROVED_CHECKPOINT_PATH.exists():
             self.checkpoint_path = ISOLATED_IMPROVED_CHECKPOINT_PATH
         else:
@@ -47,6 +60,10 @@ class IsolatedSignRecognizer:
         self.device: str = "cpu"
         self.model_type: str = "Uninitialized"
         self.rejection_threshold: float = 0.50
+        self.food_water_ambiguity_margin: float = 0.20
+        self.enable_motion_window: bool = False
+        self.classes: List[str] = list(ISOLATED_CLASSES)
+        self.idx_to_class: Dict[int, str] = dict(IDX_TO_CLASS)
 
     def load_model(self) -> None:
         """Loads classifier checkpoint if available."""
@@ -66,18 +83,44 @@ class IsolatedSignRecognizer:
             self.model = joblib.load(self.checkpoint_path)
             self.model_type = type(self.model).__name__
 
-            # Load threshold if metadata file exists
-            meta_path = self.checkpoint_path.parent / "model_metadata.json"
-            if meta_path.exists():
-                try:
-                    with open(meta_path, mode="r", encoding="utf-8") as f:
-                        meta = json.load(f)
-                    self.rejection_threshold = float(meta.get("optimal_rejection_threshold", 0.50))
-                except Exception:
-                    self.rejection_threshold = 0.50
+            # Check if model object has class_names
+            if hasattr(self.model, "class_names") and self.model.class_names:
+                self.classes = list(self.model.class_names)
+                self.idx_to_class = {i: c for i, c in enumerate(self.classes)}
+
+            # Load threshold and classes if metadata file exists
+            meta_candidates = [
+                self.checkpoint_path.parent / "model_metadata_20class.json" if "20class" in self.checkpoint_path.name else None,
+                self.checkpoint_path.parent / "model_metadata.json",
+            ]
+            for meta_path in meta_candidates:
+                if meta_path is not None and meta_path.exists():
+                    try:
+                        with open(meta_path, mode="r", encoding="utf-8") as f:
+                            meta = json.load(f)
+                        self.rejection_threshold = float(meta.get("optimal_rejection_threshold", self.rejection_threshold))
+                        if "food_water_ambiguity_margin" in meta:
+                            self.food_water_ambiguity_margin = float(meta["food_water_ambiguity_margin"])
+                        if "classes" in meta and meta["classes"]:
+                            self.classes = list(meta["classes"])
+                            self.idx_to_class = {i: c for i, c in enumerate(self.classes)}
+                        break
+                    except Exception:
+                        pass
+
+            # Check 20-class labels file if classes not loaded yet
+            if len(self.classes) <= 10 and "20class" in self.checkpoint_path.name:
+                labels_20 = PROJECT_ROOT / "models" / "labels" / "isolated_20class_labels.json"
+                if labels_20.exists():
+                    try:
+                        with open(labels_20, mode="r", encoding="utf-8") as f:
+                            self.classes = json.load(f)
+                            self.idx_to_class = {i: c for i, c in enumerate(self.classes)}
+                    except Exception:
+                        pass
 
             self.is_loaded = True
-            logger.info("Loaded isolated classifier: %s from %s (threshold=%.2f)", self.model_type, self.checkpoint_path, self.rejection_threshold)
+            logger.info("Loaded isolated classifier: %s from %s (%d classes, threshold=%.2f)", self.model_type, self.checkpoint_path, len(self.classes), self.rejection_threshold)
         except Exception as exc:
             logger.error("Failed to load isolated model from %s: %s", self.checkpoint_path, exc)
             self.is_loaded = False
@@ -88,6 +131,7 @@ class IsolatedSignRecognizer:
         raw_keypoints: Union[np.ndarray, List[Any]],
         category: Optional[str] = None,
         top_k: int = 3,
+        enable_motion_window: Optional[bool] = None,
     ) -> Dict[str, Any]:
         """
         Predict isolated ISL sign from landmark sequence.
@@ -169,12 +213,22 @@ class IsolatedSignRecognizer:
                 "reason": "No valid landmarks detected in input sequence",
             }
 
-        # Preprocessing: Spatial normalization + uniform temporal resampling
+        # Preprocessing: Spatial normalization + active motion window detection + uniform temporal resampling
         normed = spatial_normalize(kps)
-        resampled = temporal_resample(normed, target_length=self.sequence_length)
+        use_motion_window = self.enable_motion_window if enable_motion_window is None else enable_motion_window
+        if use_motion_window:
+            start_idx, end_idx = detect_active_motion_window(normed)
+            active_normed = normed[start_idx:end_idx]
+        else:
+            active_normed = normed
+
+        resampled = temporal_resample(active_normed, target_length=self.sequence_length)
         features = extract_isolated_features(resampled)  # (sequence_length, 600)
 
         # Inference
+        is_food_water_ambiguity = False
+        fw_margin = 0.0
+
         if self.model is not None and hasattr(self.model, "predict_proba"):
             seq_input = features[np.newaxis, ...]
             try:
@@ -187,37 +241,62 @@ class IsolatedSignRecognizer:
             top_indices = np.argsort(probs)[::-1][:k_val]
             top_predictions = [
                 {
-                    "label": IDX_TO_CLASS.get(int(idx), "unknown"),
-                    "sign": IDX_TO_CLASS.get(int(idx), "unknown"),
-                    "display_name": IDX_TO_CLASS.get(int(idx), "unknown").capitalize(),
+                    "label": self.idx_to_class.get(int(idx), "unknown"),
+                    "sign": self.idx_to_class.get(int(idx), "unknown"),
+                    "display_name": self.idx_to_class.get(int(idx), "unknown").capitalize(),
                     "confidence": round(float(probs[idx]), 4),
                 }
                 for idx in top_indices
             ]
             predicted_sign = top_predictions[0]["sign"]
             confidence = top_predictions[0]["confidence"]
+
+            # Food/Water ambiguity evaluation
+            all_sorted_indices = np.argsort(probs)[::-1]
+            top1_sign = self.idx_to_class.get(int(all_sorted_indices[0]), "unknown")
+            top2_sign = self.idx_to_class.get(int(all_sorted_indices[1]), "unknown") if len(all_sorted_indices) > 1 else None
+            top1_prob = float(probs[all_sorted_indices[0]])
+            top2_prob = float(probs[all_sorted_indices[1]]) if len(all_sorted_indices) > 1 else 0.0
+
+            if {top1_sign, top2_sign} == {"food", "water"}:
+                fw_margin = top1_prob - top2_prob
+                if fw_margin < self.food_water_ambiguity_margin:
+                    is_food_water_ambiguity = True
         else:
             # Default baseline stub when model not yet trained
             top_predictions = [
-                {"label": ISOLATED_CLASSES[0], "sign": ISOLATED_CLASSES[0], "display_name": ISOLATED_CLASSES[0].capitalize(), "confidence": 0.50},
-                {"label": ISOLATED_CLASSES[1], "sign": ISOLATED_CLASSES[1], "display_name": ISOLATED_CLASSES[1].capitalize(), "confidence": 0.30},
-                {"label": ISOLATED_CLASSES[2], "sign": ISOLATED_CLASSES[2], "display_name": ISOLATED_CLASSES[2].capitalize(), "confidence": 0.20},
+                {"label": self.classes[0], "sign": self.classes[0], "display_name": self.classes[0].capitalize(), "confidence": 0.50},
+                {"label": self.classes[1] if len(self.classes) > 1 else "unknown", "sign": self.classes[1] if len(self.classes) > 1 else "unknown", "display_name": (self.classes[1] if len(self.classes) > 1 else "unknown").capitalize(), "confidence": 0.30},
+                {"label": self.classes[2] if len(self.classes) > 2 else "unknown", "sign": self.classes[2] if len(self.classes) > 2 else "unknown", "display_name": (self.classes[2] if len(self.classes) > 2 else "unknown").capitalize(), "confidence": 0.20},
             ]
             predicted_sign = top_predictions[0]["sign"]
             confidence = top_predictions[0]["confidence"]
 
         proc_time_ms = round((time.perf_counter() - t0) * 1000.0, 2)
-        is_recognized = confidence >= self.rejection_threshold
+        is_recognized = (confidence >= self.rejection_threshold) and not is_food_water_ambiguity
         cat_str = category if isinstance(category, str) else "general"
 
         top_3 = top_predictions[:3]
         confirmed_label = predicted_sign if is_recognized else "uncertain"
 
+        if is_recognized:
+            reason = None
+            display_name = predicted_sign.capitalize()
+        elif is_food_water_ambiguity:
+            reason = (
+                f"Ambiguous between Food and Water: probability difference "
+                f"({fw_margin:.2f}) below configured margin ({self.food_water_ambiguity_margin:.2f})"
+            )
+            display_name = f"Uncertain ({predicted_sign.capitalize()})"
+        else:
+            reason = f"Confidence {confidence:.2f} below rejection threshold {self.rejection_threshold:.2f}"
+            display_name = f"Uncertain ({predicted_sign.capitalize()})"
+
         return {
             "success": True,
             "predicted_label": confirmed_label,
             "predicted_sign": predicted_sign,
-            "display_name": predicted_sign.capitalize() if is_recognized else f"Uncertain ({predicted_sign.capitalize()})",
+            "display_name": display_name,
             "category": cat_str,
             "confidence": confidence,
             "status": "recognized" if is_recognized else "uncertain",
@@ -227,7 +306,7 @@ class IsolatedSignRecognizer:
             "rejection_threshold": self.rejection_threshold,
             "top_3_predictions": top_3,
             "top_predictions": top_predictions,
-            "reason": None if is_recognized else f"Confidence {confidence:.2f} below rejection threshold {self.rejection_threshold:.2f}",
+            "reason": reason,
         }
 
     def predict_video(
@@ -236,9 +315,11 @@ class IsolatedSignRecognizer:
         filename: str,
         category: Optional[str] = None,
         top_k: int = 3,
+        enable_motion_window: bool = True,
     ) -> Dict[str, Any]:
         """
         Extract MediaPipe landmarks from video bytes and run isolated sign recognition.
+        Enables active-motion window detection by default to trim webcam resting frames.
         """
         from ai.pose_extraction.mediapipe_extractor import ModernMediaPipeExtractor
 
@@ -247,10 +328,17 @@ class IsolatedSignRecognizer:
             tmp_path = Path(tmp.name)
 
         try:
-            extractor = ModernMediaPipeExtractor()
-            raw_spatial, meta = extractor.extract_isign_video(tmp_path)
+            if not hasattr(self, "_extractor") or self._extractor is None:
+                from ai.pose_extraction.mediapipe_extractor import ModernMediaPipeExtractor
+                self._extractor = ModernMediaPipeExtractor()
+            raw_spatial, meta = self._extractor.extract_isign_video(tmp_path)
             landmarks_75x4 = raw_spatial.reshape(-1, 75, 4)
-            return self.predict_landmarks(landmarks_75x4, category=category, top_k=top_k)
+            return self.predict_landmarks(
+                landmarks_75x4,
+                category=category,
+                top_k=top_k,
+                enable_motion_window=enable_motion_window,
+            )
         finally:
             if tmp_path.exists():
                 try:

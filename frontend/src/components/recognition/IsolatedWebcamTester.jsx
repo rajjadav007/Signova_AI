@@ -13,6 +13,16 @@ const ISOLATED_SIGNS = [
   "stop",
   "water",
   "food",
+  "father",
+  "mother",
+  "sister",
+  "teacher",
+  "you",
+  "friend",
+  "student",
+  "school",
+  "market",
+  "hospital",
 ];
 
 const RECORDING_DURATION_MS = 3000; // 3 seconds optimal isolated gesture capture
@@ -94,6 +104,20 @@ export default function IsolatedWebcamTester() {
     }
     setCameraActive(false);
     setRecording(false);
+  };
+
+  const stopRecordingEarly = () => {
+    if (countdownIntervalRef.current) {
+      clearInterval(countdownIntervalRef.current);
+      countdownIntervalRef.current = null;
+    }
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state === "recording") {
+      try {
+        mediaRecorderRef.current.stop();
+      } catch {
+        // ignore
+      }
+    }
   };
 
   const captureAndRecognize = () => {
@@ -395,8 +419,8 @@ export default function IsolatedWebcamTester() {
 
                 <button
                   type="button"
-                  onClick={captureAndRecognize}
-                  disabled={recording || loading}
+                  onClick={recording ? stopRecordingEarly : captureAndRecognize}
+                  disabled={loading}
                   style={{
                     padding: "10px 22px",
                     backgroundColor: recording ? "#f44336" : "#4caf50",
@@ -408,7 +432,7 @@ export default function IsolatedWebcamTester() {
                     fontSize: "0.95rem",
                   }}
                 >
-                  {recording ? `Recording (${countdown}s)...` : "Capture & Recognize (3s)"}
+                  {recording ? `Stop & Recognize Now (${countdown}s)` : "Capture & Recognize (3s)"}
                 </button>
               </>
             )}

@@ -60,16 +60,22 @@ def _assign_hands_anatomically(
     detected_hands: List[Any],
     detected_handedness: List[Any],
     pose_landmarks: Optional[List[Any]] = None,
+    hand_history: Optional[List[str]] = None,
+    history_window: int = 5,
 ) -> Tuple[Optional[Any], Optional[Any]]:
     """
-    Map detected hands to anatomical (left_hand, right_hand) slots.
+    Map detected hands to anatomical (left_hand, right_hand) slots with hysteresis.
     MediaPipe HandLandmarker assumes a selfie mirror view.
     In third-person observer camera:
       - MediaPipe 'Left' is anatomical Right.
       - MediaPipe 'Right' is anatomical Left.
     When pose is present, wrist distance (pose left #15, right #16) provides ground truth.
+    When hand_history is provided, a 5-frame majority vote stabilizes single-hand assignments,
+    preventing frame-to-frame left/right channel switching while preserving two-hand gestures.
     """
     if not detected_hands:
+        if hand_history is not None:
+            hand_history.append("none")
         return None, None
 
     pose_lw = None
@@ -91,29 +97,69 @@ def _assign_hands_anatomically(
         cat = detected_handedness[0][0].category_name if detected_handedness else "Right"
         hw = np.array([hand[0].x, hand[0].y], dtype=np.float32)
 
+        raw_choice = None
+        is_decisive = False
+
         if pose_lw is not None and pose_rw is not None:
             dist_l = float(np.linalg.norm(hw - pose_lw))
             dist_r = float(np.linalg.norm(hw - pose_rw))
-            if dist_l + 0.04 < dist_r:
-                return hand, None
-            if dist_r + 0.04 < dist_l:
-                return None, hand
+            if dist_l + 0.05 < dist_r:
+                raw_choice = "left"
+                is_decisive = True
+            elif dist_r + 0.05 < dist_l:
+                raw_choice = "right"
+                is_decisive = True
+            else:
+                raw_choice = "left" if dist_l < dist_r else "right"
+                is_decisive = False
+        elif pose_lw is not None and float(np.linalg.norm(hw - pose_lw)) < 0.16:
+            raw_choice = "left"
+            is_decisive = True
+        elif pose_rw is not None and float(np.linalg.norm(hw - pose_rw)) < 0.16:
+            raw_choice = "right"
+            is_decisive = True
+        else:
+            # Inverted category fallback (MediaPipe selfie-mirror to third-person)
+            raw_choice = "right" if cat == "Left" else "left"
+            is_decisive = False
 
-        if pose_lw is not None and float(np.linalg.norm(hw - pose_lw)) < 0.16:
+        final_choice = raw_choice
+
+        # Apply 5-frame majority voting if history is maintained
+        if hand_history is not None:
+            recent_single = [h for h in hand_history[-history_window:] if h in ("left", "right")]
+            if recent_single:
+                l_count = recent_single.count("left")
+                r_count = recent_single.count("right")
+
+                if not is_decisive:
+                    if r_count > l_count:
+                        final_choice = "right"
+                    elif l_count > r_count:
+                        final_choice = "left"
+                else:
+                    # Prevent single-frame glitch against strong unanimous majority
+                    if raw_choice == "left" and r_count >= 4 and len(recent_single) >= 4:
+                        if pose_lw is not None and pose_rw is not None and abs(dist_l - dist_r) < 0.08:
+                            final_choice = "right"
+                    elif raw_choice == "right" and l_count >= 4 and len(recent_single) >= 4:
+                        if pose_lw is not None and pose_rw is not None and abs(dist_l - dist_r) < 0.08:
+                            final_choice = "left"
+
+            hand_history.append(raw_choice)
+
+        if final_choice == "left":
             return hand, None
-        if pose_rw is not None and float(np.linalg.norm(hw - pose_rw)) < 0.16:
-            return None, hand
+        return None, hand
 
-        # Inverted category fallback (MediaPipe selfie-mirror to third-person)
-        if cat == "Left":
-            return None, hand
-        return hand, None
-
-    # Two or more hands
+    # Two or more hands: Genuine two-hand gesture!
     h0 = detected_hands[0]
     h1 = detected_hands[1]
     hw0 = np.array([h0[0].x, h0[0].y], dtype=np.float32)
     hw1 = np.array([h1[0].x, h1[0].y], dtype=np.float32)
+
+    if hand_history is not None:
+        hand_history.append("both")
 
     if pose_lw is not None and pose_rw is not None:
         cost_normal = float(np.linalg.norm(hw0 - pose_lw) + np.linalg.norm(hw1 - pose_rw))
@@ -202,21 +248,27 @@ class ModernMediaPipeExtractor:
         self.min_pose_confidence = min_pose_detection_confidence
         self.min_hand_confidence = min_hand_landmarks_confidence
 
-        # Persistent IMAGE mode landmarkers for single-frame calls
-        pose_options_image = vision.PoseLandmarkerOptions(
-            base_options=BaseOptions(model_asset_path=str(self.pose_model_path)),
-            running_mode=vision.RunningMode.IMAGE,
-            min_pose_detection_confidence=self.min_pose_confidence,
-        )
-        hand_options_image = vision.HandLandmarkerOptions(
-            base_options=BaseOptions(model_asset_path=str(self.hand_model_path)),
-            running_mode=vision.RunningMode.IMAGE,
-            num_hands=2,
-            min_hand_detection_confidence=self.min_hand_confidence,
-        )
+        # Lazy IMAGE mode landmarkers for single-frame calls (avoid 110ms startup overhead when unused)
+        self._pose_image = None
+        self._hand_image = None
 
-        self._pose_image = vision.PoseLandmarker.create_from_options(pose_options_image)
-        self._hand_image = vision.HandLandmarker.create_from_options(hand_options_image)
+    def _ensure_image_landmarkers(self) -> None:
+        """Lazily initialize persistent IMAGE mode landmarkers on first single-frame call."""
+        if self._pose_image is None:
+            pose_options_image = vision.PoseLandmarkerOptions(
+                base_options=BaseOptions(model_asset_path=str(self.pose_model_path)),
+                running_mode=vision.RunningMode.IMAGE,
+                min_pose_detection_confidence=self.min_pose_confidence,
+            )
+            self._pose_image = vision.PoseLandmarker.create_from_options(pose_options_image)
+        if self._hand_image is None:
+            hand_options_image = vision.HandLandmarkerOptions(
+                base_options=BaseOptions(model_asset_path=str(self.hand_model_path)),
+                running_mode=vision.RunningMode.IMAGE,
+                num_hands=2,
+                min_hand_detection_confidence=self.min_hand_confidence,
+            )
+            self._hand_image = vision.HandLandmarker.create_from_options(hand_options_image)
 
     def extract_isign_frame(
         self, rgb_frame: np.ndarray
@@ -224,8 +276,7 @@ class ModernMediaPipeExtractor:
         """
         Extract 75 landmarks from a single RGB frame using IMAGE mode.
         """
-        if self._pose_image is None or self._hand_image is None:
-            raise RuntimeError("ModernMediaPipeExtractor is closed.")
+        self._ensure_image_landmarkers()
 
         mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb_frame)
         pose_result = self._pose_image.detect(mp_image)
@@ -285,6 +336,7 @@ class ModernMediaPipeExtractor:
         corrupted_frames = 0
         read_frames = 0
         last_timestamp_ms = -1
+        self._hand_history: List[str] = []
 
         t_start = time.perf_counter()
 
@@ -302,6 +354,11 @@ class ModernMediaPipeExtractor:
                 ts_ms = max(calculated_ts, last_timestamp_ms + 1)
                 last_timestamp_ms = ts_ms
                 read_frames += 1
+
+                # Scale down high-resolution frames (e.g. 1080p, 720p) to 640px width to cut memory bandwidth
+                if width > 640:
+                    scale = 640.0 / width
+                    frame = cv2.resize(frame, (640, int(height * scale)), interpolation=cv2.INTER_AREA)
 
                 # Consistent RGB conversion
                 rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -420,10 +477,12 @@ class ModernMediaPipeExtractor:
                 keypoints[i] = [lm.x, lm.y, lm.z, vis]
                 pose_visibilities.append(float(vis))
 
-        # Hand assignment with anatomical validation
+        # Hand assignment with anatomical validation and hysteresis stabilization
         hands = hand_result.hand_landmarks if hand_result.hand_landmarks else []
         handedness = hand_result.handedness if hand_result.handedness else []
-        lh, rh = _assign_hands_anatomically(hands, handedness, pose_lms)
+        lh, rh = _assign_hands_anatomically(
+            hands, handedness, pose_lms, hand_history=getattr(self, "_hand_history", None)
+        )
 
         left_detected = lh is not None
         right_detected = rh is not None

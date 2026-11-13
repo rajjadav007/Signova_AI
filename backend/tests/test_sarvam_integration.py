@@ -412,3 +412,85 @@ async def test_transcribe_and_translate_same_language_skips_translation(mock_con
         # Only STT called once, translate skipped
         assert mock_post.call_count == 1
 
+
+@pytest.mark.anyio
+async def test_credit_exhaustion_detection(mock_configured_service):
+    """Verify that upstream 402 or credit exhaustion returns 402 Payment Required."""
+    mock_resp = MagicMock()
+    mock_resp.status_code = 402
+    mock_resp.json.return_value = {"detail": "Insufficient credits or account subscription expired."}
+
+    with patch("httpx.AsyncClient.post", new_callable=AsyncMock) as mock_post:
+        mock_post.return_value = mock_resp
+        req = TranslationRequest(input="Water", target_language_code="hi-IN")
+        with pytest.raises(HTTPException) as exc_info:
+            await mock_configured_service.translate(req)
+
+        assert exc_info.value.status_code == 402
+        assert "credit limit exhausted" in exc_info.value.detail.lower()
+
+
+@pytest.mark.anyio
+async def test_rate_limit_detection(mock_configured_service):
+    """Verify that upstream 429 returns 429 Too Many Requests."""
+    mock_resp = MagicMock()
+    mock_resp.status_code = 429
+    mock_resp.json.return_value = {"message": "Rate limit exceeded. Slow down."}
+
+    with patch("httpx.AsyncClient.post", new_callable=AsyncMock) as mock_post:
+        mock_post.return_value = mock_resp
+        req = TranslationRequest(input="Water", target_language_code="hi-IN")
+        with pytest.raises(HTTPException) as exc_info:
+            await mock_configured_service.translate(req)
+
+        assert exc_info.value.status_code == 429
+        assert "rate limit exceeded" in exc_info.value.detail.lower()
+
+
+@pytest.mark.anyio
+async def test_empty_speech_transcript_returns_safe_failure(mock_configured_service):
+    """Verify empty speech transcript does NOT return fake translation; returns success=False with clear error message."""
+    mock_stt_resp = MagicMock()
+    mock_stt_resp.status_code = 200
+    mock_stt_resp.json.return_value = {"transcript": "", "language_code": "en-IN"}
+
+    with patch("httpx.AsyncClient.post", new_callable=AsyncMock) as mock_post:
+        mock_post.return_value = mock_stt_resp
+        res = await mock_configured_service.transcribe_and_translate(
+            audio_bytes=b"SILENT_AUDIO",
+            filename="silent.wav",
+            source_language_code="en-IN",
+            target_language_code="gu-IN",
+        )
+
+        assert res.success is False
+        assert res.original_transcript == ""
+        assert res.translated_text == ""
+        assert res.error_message is not None
+        assert "no speech detected" in res.error_message.lower()
+        # Translate must NOT have been called
+        assert mock_post.call_count == 1
+
+
+@pytest.mark.anyio
+async def test_unsupported_language_combinations_rejected(mock_configured_service):
+    """Verify that unsupported source or target languages in speech translation raise 400."""
+    with pytest.raises(HTTPException) as exc_source:
+        await mock_configured_service.transcribe_and_translate(
+            audio_bytes=b"DATA",
+            source_language_code="xx-INVALID",
+            target_language_code="gu-IN",
+        )
+    assert exc_source.value.status_code == 400
+    assert "unsupported speech source language" in exc_source.value.detail.lower()
+
+    with pytest.raises(HTTPException) as exc_target:
+        await mock_configured_service.transcribe_and_translate(
+            audio_bytes=b"DATA",
+            source_language_code="en-IN",
+            target_language_code="xx-INVALID",
+        )
+    assert exc_target.value.status_code == 400
+    assert "unsupported target language" in exc_target.value.detail.lower()
+
+
