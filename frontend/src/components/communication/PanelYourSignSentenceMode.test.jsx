@@ -166,19 +166,12 @@ describe("Continuous ISL Sentence Recognition Mode & Pipeline Integration", () =
       expect(screen.getByTestId("recognized-sentence-text").textContent).toBe(
         "are you free today"
       );
-      expect(screen.getByTestId("sentence-confidence-score").textContent).toContain("94.2%");
     });
 
-    // Verifies gloss tokens are displayed as chips
-    const glossContainer = screen.getByTestId("sentence-gloss-tokens");
-    expect(within(glossContainer).getByText("YOU")).toBeDefined();
-    expect(within(glossContainer).getByText("FREE")).toBeDefined();
-    expect(within(glossContainer).getByText("TODAY")).toBeDefined();
-
-    // Verifies top 3 alternative candidate sentences are displayed
-    const altContainer = screen.getByTestId("sentence-top-alternatives");
-    expect(within(altContainer).getByText("what are you doing")).toBeDefined();
-    expect(within(altContainer).getByText("can i help you")).toBeDefined();
+    // Verifies confidence score, gloss chips, and competing suggestions are removed
+    expect(screen.queryByTestId("sentence-confidence-score")).toBeNull();
+    expect(screen.queryByTestId("sentence-gloss-tokens")).toBeNull();
+    expect(screen.queryByTestId("sentence-top-alternatives")).toBeNull();
 
     // Verifies speech and translation pipeline integration:
     // Recognized sentence immediately triggered Sarvam translation to Gujarati!
@@ -227,13 +220,10 @@ describe("Continuous ISL Sentence Recognition Mode & Pipeline Integration", () =
       expect(screen.getByTestId("recognized-sentence-text").textContent).toBe(
         "are you hiding something"
       );
-      expect(screen.getByTestId("sentence-confidence-score").textContent).toContain("91.5%");
     });
 
-    const glossContainer = screen.getByTestId("sentence-gloss-tokens");
-    expect(within(glossContainer).getByText("YOU")).toBeDefined();
-    expect(within(glossContainer).getByText("HIDE")).toBeDefined();
-    expect(within(glossContainer).getByText("SOMETHING")).toBeDefined();
+    expect(screen.queryByTestId("sentence-confidence-score")).toBeNull();
+    expect(screen.queryByTestId("sentence-gloss-tokens")).toBeNull();
 
     // Verifies translation called
     await waitFor(() => {
@@ -242,9 +232,9 @@ describe("Continuous ISL Sentence Recognition Mode & Pipeline Integration", () =
   });
 
   // ---------------------------------------------------------------------------
-  // 4. Alternative Candidate Selection
+  // 4. Verification that alternative candidate list and probability bars are removed
   // ---------------------------------------------------------------------------
-  it("allows clicking an alternative sentence candidate to re-translate and speak", async () => {
+  it("verifies alternative candidate list and probability bars are not displayed", async () => {
     render(
       <PanelYourSign
         otherLanguage="gu-IN"
@@ -259,18 +249,11 @@ describe("Continuous ISL Sentence Recognition Mode & Pipeline Integration", () =
       expect(screen.getByTestId("recognized-sentence-text")).toBeDefined();
     });
 
-    // Clear translation mock calls to test alternative selection
-    api.translateText.mockClear();
-    api.synthesizeSpeech.mockClear();
-
-    // Click candidate #2: "what are you doing"
-    const altCandidate2 = screen.getByTestId("alt-candidate-1");
-    expect(altCandidate2.textContent).toContain("what are you doing");
-    fireEvent.click(altCandidate2);
-
-    await waitFor(() => {
-      expect(api.translateText).toHaveBeenCalledWith("what are you doing", "gu-IN", "en-IN");
-    });
+    // Competing candidates and probability panels are absent
+    expect(screen.queryByTestId("alt-candidate-0")).toBeNull();
+    expect(screen.queryByTestId("alt-candidate-1")).toBeNull();
+    expect(screen.queryByTestId("sentence-top-alternatives")).toBeNull();
+    expect(screen.queryByTestId("five-class-probabilities")).toBeNull();
   });
 
   // ---------------------------------------------------------------------------

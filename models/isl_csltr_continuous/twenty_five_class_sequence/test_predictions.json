@@ -1,0 +1,977 @@
+[
+  {
+    "video_id": "s000_signer2_are_you_free_today__2_",
+    "signer_id": 2,
+    "ground_truth_id": 5,
+    "ground_truth_sentence": "are you free today",
+    "predicted_id": 1,
+    "predicted_sentence": "help me",
+    "confidence": 0.211,
+    "correct": false,
+    "in_top3": false,
+    "in_top5": false,
+    "top5_candidates": [
+      {
+        "class_id": 1,
+        "sentence": "help me",
+        "probability": 0.211
+      },
+      {
+        "class_id": 19,
+        "sentence": "i like you i love you",
+        "probability": 0.2003
+      },
+      {
+        "class_id": 20,
+        "sentence": "i promise",
+        "probability": 0.1983
+      },
+      {
+        "class_id": 9,
+        "sentence": "had your food",
+        "probability": 0.1972
+      },
+      {
+        "class_id": 23,
+        "sentence": "thank you so much",
+        "probability": 0.1932
+      }
+    ]
+  },
+  {
+    "video_id": "s005_signer2_comb_your_hair__2_",
+    "signer_id": 2,
+    "ground_truth_id": 0,
+    "ground_truth_sentence": "comb your hair",
+    "predicted_id": 13,
+    "predicted_sentence": "how old are you",
+    "confidence": 0.2102,
+    "correct": false,
+    "in_top3": false,
+    "in_top5": false,
+    "top5_candidates": [
+      {
+        "class_id": 13,
+        "sentence": "how old are you",
+        "probability": 0.2102
+      },
+      {
+        "class_id": 23,
+        "sentence": "thank you so much",
+        "probability": 0.2041
+      },
+      {
+        "class_id": 9,
+        "sentence": "had your food",
+        "probability": 0.1986
+      },
+      {
+        "class_id": 14,
+        "sentence": "i am crying",
+        "probability": 0.1951
+      },
+      {
+        "class_id": 17,
+        "sentence": "i am hungry",
+        "probability": 0.192
+      }
+    ]
+  },
+  {
+    "video_id": "s006_signer2_congratulations",
+    "signer_id": 2,
+    "ground_truth_id": 6,
+    "ground_truth_sentence": "congratulations",
+    "predicted_id": 5,
+    "predicted_sentence": "are you free today",
+    "confidence": 0.2098,
+    "correct": false,
+    "in_top3": false,
+    "in_top5": false,
+    "top5_candidates": [
+      {
+        "class_id": 5,
+        "sentence": "are you free today",
+        "probability": 0.2098
+      },
+      {
+        "class_id": 4,
+        "sentence": "who are you",
+        "probability": 0.2041
+      },
+      {
+        "class_id": 3,
+        "sentence": "i need water",
+        "probability": 0.2
+      },
+      {
+        "class_id": 13,
+        "sentence": "how old are you",
+        "probability": 0.1952
+      },
+      {
+        "class_id": 16,
+        "sentence": "i am feeling cold",
+        "probability": 0.1909
+      }
+    ]
+  },
+  {
+    "video_id": "s014_signer2_do_not_worry__2_",
+    "signer_id": 2,
+    "ground_truth_id": 7,
+    "ground_truth_sentence": "do not worry",
+    "predicted_id": 2,
+    "predicted_sentence": "i am fine. thank you sir.",
+    "confidence": 0.2062,
+    "correct": false,
+    "in_top3": true,
+    "in_top5": true,
+    "top5_candidates": [
+      {
+        "class_id": 2,
+        "sentence": "i am fine. thank you sir.",
+        "probability": 0.2062
+      },
+      {
+        "class_id": 7,
+        "sentence": "do not worry",
+        "probability": 0.206
+      },
+      {
+        "class_id": 21,
+        "sentence": "shall we go outside",
+        "probability": 0.197
+      },
+      {
+        "class_id": 9,
+        "sentence": "had your food",
+        "probability": 0.1956
+      },
+      {
+        "class_id": 15,
+        "sentence": "i am feeling bored",
+        "probability": 0.1952
+      }
+    ]
+  },
+  {
+    "video_id": "s016_signer2_go_and_sleep__2_",
+    "signer_id": 2,
+    "ground_truth_id": 8,
+    "ground_truth_sentence": "go and sleep",
+    "predicted_id": 20,
+    "predicted_sentence": "i promise",
+    "confidence": 0.2128,
+    "correct": false,
+    "in_top3": false,
+    "in_top5": false,
+    "top5_candidates": [
+      {
+        "class_id": 20,
+        "sentence": "i promise",
+        "probability": 0.2128
+      },
+      {
+        "class_id": 9,
+        "sentence": "had your food",
+        "probability": 0.1993
+      },
+      {
+        "class_id": 5,
+        "sentence": "are you free today",
+        "probability": 0.1971
+      },
+      {
+        "class_id": 17,
+        "sentence": "i am hungry",
+        "probability": 0.1961
+      },
+      {
+        "class_id": 6,
+        "sentence": "congratulations",
+        "probability": 0.1948
+      }
+    ]
+  },
+  {
+    "video_id": "s017_signer2_had_your_food__2_",
+    "signer_id": 2,
+    "ground_truth_id": 9,
+    "ground_truth_sentence": "had your food",
+    "predicted_id": 19,
+    "predicted_sentence": "i like you i love you",
+    "confidence": 0.2175,
+    "correct": false,
+    "in_top3": true,
+    "in_top5": true,
+    "top5_candidates": [
+      {
+        "class_id": 19,
+        "sentence": "i like you i love you",
+        "probability": 0.2175
+      },
+      {
+        "class_id": 9,
+        "sentence": "had your food",
+        "probability": 0.2005
+      },
+      {
+        "class_id": 3,
+        "sentence": "i need water",
+        "probability": 0.2001
+      },
+      {
+        "class_id": 5,
+        "sentence": "are you free today",
+        "probability": 0.1956
+      },
+      {
+        "class_id": 6,
+        "sentence": "congratulations",
+        "probability": 0.1864
+      }
+    ]
+  },
+  {
+    "video_id": "s018_signer2_he_came_by_train",
+    "signer_id": 2,
+    "ground_truth_id": 10,
+    "ground_truth_sentence": "he came by train",
+    "predicted_id": 9,
+    "predicted_sentence": "had your food",
+    "confidence": 0.2049,
+    "correct": false,
+    "in_top3": false,
+    "in_top5": false,
+    "top5_candidates": [
+      {
+        "class_id": 9,
+        "sentence": "had your food",
+        "probability": 0.2049
+      },
+      {
+        "class_id": 3,
+        "sentence": "i need water",
+        "probability": 0.2031
+      },
+      {
+        "class_id": 7,
+        "sentence": "do not worry",
+        "probability": 0.2007
+      },
+      {
+        "class_id": 5,
+        "sentence": "are you free today",
+        "probability": 0.1982
+      },
+      {
+        "class_id": 17,
+        "sentence": "i am hungry",
+        "probability": 0.1932
+      }
+    ]
+  },
+  {
+    "video_id": "s021_signer2_heshe_is_my_friend",
+    "signer_id": 2,
+    "ground_truth_id": 11,
+    "ground_truth_sentence": "he she is my friend",
+    "predicted_id": 23,
+    "predicted_sentence": "thank you so much",
+    "confidence": 0.2221,
+    "correct": false,
+    "in_top3": false,
+    "in_top5": false,
+    "top5_candidates": [
+      {
+        "class_id": 23,
+        "sentence": "thank you so much",
+        "probability": 0.2221
+      },
+      {
+        "class_id": 9,
+        "sentence": "had your food",
+        "probability": 0.1969
+      },
+      {
+        "class_id": 17,
+        "sentence": "i am hungry",
+        "probability": 0.1951
+      },
+      {
+        "class_id": 8,
+        "sentence": "go and sleep",
+        "probability": 0.1932
+      },
+      {
+        "class_id": 20,
+        "sentence": "i promise",
+        "probability": 0.1927
+      }
+    ]
+  },
+  {
+    "video_id": "s023_signer2_help_me__6_",
+    "signer_id": 2,
+    "ground_truth_id": 1,
+    "ground_truth_sentence": "help me",
+    "predicted_id": 1,
+    "predicted_sentence": "help me",
+    "confidence": 0.2602,
+    "correct": true,
+    "in_top3": true,
+    "in_top5": true,
+    "top5_candidates": [
+      {
+        "class_id": 1,
+        "sentence": "help me",
+        "probability": 0.2602
+      },
+      {
+        "class_id": 5,
+        "sentence": "are you free today",
+        "probability": 0.1902
+      },
+      {
+        "class_id": 20,
+        "sentence": "i promise",
+        "probability": 0.1891
+      },
+      {
+        "class_id": 17,
+        "sentence": "i am hungry",
+        "probability": 0.1817
+      },
+      {
+        "class_id": 16,
+        "sentence": "i am feeling cold",
+        "probability": 0.1788
+      }
+    ]
+  },
+  {
+    "video_id": "s024_signer2_hi_how_are_you__1_",
+    "signer_id": 2,
+    "ground_truth_id": 12,
+    "ground_truth_sentence": "hi how are you",
+    "predicted_id": 4,
+    "predicted_sentence": "who are you",
+    "confidence": 0.2123,
+    "correct": false,
+    "in_top3": false,
+    "in_top5": false,
+    "top5_candidates": [
+      {
+        "class_id": 4,
+        "sentence": "who are you",
+        "probability": 0.2123
+      },
+      {
+        "class_id": 14,
+        "sentence": "i am crying",
+        "probability": 0.2051
+      },
+      {
+        "class_id": 15,
+        "sentence": "i am feeling bored",
+        "probability": 0.196
+      },
+      {
+        "class_id": 0,
+        "sentence": "comb your hair",
+        "probability": 0.1935
+      },
+      {
+        "class_id": 24,
+        "sentence": "what are you doing",
+        "probability": 0.1931
+      }
+    ]
+  },
+  {
+    "video_id": "s029_signer2_how_old_are_you__1_",
+    "signer_id": 2,
+    "ground_truth_id": 13,
+    "ground_truth_sentence": "how old are you",
+    "predicted_id": 17,
+    "predicted_sentence": "i am hungry",
+    "confidence": 0.2123,
+    "correct": false,
+    "in_top3": false,
+    "in_top5": false,
+    "top5_candidates": [
+      {
+        "class_id": 17,
+        "sentence": "i am hungry",
+        "probability": 0.2123
+      },
+      {
+        "class_id": 9,
+        "sentence": "had your food",
+        "probability": 0.2069
+      },
+      {
+        "class_id": 5,
+        "sentence": "are you free today",
+        "probability": 0.1975
+      },
+      {
+        "class_id": 8,
+        "sentence": "go and sleep",
+        "probability": 0.1926
+      },
+      {
+        "class_id": 20,
+        "sentence": "i promise",
+        "probability": 0.1907
+      }
+    ]
+  },
+  {
+    "video_id": "s032_signer2_i_am_crying",
+    "signer_id": 2,
+    "ground_truth_id": 14,
+    "ground_truth_sentence": "i am crying",
+    "predicted_id": 14,
+    "predicted_sentence": "i am crying",
+    "confidence": 0.2049,
+    "correct": true,
+    "in_top3": true,
+    "in_top5": true,
+    "top5_candidates": [
+      {
+        "class_id": 14,
+        "sentence": "i am crying",
+        "probability": 0.2049
+      },
+      {
+        "class_id": 24,
+        "sentence": "what are you doing",
+        "probability": 0.2018
+      },
+      {
+        "class_id": 4,
+        "sentence": "who are you",
+        "probability": 0.2
+      },
+      {
+        "class_id": 20,
+        "sentence": "i promise",
+        "probability": 0.1985
+      },
+      {
+        "class_id": 17,
+        "sentence": "i am hungry",
+        "probability": 0.1947
+      }
+    ]
+  },
+  {
+    "video_id": "s033_signer2_i_am_feeling_bored__2_",
+    "signer_id": 2,
+    "ground_truth_id": 15,
+    "ground_truth_sentence": "i am feeling bored",
+    "predicted_id": 10,
+    "predicted_sentence": "he came by train",
+    "confidence": 0.2087,
+    "correct": false,
+    "in_top3": false,
+    "in_top5": false,
+    "top5_candidates": [
+      {
+        "class_id": 10,
+        "sentence": "he came by train",
+        "probability": 0.2087
+      },
+      {
+        "class_id": 18,
+        "sentence": "i am sitting in the class",
+        "probability": 0.2016
+      },
+      {
+        "class_id": 7,
+        "sentence": "do not worry",
+        "probability": 0.1987
+      },
+      {
+        "class_id": 19,
+        "sentence": "i like you i love you",
+        "probability": 0.1957
+      },
+      {
+        "class_id": 3,
+        "sentence": "i need water",
+        "probability": 0.1953
+      }
+    ]
+  },
+  {
+    "video_id": "s034_signer2_i_am_feeling_cold__2_",
+    "signer_id": 2,
+    "ground_truth_id": 16,
+    "ground_truth_sentence": "i am feeling cold",
+    "predicted_id": 13,
+    "predicted_sentence": "how old are you",
+    "confidence": 0.2064,
+    "correct": false,
+    "in_top3": false,
+    "in_top5": false,
+    "top5_candidates": [
+      {
+        "class_id": 13,
+        "sentence": "how old are you",
+        "probability": 0.2064
+      },
+      {
+        "class_id": 4,
+        "sentence": "who are you",
+        "probability": 0.2009
+      },
+      {
+        "class_id": 23,
+        "sentence": "thank you so much",
+        "probability": 0.2009
+      },
+      {
+        "class_id": 20,
+        "sentence": "i promise",
+        "probability": 0.1992
+      },
+      {
+        "class_id": 24,
+        "sentence": "what are you doing",
+        "probability": 0.1927
+      }
+    ]
+  },
+  {
+    "video_id": "s035_signer2_i_am_fine._thank_you_sir",
+    "signer_id": 2,
+    "ground_truth_id": 2,
+    "ground_truth_sentence": "i am fine. thank you sir.",
+    "predicted_id": 9,
+    "predicted_sentence": "had your food",
+    "confidence": 0.2022,
+    "correct": false,
+    "in_top3": false,
+    "in_top5": false,
+    "top5_candidates": [
+      {
+        "class_id": 9,
+        "sentence": "had your food",
+        "probability": 0.2022
+      },
+      {
+        "class_id": 5,
+        "sentence": "are you free today",
+        "probability": 0.2009
+      },
+      {
+        "class_id": 24,
+        "sentence": "what are you doing",
+        "probability": 0.2006
+      },
+      {
+        "class_id": 8,
+        "sentence": "go and sleep",
+        "probability": 0.1983
+      },
+      {
+        "class_id": 14,
+        "sentence": "i am crying",
+        "probability": 0.198
+      }
+    ]
+  },
+  {
+    "video_id": "s036_signer2_i_am_hungry____2_",
+    "signer_id": 2,
+    "ground_truth_id": 17,
+    "ground_truth_sentence": "i am hungry",
+    "predicted_id": 17,
+    "predicted_sentence": "i am hungry",
+    "confidence": 0.2159,
+    "correct": true,
+    "in_top3": true,
+    "in_top5": true,
+    "top5_candidates": [
+      {
+        "class_id": 17,
+        "sentence": "i am hungry",
+        "probability": 0.2159
+      },
+      {
+        "class_id": 4,
+        "sentence": "who are you",
+        "probability": 0.2023
+      },
+      {
+        "class_id": 14,
+        "sentence": "i am crying",
+        "probability": 0.2008
+      },
+      {
+        "class_id": 5,
+        "sentence": "are you free today",
+        "probability": 0.1925
+      },
+      {
+        "class_id": 13,
+        "sentence": "how old are you",
+        "probability": 0.1884
+      }
+    ]
+  },
+  {
+    "video_id": "s040_signer2_i_am_sitting_in_the_class__2_",
+    "signer_id": 2,
+    "ground_truth_id": 18,
+    "ground_truth_sentence": "i am sitting in the class",
+    "predicted_id": 16,
+    "predicted_sentence": "i am feeling cold",
+    "confidence": 0.2111,
+    "correct": false,
+    "in_top3": false,
+    "in_top5": false,
+    "top5_candidates": [
+      {
+        "class_id": 16,
+        "sentence": "i am feeling cold",
+        "probability": 0.2111
+      },
+      {
+        "class_id": 9,
+        "sentence": "had your food",
+        "probability": 0.2022
+      },
+      {
+        "class_id": 8,
+        "sentence": "go and sleep",
+        "probability": 0.1998
+      },
+      {
+        "class_id": 17,
+        "sentence": "i am hungry",
+        "probability": 0.1943
+      },
+      {
+        "class_id": 23,
+        "sentence": "thank you so much",
+        "probability": 0.1926
+      }
+    ]
+  },
+  {
+    "video_id": "s052_signer2_i_love_you__2_",
+    "signer_id": 2,
+    "ground_truth_id": 19,
+    "ground_truth_sentence": "i like you i love you",
+    "predicted_id": 24,
+    "predicted_sentence": "what are you doing",
+    "confidence": 0.206,
+    "correct": false,
+    "in_top3": false,
+    "in_top5": false,
+    "top5_candidates": [
+      {
+        "class_id": 24,
+        "sentence": "what are you doing",
+        "probability": 0.206
+      },
+      {
+        "class_id": 2,
+        "sentence": "i am fine. thank you sir.",
+        "probability": 0.2019
+      },
+      {
+        "class_id": 11,
+        "sentence": "he she is my friend",
+        "probability": 0.201
+      },
+      {
+        "class_id": 7,
+        "sentence": "do not worry",
+        "probability": 0.1958
+      },
+      {
+        "class_id": 21,
+        "sentence": "shall we go outside",
+        "probability": 0.1953
+      }
+    ]
+  },
+  {
+    "video_id": "s053_signer2_i_need_water_2",
+    "signer_id": 2,
+    "ground_truth_id": 3,
+    "ground_truth_sentence": "i need water",
+    "predicted_id": 14,
+    "predicted_sentence": "i am crying",
+    "confidence": 0.2086,
+    "correct": false,
+    "in_top3": false,
+    "in_top5": true,
+    "top5_candidates": [
+      {
+        "class_id": 14,
+        "sentence": "i am crying",
+        "probability": 0.2086
+      },
+      {
+        "class_id": 24,
+        "sentence": "what are you doing",
+        "probability": 0.2058
+      },
+      {
+        "class_id": 22,
+        "sentence": "take care of yourself",
+        "probability": 0.1986
+      },
+      {
+        "class_id": 11,
+        "sentence": "he she is my friend",
+        "probability": 0.1948
+      },
+      {
+        "class_id": 3,
+        "sentence": "i need water",
+        "probability": 0.1921
+      }
+    ]
+  },
+  {
+    "video_id": "s054_signer2_i_promise__2_",
+    "signer_id": 2,
+    "ground_truth_id": 20,
+    "ground_truth_sentence": "i promise",
+    "predicted_id": 8,
+    "predicted_sentence": "go and sleep",
+    "confidence": 0.2039,
+    "correct": false,
+    "in_top3": false,
+    "in_top5": false,
+    "top5_candidates": [
+      {
+        "class_id": 8,
+        "sentence": "go and sleep",
+        "probability": 0.2039
+      },
+      {
+        "class_id": 6,
+        "sentence": "congratulations",
+        "probability": 0.2019
+      },
+      {
+        "class_id": 16,
+        "sentence": "i am feeling cold",
+        "probability": 0.2011
+      },
+      {
+        "class_id": 5,
+        "sentence": "are you free today",
+        "probability": 0.1989
+      },
+      {
+        "class_id": 23,
+        "sentence": "thank you so much",
+        "probability": 0.1942
+      }
+    ]
+  },
+  {
+    "video_id": "s068_signer2_shall_we_go_outside__2_",
+    "signer_id": 2,
+    "ground_truth_id": 21,
+    "ground_truth_sentence": "shall we go outside",
+    "predicted_id": 23,
+    "predicted_sentence": "thank you so much",
+    "confidence": 0.2188,
+    "correct": false,
+    "in_top3": true,
+    "in_top5": true,
+    "top5_candidates": [
+      {
+        "class_id": 23,
+        "sentence": "thank you so much",
+        "probability": 0.2188
+      },
+      {
+        "class_id": 21,
+        "sentence": "shall we go outside",
+        "probability": 0.2019
+      },
+      {
+        "class_id": 9,
+        "sentence": "had your food",
+        "probability": 0.1964
+      },
+      {
+        "class_id": 17,
+        "sentence": "i am hungry",
+        "probability": 0.1917
+      },
+      {
+        "class_id": 20,
+        "sentence": "i promise",
+        "probability": 0.1912
+      }
+    ]
+  },
+  {
+    "video_id": "s070_signer2_take_care_of_yourself__2_",
+    "signer_id": 2,
+    "ground_truth_id": 22,
+    "ground_truth_sentence": "take care of yourself",
+    "predicted_id": 23,
+    "predicted_sentence": "thank you so much",
+    "confidence": 0.204,
+    "correct": false,
+    "in_top3": false,
+    "in_top5": false,
+    "top5_candidates": [
+      {
+        "class_id": 23,
+        "sentence": "thank you so much",
+        "probability": 0.204
+      },
+      {
+        "class_id": 5,
+        "sentence": "are you free today",
+        "probability": 0.2032
+      },
+      {
+        "class_id": 17,
+        "sentence": "i am hungry",
+        "probability": 0.2028
+      },
+      {
+        "class_id": 20,
+        "sentence": "i promise",
+        "probability": 0.1959
+      },
+      {
+        "class_id": 6,
+        "sentence": "congratulations",
+        "probability": 0.1941
+      }
+    ]
+  },
+  {
+    "video_id": "s072_signer2_thank_you_so_much__7_",
+    "signer_id": 2,
+    "ground_truth_id": 23,
+    "ground_truth_sentence": "thank you so much",
+    "predicted_id": 14,
+    "predicted_sentence": "i am crying",
+    "confidence": 0.2098,
+    "correct": false,
+    "in_top3": true,
+    "in_top5": true,
+    "top5_candidates": [
+      {
+        "class_id": 14,
+        "sentence": "i am crying",
+        "probability": 0.2098
+      },
+      {
+        "class_id": 4,
+        "sentence": "who are you",
+        "probability": 0.2003
+      },
+      {
+        "class_id": 23,
+        "sentence": "thank you so much",
+        "probability": 0.1993
+      },
+      {
+        "class_id": 20,
+        "sentence": "i promise",
+        "probability": 0.1962
+      },
+      {
+        "class_id": 9,
+        "sentence": "had your food",
+        "probability": 0.1945
+      }
+    ]
+  },
+  {
+    "video_id": "s079_signer2_what_are_you_doing__7_",
+    "signer_id": 2,
+    "ground_truth_id": 24,
+    "ground_truth_sentence": "what are you doing",
+    "predicted_id": 8,
+    "predicted_sentence": "go and sleep",
+    "confidence": 0.2041,
+    "correct": false,
+    "in_top3": false,
+    "in_top5": false,
+    "top5_candidates": [
+      {
+        "class_id": 8,
+        "sentence": "go and sleep",
+        "probability": 0.2041
+      },
+      {
+        "class_id": 4,
+        "sentence": "who are you",
+        "probability": 0.2038
+      },
+      {
+        "class_id": 20,
+        "sentence": "i promise",
+        "probability": 0.2016
+      },
+      {
+        "class_id": 5,
+        "sentence": "are you free today",
+        "probability": 0.1976
+      },
+      {
+        "class_id": 9,
+        "sentence": "had your food",
+        "probability": 0.1929
+      }
+    ]
+  },
+  {
+    "video_id": "s091_signer2_who_are_you__7_",
+    "signer_id": 2,
+    "ground_truth_id": 4,
+    "ground_truth_sentence": "who are you",
+    "predicted_id": 17,
+    "predicted_sentence": "i am hungry",
+    "confidence": 0.2049,
+    "correct": false,
+    "in_top3": false,
+    "in_top5": false,
+    "top5_candidates": [
+      {
+        "class_id": 17,
+        "sentence": "i am hungry",
+        "probability": 0.2049
+      },
+      {
+        "class_id": 16,
+        "sentence": "i am feeling cold",
+        "probability": 0.2048
+      },
+      {
+        "class_id": 6,
+        "sentence": "congratulations",
+        "probability": 0.2045
+      },
+      {
+        "class_id": 5,
+        "sentence": "are you free today",
+        "probability": 0.1961
+      },
+      {
+        "class_id": 14,
+        "sentence": "i am crying",
+        "probability": 0.1897
+      }
+    ]
+  }
+]

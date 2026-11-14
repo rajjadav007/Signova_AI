@@ -70,13 +70,6 @@ export default function SentenceTestingPage() {
   const [errorMessage, setErrorMessage] = useState(null);
   const [predictionResult, setPredictionResult] = useState(null);
 
-  // Manual verification state
-  const [actualSentence, setActualSentence] = useState("");
-  const [verifiedItem, setVerifiedItem] = useState(null);
-
-  // Session history state
-  const [sessionHistory, setSessionHistory] = useState([]);
-
   const fileInputRef = useRef(null);
   const webcamVideoRef = useRef(null);
   const webcamStreamRef = useRef(null);
@@ -138,8 +131,6 @@ export default function SentenceTestingPage() {
 
     setErrorMessage(null);
     setPredictionResult(null);
-    setVerifiedItem(null);
-    setActualSentence("");
     setVideoDuration(null);
 
     const ext = "." + file.name.split(".").pop().toLowerCase();
@@ -230,8 +221,6 @@ export default function SentenceTestingPage() {
       setVideoPreviewUrl(null);
     }
     setPredictionResult(null);
-    setVerifiedItem(null);
-    setActualSentence("");
     setErrorMessage(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
@@ -245,7 +234,6 @@ export default function SentenceTestingPage() {
     setIsLoading(true);
     setErrorMessage(null);
     setPredictionResult(null);
-    setVerifiedItem(null);
 
     try {
       const result = await recognizeFiveClassSentenceVideo(selectedFile, selectedModel);
@@ -305,7 +293,6 @@ export default function SentenceTestingPage() {
     setCameraError(null);
     setErrorMessage(null);
     setPredictionResult(null);
-    setVerifiedItem(null);
 
     try {
       let mimeType = "video/webm";
@@ -357,7 +344,6 @@ export default function SentenceTestingPage() {
     setIsLoading(true);
     setErrorMessage(null);
     setPredictionResult(null);
-    setVerifiedItem(null);
 
     const ext = mimeType && mimeType.includes("mp4") ? "mp4" : "webm";
     const file = new File([blob], `webcam_signing.${ext}`, { type: mimeType || "video/webm" });
@@ -376,65 +362,6 @@ export default function SentenceTestingPage() {
   const handleRetryRecording = () => {
     setPredictionResult(null);
     setErrorMessage(null);
-    setVerifiedItem(null);
-    setActualSentence("");
-  };
-
-  // Record manual verification and save to history (no duplicates)
-  const handleVerify = () => {
-    if (!predictionResult || !actualSentence) return;
-
-    const isRecognized = predictionResult.is_recognized;
-    const predicted = predictionResult.predicted_sentence;
-
-    let correctness = "incorrect";
-    if (actualSentence === "other_unknown") {
-      correctness = !isRecognized ? "correct" : "incorrect";
-    } else {
-      correctness = (isRecognized && predicted === actualSentence) ? "correct" : "incorrect";
-    }
-
-    const uniqueKey = `${selectedFile ? selectedFile.name : `webcam_${selectedModel}`}_${predictionResult.processing_time_ms}`;
-    const now = new Date();
-
-    const verificationRecord = {
-      id: Date.now(),
-      key: uniqueKey,
-      filename: selectedFile ? selectedFile.name : `webcam_${selectedModel}_signing.webm`,
-      actual: actualSentence === "other_unknown" ? "Out of Vocabulary (Unknown)" : actualSentence,
-      predicted: predicted ? (isRecognized ? predicted : `${predicted} (Low Conf)`) : "Sentence not recognized.",
-      isRecognized,
-      correctness,
-      dtwDistance: predictionResult.top_distance ?? 0.0,
-      processingTimeMs: predictionResult.processing_time_ms,
-      timestamp: now.toLocaleTimeString(),
-      dateTime: now.toLocaleString(),
-    };
-
-    setVerifiedItem(verificationRecord);
-
-    setSessionHistory((prev) => {
-      if (prev.some((item) => item.key === uniqueKey)) {
-        return prev;
-      }
-      return [verificationRecord, ...prev];
-    });
-  };
-
-  // Compute live session statistics
-  const sessionStats = useMemo(() => {
-    const total = sessionHistory.length;
-    const correct = sessionHistory.filter((h) => h.correctness === "correct").length;
-    const incorrect = sessionHistory.filter((h) => h.correctness === "incorrect").length;
-    const rejected = sessionHistory.filter((h) => !h.isRecognized).length;
-    const accuracy = total > 0 ? ((correct / total) * 100).toFixed(1) : "0.0";
-
-    return { total, correct, incorrect, rejected, accuracy };
-  }, [sessionHistory]);
-
-  const clearHistory = () => {
-    setSessionHistory([]);
-    setVerifiedItem(null);
   };
 
   return (
@@ -819,16 +746,8 @@ export default function SentenceTestingPage() {
             <div className="card-header-clean">
               <h2 className="card-title-clean">
                 <BarChart3 size={18} />
-                Prediction Result
+                LIVE RECOGNITION RESULT
               </h2>
-              {predictionResult && (
-                <span
-                  className={`status-tag ${predictionResult.is_recognized ? "success" : "rejected"}`}
-                  data-testid="recognition-status-badge"
-                >
-                  {predictionResult.status}
-                </span>
-              )}
             </div>
 
             {!predictionResult ? (
@@ -842,228 +761,68 @@ export default function SentenceTestingPage() {
               </div>
             ) : (
               <>
-                {/* Hero Prediction Card */}
+                {/* Clean Simplified Hero Card */}
                 <div
-                  className={`prediction-hero-card ${
-                    predictionResult.is_recognized ? "recognized" : "rejected"
-                  }`}
+                  className="prediction-hero-card recognized"
                   data-testid="prediction-hero"
+                  style={{
+                    padding: "24px",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "10px",
+                    background: "var(--color-surface)",
+                    border: "1.5px solid var(--color-border)",
+                    borderRadius: "var(--radius-lg)",
+                  }}
                 >
-                  <div className="prediction-status-row">
-                    <span className="hero-gloss">
-                      {predictionResult.is_recognized
-                        ? "Prediction"
-                        : "Low confidence"}
-                      {predictionResult.predicted_class_id !== null && predictionResult.predicted_class_id !== undefined
-                        ? ` • Class ${predictionResult.predicted_class_id}${predictionResult.original_sentence_id ? ` (SID ${predictionResult.original_sentence_id})` : ""}`
-                        : ""}
-                    </span>
-                    <span
+                  {predictionResult.is_recognized && predictionResult.predicted_sentence && predictionResult.predicted_sentence !== "Sentence not recognized." ? (
+                    <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                      <span
+                        className="prediction-field-label"
+                        style={{
+                          fontSize: "0.82rem",
+                          letterSpacing: "0.06em",
+                          color: "var(--color-text-muted)",
+                          fontWeight: "700",
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        RECOGNIZED SENTENCE:
+                      </span>
+                      <h3
+                        className="hero-sentence"
+                        data-testid="predicted-sentence-text"
+                        style={{
+                          fontSize: "2rem",
+                          fontWeight: "800",
+                          letterSpacing: "0.02em",
+                          color: "var(--color-text)",
+                          textTransform: "uppercase",
+                          margin: 0,
+                        }}
+                      >
+                        {predictionResult.predicted_sentence}
+                      </h3>
+                    </div>
+                  ) : (
+                    <div
+                      className="no-sentence-detected-msg"
+                      data-testid="predicted-sentence-text"
                       style={{
-                        fontSize: "0.8rem",
-                        fontWeight: 600,
-                        color: predictionResult.is_recognized
-                          ? "var(--color-status-green)"
-                          : "var(--color-status-yellow, #D97706)",
+                        padding: "12px 0",
+                        fontSize: "1.1rem",
+                        fontWeight: "500",
+                        color: "var(--color-text-muted)",
                       }}
                     >
-                      {predictionResult.confidence !== undefined
-                        ? `Prob: ${(predictionResult.confidence * 100).toFixed(1)}%`
-                        : predictionResult.top_similarity !== undefined
-                        ? `Sim: ${(predictionResult.top_similarity * 100).toFixed(1)}%`
-                        : predictionResult.is_recognized
-                        ? "Recognized"
-                        : "Tentative"}
-                    </span>
-                  </div>
-
-                  <h3 className="hero-sentence" data-testid="predicted-sentence-text">
-                    {predictionResult.predicted_sentence
-                      ? `"${predictionResult.predicted_sentence}"`
-                      : "Sentence not recognized."}
-                  </h3>
+                      No sentence detected. Please try again.
+                    </div>
+                  )}
                 </div>
-
-                {/* Explanation if Rejected */}
-                {!predictionResult.is_recognized && (
-                  <div className="rejection-explanation-box">
-                    <strong>Notice (Low Confidence):</strong>
-                    <span>
-                      {predictionResult.reason ||
-                        "The model confidence is below the acceptance threshold. The tentative top candidate is displayed above along with all five class probabilities."}
-                    </span>
-                  </div>
-                )}
-
-                {/* Metrics Chips Grid */}
-                <div className="metrics-chips-grid">
-                  <div className="metric-chip">
-                    <span className="metric-chip-label">Recognition Status</span>
-                    <span
-                      className="metric-chip-value"
-                      style={{
-                        fontSize: "0.95rem",
-                        color: predictionResult.is_recognized
-                          ? "var(--color-status-green)"
-                          : "var(--color-status-yellow)",
-                      }}
-                    >
-                      {predictionResult.is_recognized ? "Recognized" : "Unknown"}
-                    </span>
-                  </div>
-
-                  <div className="metric-chip">
-                    <span className="metric-chip-label">Class ID</span>
-                    <span className="metric-chip-value">
-                      {predictionResult.is_recognized && predictionResult.predicted_class_id !== null && predictionResult.predicted_class_id !== undefined
-                        ? `Class ${predictionResult.predicted_class_id}`
-                        : "N/A"}
-                    </span>
-                  </div>
-
-                  {predictionResult.frame_count !== undefined && (
-                    <div className="metric-chip">
-                      <span className="metric-chip-label">Captured Frames</span>
-                      <span className="metric-chip-value">
-                        {predictionResult.frame_count} frames
-                      </span>
-                    </div>
-                  )}
-
-                  {predictionResult.confidence !== undefined && (
-                    <div className="metric-chip">
-                      <span className="metric-chip-label">Confidence</span>
-                      <span className="metric-chip-value">
-                        {(predictionResult.confidence * 100).toFixed(1)}%
-                      </span>
-                    </div>
-                  )}
-
-                  {predictionResult.top_distance !== undefined && (
-                    <div className="metric-chip">
-                      <span className="metric-chip-label">DTW Distance</span>
-                      <span className="metric-chip-value">
-                        {predictionResult.top_distance.toFixed(4)}
-                      </span>
-                    </div>
-                  )}
-
-                  {predictionResult.runner_up_distance !== null && predictionResult.runner_up_distance !== undefined && (
-                    <div className="metric-chip">
-                      <span className="metric-chip-label">Runner-Up Dist</span>
-                      <span className="metric-chip-value">
-                        {Number(predictionResult.runner_up_distance).toFixed(4)}
-                      </span>
-                    </div>
-                  )}
-
-                  {predictionResult.margin_to_second !== undefined && (
-                    <div className="metric-chip">
-                      <span className="metric-chip-label">Margin to 2nd</span>
-                      <span className="metric-chip-value">
-                        +{predictionResult.margin_to_second.toFixed(4)}
-                      </span>
-                    </div>
-                  )}
-
-                  {predictionResult.model_inference_latency_ms !== null && predictionResult.model_inference_latency_ms !== undefined && (
-                    <div className="metric-chip">
-                      <span className="metric-chip-label">Model Latency</span>
-                      <span className="metric-chip-value">
-                        {Number(predictionResult.model_inference_latency_ms).toFixed(2)} ms
-                      </span>
-                    </div>
-                  )}
-
-                  {predictionResult.matching_latency_ms !== undefined && (
-                    <div className="metric-chip">
-                      <span className="metric-chip-label">DTW Latency</span>
-                      <span className="metric-chip-value">
-                        {predictionResult.matching_latency_ms} ms
-                      </span>
-                    </div>
-                  )}
-
-                  <div className="metric-chip">
-                    <span className="metric-chip-label">Full Pipeline Time</span>
-                    <span className="metric-chip-value">
-                      {predictionResult.processing_time_ms} ms
-                    </span>
-                  </div>
-                </div>
-
-                {/* 5-Class Probabilities (BiGRU Attention) */}
-                {predictionResult.class_probabilities && Object.keys(predictionResult.class_probabilities).length > 0 && (
-                  <div className="probabilities-card" data-testid="probabilities-card">
-                    <div className="probabilities-header">
-                      <span>Five-Class Softmax Probabilities</span>
-                      <span className="prob-engine-tag">{predictionResult.model_used || "BiGRU Attention"}</span>
-                    </div>
-                    <div className="probabilities-list">
-                      {Object.entries(predictionResult.class_probabilities).map(([sentence, prob], idx) => {
-                        const isTop = predictionResult.is_recognized && sentence === predictionResult.predicted_sentence;
-                        const pct = (prob * 100).toFixed(1);
-                        return (
-                          <div key={sentence} className={`prob-row ${isTop ? "prob-top" : ""}`} data-testid={`prob-row-${idx}`}>
-                            <div className="prob-label-row">
-                              <span className="prob-sentence">
-                                <strong>#{idx + 1}</strong> &nbsp; "{sentence}"
-                              </span>
-                              <span className="prob-value">{pct}%</span>
-                            </div>
-                            <div className="prob-bar-track">
-                              <div
-                                className={`prob-bar-fill ${isTop ? "fill-top" : ""}`}
-                                style={{ width: `${Math.max(2, Math.min(100, prob * 100))}%` }}
-                              />
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-
-                {/* 5-Class Rankings Table (DTW-KNN) */}
-                {predictionResult.rankings && predictionResult.rankings.length > 0 && (
-                  <div className="rankings-table-wrapper">
-                    <div className="rankings-table-title">Full 5-Class Alignment Rankings</div>
-                    {predictionResult.rankings.map((rankItem, idx) => {
-                      const isTop = idx === 0 && predictionResult.is_recognized;
-                      return (
-                        <div
-                          key={rankItem.class_id}
-                          className={`ranking-row ${isTop ? "top-rank" : ""}`}
-                        >
-                          <span className="ranking-sentence-name">
-                            <strong>#{idx + 1}</strong> &nbsp; "{rankItem.sentence}"
-                          </span>
-                          <div className="ranking-stats">
-                            <span>Dist: {rankItem.dtw_distance.toFixed(4)}</span>
-                            <span>Sim: {(rankItem.similarity * 100).toFixed(1)}%</span>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-
-                {predictionResult.note && (
-                  <p
-                    style={{
-                      fontSize: "0.78rem",
-                      color: "var(--color-text-muted)",
-                      margin: "0",
-                      fontStyle: "italic",
-                    }}
-                  >
-                    {predictionResult.note}
-                  </p>
-                )}
 
                 {/* Retry action for webcam */}
                 {inputMode === "webcam" && (
-                  <div className="retry-action-wrapper">
+                  <div className="retry-action-wrapper" style={{ marginTop: "12px" }}>
                     <button
                       type="button"
                       className="btn-secondary-action"
@@ -1079,201 +838,6 @@ export default function SentenceTestingPage() {
             )}
           </section>
         </div>
-
-        {/* Manual Verification */}
-        {predictionResult && (
-          <section className="verification-card" aria-label="Manual Verification">
-            <div className="card-header-clean">
-              <h2 className="card-title-clean">
-                <CheckCircle size={18} />
-                Manual Verification Against Ground Truth
-              </h2>
-            </div>
-
-            <div className="verification-form">
-              <label htmlFor="actual-sentence-select" style={{ fontWeight: 600, fontSize: "0.9rem" }}>
-                Select Actual Signed Sentence:
-              </label>
-              <select
-                id="actual-sentence-select"
-                className="verification-select"
-                value={actualSentence}
-                onChange={(e) => setActualSentence(e.target.value)}
-                data-testid="actual-sentence-select"
-              >
-                <option value="">-- Choose Ground Truth Sentence --</option>
-                {demoClasses.map((c) => (
-                  <option key={c.demo_class_id} value={c.sentence}>
-                    {c.sentence} (Gloss: {c.isl_gloss})
-                  </option>
-                ))}
-                <option value="other_unknown">Out of Vocabulary / Other (Unknown Sentence)</option>
-              </select>
-
-              <button
-                type="button"
-                className="btn-primary-action"
-                style={{ flex: "initial", minWidth: "160px" }}
-                onClick={handleVerify}
-                disabled={!actualSentence}
-                data-testid="btn-verify-prediction"
-              >
-                <Check size={16} />
-                Record Verification
-              </button>
-            </div>
-
-            {/* Verification Result Feedback */}
-            {verifiedItem && (
-              <div
-                className="verification-result-box"
-                data-testid="verification-result-box"
-              >
-                <div>
-                  <div style={{ fontSize: "0.9rem", color: "var(--color-text)" }}>
-                    <strong>Actual:</strong> "{verifiedItem.actual}" &nbsp;|&nbsp;{" "}
-                    <strong>AI Prediction:</strong> "{verifiedItem.predicted}"
-                  </div>
-                  <div style={{ fontSize: "0.8rem", color: "var(--color-text-muted)", marginTop: "2px" }}>
-                    {verifiedItem.isRecognized
-                      ? `Model: ${selectedModel === "bigru" ? "BiGRU Attention" : "DTW-KNN"} | Latency: ${verifiedItem.processingTimeMs} ms`
-                      : "Input rejected by confidence threshold."}
-                  </div>
-                </div>
-                <span
-                  className={`verification-result-badge ${verifiedItem.correctness}`}
-                  data-testid="verification-badge"
-                >
-                  {verifiedItem.correctness === "correct" ? "Correct" : "Incorrect"}
-                </span>
-              </div>
-            )}
-          </section>
-        )}
-
-        {/* Live Session Statistics */}
-        <section aria-label="Live Session Statistics">
-          <div className="stats-cards-grid">
-            <div className="stat-metric-card" data-testid="stat-total">
-              <div className="stat-metric-label">Total Tested</div>
-              <div className="stat-metric-value">{sessionStats.total}</div>
-            </div>
-
-            <div className="stat-metric-card" data-testid="stat-correct">
-              <div className="stat-metric-label">Correct</div>
-              <div className="stat-metric-value" style={{ color: "var(--color-status-green)" }}>
-                {sessionStats.correct}
-              </div>
-            </div>
-
-            <div className="stat-metric-card" data-testid="stat-incorrect">
-              <div className="stat-metric-label">Incorrect</div>
-              <div className="stat-metric-value" style={{ color: "var(--color-status-red)" }}>
-                {sessionStats.incorrect}
-              </div>
-            </div>
-
-            <div className="stat-metric-card" data-testid="stat-rejected">
-              <div className="stat-metric-label">Rejected</div>
-              <div className="stat-metric-value" style={{ color: "var(--color-status-yellow)" }}>
-                {sessionStats.rejected}
-              </div>
-            </div>
-
-            <div className="stat-metric-card" data-testid="stat-accuracy">
-              <div className="stat-metric-label">Manual Accuracy</div>
-              <div className="stat-metric-value accuracy">
-                {sessionStats.accuracy}%
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Testing History Table */}
-        <section className="testing-card" aria-label="Session History">
-          <div className="card-header-clean">
-            <h2 className="card-title-clean">
-              <Clock size={18} />
-              Testing History ({sessionHistory.length} Entries)
-            </h2>
-            {sessionHistory.length > 0 && (
-              <button
-                type="button"
-                className="btn-secondary-action"
-                onClick={clearHistory}
-                style={{ padding: "4px 10px", fontSize: "0.8rem" }}
-                data-testid="btn-clear-history"
-              >
-                Clear History
-              </button>
-            )}
-          </div>
-
-          {sessionHistory.length === 0 ? (
-            <p style={{ color: "var(--color-text-muted)", fontSize: "0.9rem", margin: "12px 0" }}>
-              No session test records yet. Upload a video or record via webcam, then record a verification above.
-            </p>
-          ) : (
-            <div className="history-table-container">
-              <table className="history-data-table" data-testid="history-table">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Source / Video</th>
-                    <th>AI Prediction</th>
-                    <th>Actual Sentence</th>
-                    <th>Status</th>
-                    <th>Result</th>
-                    <th>Processing Time</th>
-                    <th>Date &amp; Time</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {sessionHistory.map((item, index) => (
-                    <tr key={item.id}>
-                      <td>{sessionHistory.length - index}</td>
-                      <td style={{ fontWeight: 500 }}>{item.filename}</td>
-                      <td>"{item.predicted}"</td>
-                      <td>"{item.actual}"</td>
-                      <td>
-                        <span
-                          style={{
-                            fontSize: "0.8rem",
-                            fontWeight: 600,
-                            color: item.isRecognized
-                              ? "var(--color-status-green)"
-                              : "var(--color-status-yellow)",
-                          }}
-                        >
-                          {item.isRecognized ? "Recognized" : "Unknown"}
-                        </span>
-                      </td>
-                      <td>
-                        <span className={`badge-res ${item.correctness}`}>
-                          {item.correctness === "correct" ? (
-                            <>
-                              <Check size={12} style={{ display: "inline", marginRight: "3px" }} />
-                              Correct
-                            </>
-                          ) : (
-                            <>
-                              <X size={12} style={{ display: "inline", marginRight: "3px" }} />
-                              Incorrect
-                            </>
-                          )}
-                        </span>
-                      </td>
-                      <td>{item.processingTimeMs} ms</td>
-                      <td style={{ fontSize: "0.82rem", color: "var(--color-text-muted)" }}>
-                        {item.dateTime || item.timestamp}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </section>
       </div>
     </PageContainer>
   );

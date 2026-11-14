@@ -7,7 +7,7 @@ import {
   detectHandPresenceInCanvas,
   DEFAULT_FOCUS_ZONE,
 } from "../utils/handPresence";
-import { recognizeIsolatedVideo, recognizeFiveClassSentenceVideo } from "../services/api";
+import { recognizeIsolatedVideo, recognizeFiveClassSentenceVideo, recognizeTwentyFiveClassSentenceVideo } from "../services/api";
 
 export const MIN_GESTURE_DURATION_MS = 800; // 0.8s minimum gesture duration
 export const MAX_GESTURE_DURATION_MS = 6000; // 6.0s duration safety cap
@@ -31,7 +31,8 @@ export function useAutoRecognition({
   onSentenceRecognized = null,
 } = {}) {
   const currentMode = activeRecognitionMode || recognitionMode || "isolated";
-  const isContinuousMode = currentMode === "continuous" || currentMode === "sentence";
+  const isContinuousMode = currentMode === "continuous" || currentMode === "sentence" || currentMode === "sentence_25";
+  const isTwentyFiveClass = currentMode === "sentence_25";
   const isWordMode = !isContinuousMode;
 
   const stateMachineRef = useRef(
@@ -201,7 +202,13 @@ export function useAutoRecognition({
 
       try {
         let response;
-        if (isContinuousAtStart) {
+        if (modeAtStart === "sentence_25") {
+          // TWENTY-FIVE-CLASS SENTENCE MODE: ONLY 25-class BiGRU sentence pipeline
+          const file = new File([videoBlob], "auto_sentence_25.webm", {
+            type: videoBlob.type || "video/webm",
+          });
+          response = await recognizeTwentyFiveClassSentenceVideo(file, { signal: controller?.signal, confidenceThreshold: 0.25 });
+        } else if (isContinuousAtStart) {
           // CONTINUOUS SENTENCE MODE: ONLY five-class BiGRU sentence pipeline
           const file = new File([videoBlob], "auto_sentence.webm", {
             type: videoBlob.type || "video/webm",

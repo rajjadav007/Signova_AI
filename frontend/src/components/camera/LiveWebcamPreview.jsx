@@ -440,19 +440,20 @@ const LiveWebcamPreview = React.forwardRef(function LiveWebcamPreview(
             aria-label="Sign Recognition Result"
           >
             <div className="prediction-card-header">
-              <span className="prediction-card-title">Live Recognition Result</span>
-              {recognitionResult ? (
+              <span className="prediction-card-title">
+                {isContinuousMode ? "LIVE RECOGNITION RESULT" : "Live Recognition Result"}
+              </span>
+              {!isContinuousMode && recognitionResult && (
                 <span
                   className={`prediction-status-pill ${
                     isHighConfidence ? "recognized" : "uncertain"
                   }`}
                   data-testid="prediction-status-badge"
                 >
-                  {isHighConfidence
-                    ? (isContinuousMode ? "✓ PREDICTION" : "✓ RECOGNIZED")
-                    : "⚠ UNCERTAIN"}
+                  {isHighConfidence ? "✓ RECOGNIZED" : "⚠ UNCERTAIN"}
                 </span>
-              ) : hasError ? (
+              )}
+              {!isContinuousMode && hasError && (
                 <span
                   className="prediction-status-pill error"
                   style={{ backgroundColor: "rgba(239, 68, 68, 0.15)", color: "#EF4444", borderColor: "#EF4444" }}
@@ -460,14 +461,42 @@ const LiveWebcamPreview = React.forwardRef(function LiveWebcamPreview(
                 >
                   ✕ ERROR
                 </span>
-              ) : null}
+              )}
             </div>
 
             {isRecognizing ? (
               <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "12px 0", color: "var(--color-primary)" }}>
                 <Loader2 size={24} className="rotating" />
-                <span style={{ fontWeight: "600" }}>Extracting landmarks & classifying sign...</span>
+                <span style={{ fontWeight: "600" }}>
+                  {isContinuousMode ? "Recognizing sentence..." : "Extracting landmarks & classifying sign..."}
+                </span>
               </div>
+            ) : isContinuousMode ? (
+              /* Continuous Sentence Recognition: Clean & Simplified */
+              recognitionResult && predictedSignDisplay && predictedSignDisplay !== "UNKNOWN" && predictedSignDisplay !== "SENTENCE NOT RECOGNIZED." ? (
+                <div className="prediction-prominent-display" style={{ marginTop: "12px" }}>
+                  <div className="prediction-field-row" style={{ borderBottom: "none", padding: 0, flexDirection: "column", alignItems: "flex-start", gap: "6px" }}>
+                    <span className="prediction-field-label" style={{ fontSize: "0.82rem", letterSpacing: "0.06em", color: "var(--color-text-muted)", fontWeight: "700" }}>
+                      RECOGNIZED SENTENCE:
+                    </span>
+                    <span
+                      className="prediction-sign-name"
+                      data-testid="prediction-sign-name"
+                      style={{ fontSize: "1.75rem", fontWeight: "800", letterSpacing: "0.02em", color: "var(--color-text)", textTransform: "uppercase" }}
+                    >
+                      {predictedSignDisplay}
+                    </span>
+                  </div>
+                </div>
+              ) : (
+                <div
+                  className="prediction-no-sentence-msg"
+                  data-testid="prediction-no-sentence-msg"
+                  style={{ padding: "16px 0", color: "var(--color-text-muted)", fontSize: "1.05rem", fontWeight: "500", textAlign: "center" }}
+                >
+                  No sentence detected. Please try again.
+                </div>
+              )
             ) : hasError ? (
               <div
                 className="prediction-rejection-alert"
@@ -485,9 +514,7 @@ const LiveWebcamPreview = React.forwardRef(function LiveWebcamPreview(
                 <div className="prediction-main-row" data-testid="prediction-main-row">
                   <div className="prediction-prominent-display">
                     <div className="prediction-field-row">
-                      <span className="prediction-field-label">
-                        {isContinuousMode ? "Predicted Sentence:" : "Predicted Sign:"}
-                      </span>
+                      <span className="prediction-field-label">Predicted Sign:</span>
                       <span
                         className="prediction-sign-name"
                         data-testid="prediction-sign-name"
@@ -509,19 +536,8 @@ const LiveWebcamPreview = React.forwardRef(function LiveWebcamPreview(
                           className={`confidence-tag ${isHighConfidence ? "high-confidence" : "low-confidence"}`}
                           data-testid="confidence-tag"
                         >
-                          {isHighConfidence
-                            ? (isContinuousMode ? "Prediction" : "High Confidence")
-                            : "Low Confidence"}
+                          {isHighConfidence ? "High Confidence" : "Low Confidence"}
                         </span>
-                        {recognitionResult?.margin_to_second !== undefined && recognitionResult?.margin_to_second !== null && (
-                          <span
-                            className="sentence-margin-chip"
-                            data-testid="camera-margin-chip"
-                            style={{ fontSize: "0.74rem", padding: "2px 6px" }}
-                          >
-                            +{((recognitionResult.margin_to_second || 0) * 100).toFixed(1)}% vs 2nd
-                          </span>
-                        )}
                       </div>
                     </div>
 
@@ -553,10 +569,7 @@ const LiveWebcamPreview = React.forwardRef(function LiveWebcamPreview(
                     {recognitionResult.processing_time_ms ? `${recognitionResult.processing_time_ms} ms` : "--"}
                   </span>
                   <span>
-                    Vocabulary:{" "}
-                    {isContinuousMode
-                      ? `5 Continuous ISL Sentences (${sentenceModel === "bigru" ? "BiGRU Attention" : "DTW-KNN"})`
-                      : "10 Isolated ISL Signs"}
+                    Vocabulary: 10 Isolated ISL Signs
                   </span>
                 </div>
               </>

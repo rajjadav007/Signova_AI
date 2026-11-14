@@ -119,7 +119,7 @@ describe("Signova AI: SentenceTestingPage (Hackathon Demo)", () => {
     expect(screen.getByText(/Unsupported video format "\.pdf"/i)).toBeDefined();
   });
 
-  it("executes recognition, displays real prediction output, latency, and full rankings", async () => {
+  it("executes recognition, displays real prediction output without technical metrics", async () => {
     vi.spyOn(api, "recognizeFiveClassSentenceVideo").mockResolvedValue(MOCK_SUCCESS_RECOGNITION);
 
     render(<SentenceTestingPage />);
@@ -133,17 +133,16 @@ describe("Signova AI: SentenceTestingPage (Hackathon Demo)", () => {
     fireEvent.click(recognizeBtn);
 
     const heroSentence = await screen.findByTestId("predicted-sentence-text");
-    expect(heroSentence.textContent).toBe('"comb your hair"');
-    expect(screen.getByText("Class 0 (SID 5)")).toBeDefined();
-    expect(screen.getByTestId("recognition-status-badge").textContent).toBe("Recognized");
-    expect(screen.getByText("0.3117")).toBeDefined(); // DTW distance
-    expect(screen.getByText("+0.0579")).toBeDefined(); // Margin
-    expect(screen.getByText("5.4 ms")).toBeDefined(); // Matching latency
-    expect(screen.getByText("1820.5 ms")).toBeDefined(); // Pipeline latency
-    expect(screen.getByText(/Full 5-Class Alignment Rankings/i)).toBeDefined();
+    expect(heroSentence.textContent.toLowerCase()).toContain("comb your hair");
+    expect(screen.getByText(/RECOGNIZED SENTENCE:/i)).toBeDefined();
+
+    // Technical metrics, accuracy, and probability panels removed
+    expect(screen.queryByTestId("recognition-status-badge")).toBeNull();
+    expect(screen.queryByTestId("probabilities-card")).toBeNull();
+    expect(screen.queryByText(/Full 5-Class Alignment Rankings/i)).toBeNull();
   });
 
-  it("handles unknown input rejection correctly displaying 'Sentence not recognized.'", async () => {
+  it("handles unknown input rejection correctly displaying 'No sentence detected. Please try again.'", async () => {
     vi.spyOn(api, "recognizeFiveClassSentenceVideo").mockResolvedValue(MOCK_REJECTED_RECOGNITION);
 
     render(<SentenceTestingPage />);
@@ -157,12 +156,11 @@ describe("Signova AI: SentenceTestingPage (Hackathon Demo)", () => {
     fireEvent.click(recognizeBtn);
 
     const heroSentence = await screen.findByTestId("predicted-sentence-text");
-    expect(heroSentence.textContent).toBe("Sentence not recognized.");
-    expect(screen.getByTestId("recognition-status-badge").textContent).toBe("Sentence not recognized.");
-    expect(screen.getByText("Threshold Rejection")).toBeDefined();
+    expect(heroSentence.textContent).toContain("No sentence detected. Please try again.");
+    expect(screen.queryByTestId("recognition-status-badge")).toBeNull();
   });
 
-  it("performs manual verification, updates session history, and calculates accuracy", async () => {
+  it("displays clean result card layout without accuracy or technical panels", async () => {
     vi.spyOn(api, "recognizeFiveClassSentenceVideo").mockResolvedValue(MOCK_SUCCESS_RECOGNITION);
 
     render(<SentenceTestingPage />);
@@ -175,33 +173,13 @@ describe("Signova AI: SentenceTestingPage (Hackathon Demo)", () => {
 
     fireEvent.click(screen.getByTestId("btn-recognize-sentence"));
 
-    await screen.findByTestId("predicted-sentence-text");
+    const heroSentence = await screen.findByTestId("predicted-sentence-text");
+    expect(heroSentence.textContent.toLowerCase()).toContain("comb your hair");
 
-    // Step 2: Manual verification selection
-    const select = screen.getByTestId("actual-sentence-select");
-    fireEvent.change(select, { target: { value: "comb your hair" } });
-
-    const verifyBtn = screen.getByTestId("btn-verify-prediction");
-    fireEvent.click(verifyBtn);
-
-    // Step 3: Check verification badge
-    const badge = screen.getByTestId("verification-badge");
-    expect(badge.textContent).toBe("Correct");
-
-    // Step 4: Verify session stats
-    expect(screen.getByTestId("stat-total").textContent).toContain("1");
-    expect(screen.getByTestId("stat-correct").textContent).toContain("1");
-    expect(screen.getByTestId("stat-incorrect").textContent).toContain("0");
-    expect(screen.getByTestId("stat-accuracy").textContent).toContain("100.0%");
-
-    // Step 5: Check session history table row
-    const historyTable = screen.getByTestId("history-table");
-    expect(historyTable.textContent).toContain("test_comb.mp4");
-    expect(historyTable.textContent).toContain("comb your hair");
-
-    // Step 6: Verify duplicate prevention on second click
-    fireEvent.click(verifyBtn);
-    expect(screen.getByTestId("stat-total").textContent).toContain("1");
+    // Verification and accuracy UI removed
+    expect(screen.queryByTestId("verification-badge")).toBeNull();
+    expect(screen.queryByTestId("stat-accuracy")).toBeNull();
+    expect(screen.queryByTestId("history-table")).toBeNull();
   });
 
   it("renders 5 supported sentence cards and model status indicators in header", async () => {
@@ -388,18 +366,14 @@ describe("Signova AI: SentenceTestingPage (Hackathon Demo)", () => {
 
       // 5. Verify prediction results
       const heroSentence = await screen.findByTestId("predicted-sentence-text");
-      expect(heroSentence.textContent).toBe('"i need water"');
-      expect(screen.getByText("Class 3 (SID 53)")).toBeDefined();
-      expect(screen.getByText("Conf: 94.1%")).toBeDefined();
-      expect(screen.getByText("28 frames")).toBeDefined();
-      expect(screen.getByText("0.94 ms")).toBeDefined();
-      expect(screen.getByText("1120.4 ms")).toBeDefined();
+      expect(heroSentence.textContent.toLowerCase()).toContain("i need water");
+      expect(screen.getByText(/RECOGNIZED SENTENCE:/i)).toBeDefined();
 
-      // 6. Verify 5-class probability meters
-      expect(screen.getByTestId("probabilities-card")).toBeDefined();
-      expect(screen.getAllByText("94.1%").length).toBeGreaterThanOrEqual(1);
+      // Technical metrics and probability panels are removed
+      expect(screen.queryByTestId("probabilities-card")).toBeNull();
+      expect(screen.queryByText("Conf: 94.1%")).toBeNull();
 
-      // 7. Test retry recording button
+      // 6. Test retry recording button
       const retryBtn = screen.getByTestId("btn-retry-webcam");
       fireEvent.click(retryBtn);
 
@@ -421,9 +395,7 @@ describe("Signova AI: SentenceTestingPage (Hackathon Demo)", () => {
       fireEvent.click(screen.getByTestId("btn-stop-signing"));
 
       const heroSentence = await screen.findByTestId("predicted-sentence-text");
-      expect(heroSentence.textContent).toBe("Sentence not recognized.");
-      expect(screen.getByText("Threshold Rejection")).toBeDefined();
-      expect(screen.getByText(/Only 4 frames captured\. Minimum 8 frames required/i)).toBeDefined();
+      expect(heroSentence.textContent).toContain("No sentence detected. Please try again.");
     });
 
     it("verifies BiGRU file upload calls recognizeFiveClassSentenceVideo with 'bigru' and never 101-class model", async () => {

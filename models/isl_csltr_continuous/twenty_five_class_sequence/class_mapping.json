@@ -1,0 +1,105 @@
+{
+  "classes": [
+    {
+      "class_id": 0,
+      "sentence": "comb your hair"
+    },
+    {
+      "class_id": 1,
+      "sentence": "help me"
+    },
+    {
+      "class_id": 2,
+      "sentence": "i am fine. thank you sir."
+    },
+    {
+      "class_id": 3,
+      "sentence": "i need water"
+    },
+    {
+      "class_id": 4,
+      "sentence": "who are you"
+    },
+    {
+      "class_id": 5,
+      "sentence": "are you free today"
+    },
+    {
+      "class_id": 6,
+      "sentence": "congratulations"
+    },
+    {
+      "class_id": 7,
+      "sentence": "do not worry"
+    },
+    {
+      "class_id": 8,
+      "sentence": "go and sleep"
+    },
+    {
+      "class_id": 9,
+      "sentence": "had your food"
+    },
+    {
+      "class_id": 10,
+      "sentence": "he came by train"
+    },
+    {
+      "class_id": 11,
+      "sentence": "he she is my friend"
+    },
+    {
+      "class_id": 12,
+      "sentence": "hi how are you"
+    },
+    {
+      "class_id": 13,
+      "sentence": "how old are you"
+    },
+    {
+      "class_id": 14,
+      "sentence": "i am crying"
+    },
+    {
+      "class_id": 15,
+      "sentence": "i am feeling bored"
+    },
+    {
+      "class_id": 16,
+      "sentence": "i am feeling cold"
+    },
+    {
+      "class_id": 17,
+      "sentence": "i am hungry"
+    },
+    {
+      "class_id": 18,
+      "sentence": "i am sitting in the class"
+    },
+    {
+      "class_id": 19,
+      "sentence": "i like you i love you"
+    },
+    {
+      "class_id": 20,
+      "sentence": "i promise"
+    },
+    {
+      "class_id": 21,
+      "sentence": "shall we go outside"
+    },
+    {
+      "class_id": 22,
+      "sentence": "take care of yourself"
+    },
+    {
+      "class_id": 23,
+      "sentence": "thank you so much"
+    },
+    {
+      "class_id": 24,
+      "sentence": "what are you doing"
+    }
+  ],
+  "num_classes": 25
+}

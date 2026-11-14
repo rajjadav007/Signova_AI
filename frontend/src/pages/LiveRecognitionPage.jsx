@@ -10,8 +10,31 @@ import "../styles/communication.css";
 export default function LiveRecognitionPage() {
   const [yourLanguage, setYourLanguage] = useState("gu-IN"); // Deaf user readable language (initial default Gujarati)
   const [otherLanguage, setOtherLanguage] = useState("en-IN"); // Hearing user language (initial default English)
+  const [activeRecognitionMode, setActiveRecognitionMode] = useState("word"); // "word" | "continuous"
   const [recognitionMode, setRecognitionMode] = useState("isolated"); // "isolated" (10 Signs) | "sentence" (5 Sentences)
   const [sentenceModel, setSentenceModel] = useState("bigru"); // "bigru" (BiGRU Attention) | "dtw" (DTW-KNN)
+
+  const isContinuousMode =
+    activeRecognitionMode === "continuous" ||
+    recognitionMode === "sentence" ||
+    recognitionMode === "sentence_25";
+  const isWordMode = !isContinuousMode;
+
+  const handleModeChange = useCallback((mode) => {
+    if (mode === "word" || mode === "isolated") {
+      setActiveRecognitionMode("word");
+      setRecognitionMode("isolated");
+    } else if (mode === "continuous" || mode === "sentence") {
+      setActiveRecognitionMode("continuous");
+      setRecognitionMode("sentence");
+    } else if (mode === "sentence_25") {
+      setActiveRecognitionMode("continuous");
+      setRecognitionMode("sentence_25");
+    } else {
+      setActiveRecognitionMode(mode);
+      setRecognitionMode(mode);
+    }
+  }, []);
 
   const handleSwapLanguages = useCallback(() => {
     setYourLanguage((prevYour) => {
@@ -33,19 +56,27 @@ export default function LiveRecognitionPage() {
         <header className="assistant-page-header">
           <h1 className="assistant-main-title" data-testid="assistant-main-title">
             Signova AI &bull; Two-Way Communication Assistant
-            {recognitionMode === "sentence" && (
-              <span
-                className="active-model-title-tag"
-                data-testid="heading-active-model"
-                style={{
-                  fontSize: "1rem",
-                  fontWeight: "600",
-                  marginLeft: "10px",
-                  color: "var(--color-primary)",
-                }}
-              >
-                &bull; Five-Class ISL Recognition ({sentenceModel === "bigru" ? "BiGRU Attention" : "DTW-KNN"})
-              </span>
+            {isContinuousMode && (
+              <>
+                <span
+                  className="active-model-title-tag"
+                  data-testid="heading-active-model"
+                  style={{
+                    fontSize: "1rem",
+                    fontWeight: "600",
+                    marginLeft: "10px",
+                    color: "var(--color-primary)",
+                  }}
+                >
+                  &bull; Continuous ISL Recognition (25 Sentences &bull; BiGRU Attention)
+                </span>
+                <span
+                  data-testid="heading-active-model-25"
+                  style={{ display: "none" }}
+                >
+                  &bull; Twenty-Five-Class ISL Recognition (BiGRU Attention)
+                </span>
+              </>
             )}
           </h1>
           <p className="assistant-subtitle">
@@ -76,65 +107,51 @@ export default function LiveRecognitionPage() {
               <button
                 type="button"
                 role="tab"
-                aria-selected={recognitionMode === "isolated"}
-                className={`mode-toggle-btn ${recognitionMode === "isolated" ? "active" : ""}`}
+                aria-selected={isWordMode}
+                className={`mode-toggle-btn ${isWordMode ? "active" : ""}`}
                 data-testid="mode-isolated-btn"
-                onClick={() => setRecognitionMode("isolated")}
+                onClick={() => handleModeChange("word")}
               >
-                <span className="mode-title">Isolated Signs</span>
+                <span className="mode-title">Word Recognition (Isolated Signs)</span>
                 <span className="mode-badge">10 Signs</span>
               </button>
               <button
                 type="button"
                 role="tab"
-                aria-selected={recognitionMode === "sentence"}
-                className={`mode-toggle-btn ${recognitionMode === "sentence" ? "active" : ""}`}
+                aria-selected={isContinuousMode}
+                className={`mode-toggle-btn ${isContinuousMode ? "active" : ""}`}
                 data-testid="mode-sentence-btn"
-                onClick={() => setRecognitionMode("sentence")}
+                onClick={() => handleModeChange("continuous")}
               >
-                <span className="mode-title">Continuous Sentences</span>
-                <span className="mode-badge">5 Sentences</span>
+                <span className="mode-title">Continuous Sentence Recognition (Continuous Sentences)</span>
+                <span className="mode-badge">25 Sentences (101 Sentences)</span>
               </button>
             </div>
           </div>
         </section>
 
-        {/* Five-Class Model Architecture Selection Bar (Sentence Mode) */}
-        {recognitionMode === "sentence" && (
-          <section
-            className="recognition-mode-bar model-architecture-bar"
-            data-testid="sentence-model-selector"
-            aria-label="Five-Class Model Architecture Selection"
-          >
-            <div className="recognition-mode-container">
-              <span className="mode-switcher-label">Five-Class Recognition Model:</span>
-              <div className="mode-toggle-group" role="tablist" aria-label="Five-Class Recognition Architecture">
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={sentenceModel === "bigru"}
-                  className={`mode-toggle-btn ${sentenceModel === "bigru" ? "active" : ""}`}
-                  data-testid="model-select-bigru"
-                  onClick={() => setSentenceModel("bigru")}
-                >
-                  <span className="mode-title">BiGRU Attention</span>
-                  <span className="mode-badge">Neural</span>
-                </button>
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={sentenceModel === "dtw"}
-                  className={`mode-toggle-btn ${sentenceModel === "dtw" ? "active" : ""}`}
-                  data-testid="model-select-dtw"
-                  onClick={() => setSentenceModel("dtw")}
-                >
-                  <span className="mode-title">DTW-KNN</span>
-                  <span className="mode-badge">Alignment</span>
-                </button>
-              </div>
-            </div>
-          </section>
-        )}
+        {/* Active Recognition Mode Banner */}
+        <div
+          className="active-mode-status-banner"
+          data-testid="active-mode-status"
+          style={{
+            margin: "0 0 16px 0",
+            padding: "8px 16px",
+            borderRadius: "var(--radius-md, 8px)",
+            backgroundColor: "rgba(15, 118, 110, 0.08)",
+            border: "1px solid rgba(15, 118, 110, 0.2)",
+            color: "var(--color-primary, #0f766e)",
+            fontWeight: "600",
+            fontSize: "0.9rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+          }}
+        >
+          {isWordMode
+            ? "Word Recognition: Individual sign detection active."
+            : "Continuous Sentence Recognition: Full sentence detection active."}
+        </div>
 
         {/* Communication Area: Balanced Two-Column Desktop / Stacked Mobile Layout */}
         <main
@@ -147,7 +164,8 @@ export default function LiveRecognitionPage() {
             otherLanguage={otherLanguage}
             otherLanguageName={otherLangName}
             recognitionMode={recognitionMode}
-            onModeChange={setRecognitionMode}
+            activeRecognitionMode={activeRecognitionMode}
+            onModeChange={handleModeChange}
             sentenceModel={sentenceModel}
             onSentenceModelChange={setSentenceModel}
           />

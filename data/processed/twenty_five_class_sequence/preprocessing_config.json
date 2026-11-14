@@ -1,0 +1,141 @@
+{
+  "num_classes": 25,
+  "classes": [
+    {
+      "class_id": 0,
+      "name": "comb your hair",
+      "folder": "comb your hair"
+    },
+    {
+      "class_id": 1,
+      "name": "help me",
+      "folder": "help me"
+    },
+    {
+      "class_id": 2,
+      "name": "i am fine. thank you sir.",
+      "folder": "i am fine. thank you sir"
+    },
+    {
+      "class_id": 3,
+      "name": "i need water",
+      "folder": "i need water"
+    },
+    {
+      "class_id": 4,
+      "name": "who are you",
+      "folder": "who are you"
+    },
+    {
+      "class_id": 5,
+      "name": "are you free today",
+      "folder": "are you free today"
+    },
+    {
+      "class_id": 6,
+      "name": "congratulations",
+      "folder": "congratulations"
+    },
+    {
+      "class_id": 7,
+      "name": "do not worry",
+      "folder": "do not worry"
+    },
+    {
+      "class_id": 8,
+      "name": "go and sleep",
+      "folder": "go and sleep"
+    },
+    {
+      "class_id": 9,
+      "name": "had your food",
+      "folder": "had your food"
+    },
+    {
+      "class_id": 10,
+      "name": "he came by train",
+      "folder": "he came by train"
+    },
+    {
+      "class_id": 11,
+      "name": "he she is my friend",
+      "folder": "he she is my friend"
+    },
+    {
+      "class_id": 12,
+      "name": "hi how are you",
+      "folder": "hi how are you"
+    },
+    {
+      "class_id": 13,
+      "name": "how old are you",
+      "folder": "how old are you"
+    },
+    {
+      "class_id": 14,
+      "name": "i am crying",
+      "folder": "i am crying"
+    },
+    {
+      "class_id": 15,
+      "name": "i am feeling bored",
+      "folder": "i am feeling bored"
+    },
+    {
+      "class_id": 16,
+      "name": "i am feeling cold",
+      "folder": "i am feeling cold"
+    },
+    {
+      "class_id": 17,
+      "name": "i am hungry",
+      "folder": "i am hungry"
+    },
+    {
+      "class_id": 18,
+      "name": "i am sitting in the class",
+      "folder": "i am sitting in the class"
+    },
+    {
+      "class_id": 19,
+      "name": "i like you i love you",
+      "folder": "i like you i love you"
+    },
+    {
+      "class_id": 20,
+      "name": "i promise",
+      "folder": "i promise"
+    },
+    {
+      "class_id": 21,
+      "name": "shall we go outside",
+      "folder": "shall we go outside"
+    },
+    {
+      "class_id": 22,
+      "name": "take care of yourself",
+      "folder": "take care of yourself"
+    },
+    {
+      "class_id": 23,
+      "name": "thank you so much",
+      "folder": "thank you so much"
+    },
+    {
+      "class_id": 24,
+      "name": "what are you doing",
+      "folder": "what are you doing"
+    }
+  ],
+  "landmark_count": 75,
+  "landmark_channels": 4,
+  "feature_dim": 300,
+  "normalization": "torso_centered",
+  "origin_landmarks": [
+    11,
+    12
+  ],
+  "scale_reference": "shoulder_distance",
+  "missing_hand_strategy": "zero_fill",
+  "timestamp": "2026-11-14 05:18:31"
+}

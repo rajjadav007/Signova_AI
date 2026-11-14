@@ -1,36 +1,43 @@
 """
 Signova AI - 25-Class ISL Sentence Sequence Recognizer.
-Phase 9 Inference Module:
+Velocity-Dominant Kinematic DTW Engine (Upgraded from BiGRU).
+
 Accepts:
-- An ordered list of RGB/BGR image frames (e.g. from webcam or video frames folder)
+- An ordered list of RGB/BGR image frames (e.g. from webcam or video file)
 - OR pre-extracted (T, 75, 4) landmark array
-- OR an existing preprocessed (T, 300) feature sequence
+- OR an existing preprocessed feature sequence
 
 Runs:
-1. MediaPipe landmark extraction (Pose 33, LH 21, RH 21) if raw frames provided
-2. Torso-centered coordinate normalization
-3. Variable-length 25-Class BiGRU Attention Model forward pass
-4. Softmax probability distribution and prediction
-5. Always returns top prediction with clear uncertainty warning if confidence < 0.25
+1. MediaPipe landmark extraction (Pose 33, LH 21, RH 21) with forward-fill if raw frames provided
+2. 678-dimensional temporal feature extraction (225 spatial, 225 velocity, 225 acceleration, 3 masks)
+3. 48-dimensional group-partitioned PCA projection (spatial 24, velocity 16, accel 8) with 2x temporal stride
+4. Pairwise Velocity-Dominant DTW matching against the 126 canonical training exemplars
+5. 1-NN / 5-NN class distance aggregation and temperature-scaled posterior probabilities
+6. Calibrated uncertainty rejection (distance <= 0.40, margin >= 0.015)
 """
+
+from __future__ import annotations
 
 import json
 import logging
 from pathlib import Path
+import pickle
 import re
 import sys
 import time
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Tuple, Union
+
 import cv2
 import numpy as np
-import torch
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from ai.continuous.twenty_five_class_model import TwentyFiveClassBiGRUAttentionModel
-from ai.pose_extraction.mediapipe_extractor import ModernMediaPipeExtractor
+from ai.continuous.dtw_knn_classifier import DTWKNNClassifier, compute_dtw_distance
+from ai.continuous.temporal_features import extract_temporal_features
+from ai.pose_extraction.mediapipe_extractor import ModernMediaPipeExtractor, apply_hand_forward_fill
+from scripts.recognize_sentence_dtw import preprocess_sequence
 
 logger = logging.getLogger("twenty_five_class_recognizer")
 
@@ -41,7 +48,8 @@ def natural_sort_key(p: Path):
 
 class TwentyFiveClassSequenceRecognizer:
     """
-    Inference engine for 25-class ISL sentence sequence recognition.
+    Inference engine for 25-class ISL sentence sequence recognition using
+    Velocity-Dominant Kinematic DTW with calibrated rejection.
     """
 
     def __init__(
@@ -55,20 +63,19 @@ class TwentyFiveClassSequenceRecognizer:
             self.model_dir = Path(model_dir)
 
         # Fallback to root models dir if needed
-        if not (self.model_dir / "best_model.pt").exists():
+        if not (self.model_dir / "dtw_reference_dataset.pkl").exists():
             root_model_dir = Path(r"D:\Projects\models\isl_csltr_continuous\twenty_five_class_sequence")
-            if (root_model_dir / "best_model.pt").exists():
+            if (root_model_dir / "dtw_reference_dataset.pkl").exists():
                 self.model_dir = root_model_dir
 
-        if device is None:
-            self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        else:
-            self.device = torch.device(device)
-
-        # 1. Load configurations & class mapping
+        # 1. Load class mapping
         class_mapping_path = self.model_dir / "class_mapping.json"
         if not class_mapping_path.exists():
-            raise FileNotFoundError(f"class_mapping.json not found at {class_mapping_path}")
+            root_mapping = Path(r"D:\Projects\models\isl_csltr_continuous\twenty_five_class_sequence\class_mapping.json")
+            if root_mapping.exists():
+                class_mapping_path = root_mapping
+            else:
+                raise FileNotFoundError(f"class_mapping.json not found at {class_mapping_path}")
 
         with open(class_mapping_path, "r", encoding="utf-8") as f:
             mapping_data = json.load(f)
@@ -76,46 +83,46 @@ class TwentyFiveClassSequenceRecognizer:
             self.class_names = [c["sentence"] for c in self.classes]
             self.num_classes = len(self.class_names)
 
-        model_config_path = self.model_dir / "model_config.json"
-        if model_config_path.exists():
-            with open(model_config_path, "r", encoding="utf-8") as f:
-                self.model_config = json.load(f)
-        else:
-            self.model_config = {
-                "input_dim": 300,
-                "proj_dim": 128,
-                "hidden_dim": 64,
-                "num_layers": 1,
-                "num_classes": self.num_classes,
-                "dropout": 0.3
-            }
-
-        prep_config_path = self.model_dir / "preprocessing_config.json"
-        if prep_config_path.exists():
-            with open(prep_config_path, "r", encoding="utf-8") as f:
-                self.prep_config = json.load(f)
-        else:
-            self.prep_config = {}
-
-        # 2. Load Model
-        checkpoint_path = self.model_dir / "best_model.pt"
-        if not checkpoint_path.exists():
-            raise FileNotFoundError(f"best_model.pt not found at {checkpoint_path}")
-
-        self.model = TwentyFiveClassBiGRUAttentionModel(
-            input_dim=self.model_config.get("input_dim", 300),
-            proj_dim=self.model_config.get("proj_dim", 128),
-            hidden_dim=self.model_config.get("hidden_dim", 64),
-            num_layers=self.model_config.get("num_layers", 1),
-            num_classes=self.num_classes,
-            dropout=self.model_config.get("dropout", 0.3)
+        # 2. Load preprocessors (improved group-partitioned PCA)
+        preprocessors_path = (
+            PROJECT_ROOT / "datasets" / "isl_csltr_continuous" / "ml_cache" / "preprocessors_improved.pkl"
         )
-        state_dict = torch.load(checkpoint_path, map_location=self.device)
-        self.model.load_state_dict(state_dict)
-        self.model.to(self.device)
-        self.model.eval()
+        if not preprocessors_path.exists():
+            preprocessors_path = self.model_dir / "preprocessors_improved.pkl"
+
+        if preprocessors_path.exists():
+            with open(preprocessors_path, "rb") as f:
+                self.preprocessors = pickle.load(f)
+        else:
+            logger.warning("preprocessors_improved.pkl not found at %s", preprocessors_path)
+            self.preprocessors = None
+
+        # 3. Load DTW reference dataset & fitted classifier
+        dataset_path = self.model_dir / "dtw_reference_dataset.pkl"
+        model_path = self.model_dir / "best_dtw_knn_model.pkl"
+
+        if not dataset_path.exists() or not model_path.exists():
+            raise FileNotFoundError(
+                f"DTW artifacts missing in {self.model_dir}. Please ensure dtw_reference_dataset.pkl and best_dtw_knn_model.pkl exist."
+            )
+
+        with open(dataset_path, "rb") as f:
+            self.dataset_pkg = pickle.load(f)
+            self.train_seqs = self.dataset_pkg["train"]["sequences"]
+            self.train_labels = np.asarray(self.dataset_pkg["train"]["labels"], dtype=np.int64)
+
+        with open(model_path, "rb") as f:
+            self.clf: DTWKNNClassifier = pickle.load(f)
 
         self._extractor: Optional[ModernMediaPipeExtractor] = None
+        self.distance_threshold = 0.40
+        self.min_margin = 0.015
+
+        logger.info(
+            "TwentyFiveClassSequenceRecognizer initialized with %d classes and %d reference exemplars.",
+            self.num_classes,
+            len(self.train_seqs),
+        )
 
     @property
     def extractor(self) -> ModernMediaPipeExtractor:
@@ -123,45 +130,25 @@ class TwentyFiveClassSequenceRecognizer:
             self._extractor = ModernMediaPipeExtractor()
         return self._extractor
 
-    def normalize_torso_landmarks(self, keypoints_75x4: np.ndarray) -> np.ndarray:
-        norm_kps = keypoints_75x4.copy()
-        ls = norm_kps[11, :3]
-        rs = norm_kps[12, :3]
-        ls_vis = norm_kps[11, 3]
-        rs_vis = norm_kps[12, 3]
-
-        if ls_vis > 0.3 and rs_vis > 0.3:
-            midpoint = (ls + rs) / 2.0
-            shoulder_dist = float(np.linalg.norm(ls - rs))
-            scale = shoulder_dist if shoulder_dist > 1e-3 else 1.0
-        else:
-            nose = norm_kps[0, :3]
-            nose_vis = norm_kps[0, 3]
-            midpoint = nose if nose_vis > 0.3 else np.array([0.5, 0.5, 0.0], dtype=np.float32)
-            scale = 1.0
-
-        for i in range(75):
-            if norm_kps[i, 3] > 0.0:
-                norm_kps[i, :3] = (norm_kps[i, :3] - midpoint) / scale
-            else:
-                norm_kps[i, :3] = 0.0
-                norm_kps[i, 3] = 0.0
-
-        return norm_kps
+    @property
+    def model(self) -> Any:
+        """Alias for compatibility with services checking for model attribute."""
+        return self.clf
 
     def predict_features(
         self,
-        features: np.ndarray,
+        features_48: np.ndarray,
         confidence_threshold: float = 0.25,
-        min_frames: int = 5
+        min_frames: int = 5,
+        fps: float = 25.0
     ) -> Dict[str, Any]:
         """
-        Run inference on preprocessed (T, 300) normalized feature array.
+        Run inference on preprocessed (T, 48) feature array.
         """
         t0 = time.perf_counter()
-        t, d = features.shape
-        if d != 300:
-            raise ValueError(f"Expected feature dim 300, got {d}")
+        t, d = features_48.shape
+        if d != 48:
+            raise ValueError(f"Expected 48-dimensional features, got {d}")
 
         if t < min_frames:
             return {
@@ -173,84 +160,151 @@ class TwentyFiveClassSequenceRecognizer:
                 "class_probabilities": {},
                 "top5_candidates": [],
                 "is_confident": False,
-                "model_identifier": "bigru_25class"
+                "model_identifier": "dtw_knn_25class",
+                "model_used": "VelocityDominantDTWKNN"
             }
 
-        tensor_x = torch.from_numpy(features).float().unsqueeze(0).to(self.device)  # (1, T, 300)
+        # Pairwise DTW to all 126 train exemplars
+        dists = [
+            compute_dtw_distance(
+                features_48, ref,
+                metric="cosine",
+                window=10,
+                group_weights=(0.05, 1.0, 0.05),
+                group_slices=(slice(0, 24), slice(24, 40), slice(40, 48))
+            )
+            for ref in self.train_seqs
+        ]
 
-        with torch.no_grad():
-            logits, attn_weights = self.model(tensor_x)
-            probs = torch.softmax(logits, dim=-1).squeeze(0).cpu().numpy()
+        # Aggregate minimum distance per class
+        class_min_dists = {}
+        for c_id in range(self.num_classes):
+            c_dists = [dists[i] for i in range(len(dists)) if self.train_labels[i] == c_id]
+            class_min_dists[c_id] = float(min(c_dists)) if c_dists else 1.0
+
+        sorted_classes = sorted(class_min_dists.items(), key=lambda x: x[1])
+        best_cid, best_dist = sorted_classes[0]
+        second_cid, second_dist = sorted_classes[1]
+        margin = second_dist - best_dist
+
+        # Temperature-scaled softmax posterior probabilities over negative distances
+        tau = 0.05
+        raw_logits = np.array([-class_min_dists[c] / tau for c in range(self.num_classes)], dtype=np.float32)
+        raw_logits -= np.max(raw_logits)
+        exp_logits = np.exp(raw_logits)
+        probs = exp_logits / np.sum(exp_logits)
 
         latency_ms = (time.perf_counter() - t0) * 1000.0
 
-        pred_idx = int(np.argmax(probs))
-        pred_prob = float(probs[pred_idx])
-        pred_sentence = self.class_names[pred_idx]
+        pred_sentence = self.class_names[best_cid]
+        best_prob = float(probs[best_cid])
 
-        # Top 5 candidate sorting
-        top5_indices = np.argsort(probs)[-5:][::-1]
+        # Top 5 candidates
         top5_candidates = [
             {
-                "class_id": int(idx),
-                "sentence": self.class_names[idx],
-                "probability": float(probs[idx])
+                "class_id": int(cid),
+                "sentence": self.class_names[cid],
+                "probability": round(float(probs[cid]), 4),
+                "dtw_distance": round(float(dist), 4)
             }
-            for idx in top5_indices
+            for cid, dist in sorted_classes[:5]
         ]
 
         class_probabilities = {
-            self.class_names[i]: float(probs[i])
+            self.class_names[i]: round(float(probs[i]), 4)
             for i in range(self.num_classes)
         }
 
-        is_confident = pred_prob >= confidence_threshold
-        uncertainty_warning = (
-            None if is_confident
-            else f"Low confidence prediction ({pred_prob*100:.1f}% < {confidence_threshold*100:.1f}% threshold). Prediction may be uncertain."
-        )
+        # Rejection & uncertainty thresholding
+        is_confident = (best_dist <= self.distance_threshold) and (margin >= self.min_margin)
+        uncertainty_warning = None
+        if not is_confident:
+            reasons = []
+            if best_dist > self.distance_threshold:
+                reasons.append(f"DTW distance {best_dist:.3f} > {self.distance_threshold}")
+            if margin < self.min_margin:
+                reasons.append(f"margin {margin:.3f} < {self.min_margin}")
+            uncertainty_warning = (
+                f"Low confidence prediction ({best_prob*100:.1f}%, {', '.join(reasons)}). Prediction may be uncertain."
+            )
 
         return {
             "success": True,
-            "predicted_class_id": pred_idx,
+            "predicted_class_id": best_cid,
             "predicted_sentence": pred_sentence,
-            "confidence": pred_prob,
+            "confidence": best_prob,
+            "dtw_distance": round(best_dist, 4),
+            "margin": round(margin, 4),
             "class_probabilities": class_probabilities,
             "top5_candidates": top5_candidates,
             "frame_count": t,
             "is_confident": is_confident,
             "uncertainty_warning": uncertainty_warning,
             "latency_ms": round(latency_ms, 2),
-            "model_identifier": "bigru_25class",
-            "model_type": "TwentyFiveClassBiGRUAttentionModel",
-            "attention_weights": attn_weights.squeeze(0).cpu().numpy().tolist() if attn_weights is not None else []
+            "model_identifier": "dtw_knn_25class",
+            "model_type": "VelocityDominantDTWKNN",
+            "model_used": "VelocityDominantDTWKNN"
         }
 
     def predict_landmarks(
         self,
         landmarks_seq: np.ndarray,
         confidence_threshold: float = 0.25,
-        min_frames: int = 5
+        min_frames: int = 5,
+        fps: float = 25.0
     ) -> Dict[str, Any]:
         """
         Inference on raw (T, 75, 4) landmark array.
         """
-        t, n_pts, n_ch = landmarks_seq.shape
-        normalized = []
-        for i in range(t):
-            norm_frame = self.normalize_torso_landmarks(landmarks_seq[i])
-            normalized.append(norm_frame.reshape(-1))
-        features = np.array(normalized, dtype=np.float32)
-        return self.predict_features(features, confidence_threshold=confidence_threshold, min_frames=min_frames)
+        arr = np.asarray(landmarks_seq, dtype=np.float32)
+        if arr.ndim == 2 and arr.shape[1] == 300:
+            arr = arr.reshape(-1, 75, 4)
+
+        if arr.ndim != 3 or arr.shape[1] != 75 or arr.shape[2] != 4:
+            raise ValueError(f"Expected (T, 75, 4) landmarks, got {arr.shape}")
+
+        t = arr.shape[0]
+        if t < min_frames:
+            return {
+                "success": False,
+                "error": f"Insufficient frames ({t} < {min_frames}) for sentence recognition.",
+                "frame_count": t,
+                "predicted_sentence": "",
+                "confidence": 0.0,
+                "class_probabilities": {},
+                "top5_candidates": [],
+                "is_confident": False,
+                "model_identifier": "dtw_knn_25class",
+                "model_used": "VelocityDominantDTWKNN"
+            }
+
+        # 1. Forward-fill missing hands
+        coords_flat = arr.reshape(t, 300)
+        filled_flat = apply_hand_forward_fill(coords_flat, max_consecutive_frames=15)
+        filled_landmarks = filled_flat.reshape(t, 75, 4)
+
+        # 2. Extract 678-dim temporal features (spatial + velocity + acceleration + mask)
+        raw_678 = extract_temporal_features(filled_landmarks, fps=fps)
+
+        # 3. Project to 48-dim PCA with 2x temporal stride
+        proc_48 = preprocess_sequence(raw_678, preprocessors=self.preprocessors, stride=2)
+
+        return self.predict_features(
+            proc_48,
+            confidence_threshold=confidence_threshold,
+            min_frames=min_frames,
+            fps=fps
+        )
 
     def predict_frames(
         self,
         frames_bgr: List[np.ndarray],
         confidence_threshold: float = 0.25,
-        min_frames: int = 5
+        min_frames: int = 5,
+        fps: float = 25.0
     ) -> Dict[str, Any]:
         """
-        Extract MediaPipe landmarks from RGB/BGR frames and run 25-class BiGRU inference.
+        Extract MediaPipe landmarks from RGB/BGR frames and run 25-class Velocity DTW inference.
         """
         if not frames_bgr:
             return {
@@ -262,30 +316,36 @@ class TwentyFiveClassSequenceRecognizer:
                 "class_probabilities": {},
                 "top5_candidates": [],
                 "is_confident": False,
-                "model_identifier": "bigru_25class"
+                "model_identifier": "dtw_knn_25class",
+                "model_used": "VelocityDominantDTWKNN"
             }
 
-        features = []
+        landmarks_list = []
         for frame in frames_bgr:
             if frame is None:
                 continue
             rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             raw_75x4, _ = self.extractor.extract_isign_frame(rgb)
-            norm_75x4 = self.normalize_torso_landmarks(raw_75x4)
-            features.append(norm_75x4.reshape(-1))
+            landmarks_list.append(raw_75x4)
 
-        if not features:
+        if not landmarks_list or len(landmarks_list) < min_frames:
             return {
                 "success": False,
-                "error": "Failed to extract landmarks from any frame.",
-                "frame_count": 0,
+                "error": f"Failed to extract sufficient frames ({len(landmarks_list)} < {min_frames}).",
+                "frame_count": len(landmarks_list),
                 "predicted_sentence": "",
                 "confidence": 0.0,
                 "class_probabilities": {},
                 "top5_candidates": [],
                 "is_confident": False,
-                "model_identifier": "bigru_25class"
+                "model_identifier": "dtw_knn_25class",
+                "model_used": "VelocityDominantDTWKNN"
             }
 
-        features_arr = np.array(features, dtype=np.float32)
-        return self.predict_features(features_arr, confidence_threshold=confidence_threshold, min_frames=min_frames)
+        landmarks_arr = np.array(landmarks_list, dtype=np.float32)
+        return self.predict_landmarks(
+            landmarks_arr,
+            confidence_threshold=confidence_threshold,
+            min_frames=min_frames,
+            fps=fps
+        )

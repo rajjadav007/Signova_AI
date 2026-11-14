@@ -69,6 +69,28 @@ class TwentyFiveClassBiGRUService:
                 logger.error("Failed to load TwentyFiveClassSequenceRecognizer: %s", e, exc_info=True)
                 self.is_loaded = False
 
+    def load_model(self) -> None:
+        """Alias for load_artifacts for consistency with other inference services."""
+        self.load_artifacts()
+
+    @property
+    def classes(self) -> List[str]:
+        """Return the list of 25 supported class labels as strings."""
+        if not self.is_loaded:
+            self.load_artifacts()
+        if self._recognizer is not None:
+            return self._recognizer.class_names
+        return []
+
+    @property
+    def model(self) -> Any:
+        """Return the underlying PyTorch model instance."""
+        if not self.is_loaded:
+            self.load_artifacts()
+        if self._recognizer is not None:
+            return self._recognizer.model
+        return None
+
     def get_classes(self) -> List[Dict[str, Any]]:
         """Return the list of 25 supported sentence classes."""
         if not self.is_loaded:
@@ -196,3 +218,7 @@ def get_twenty_five_class_bigru_service() -> TwentyFiveClassBiGRUService:
     if _instance is None:
         _instance = TwentyFiveClassBiGRUService()
     return _instance
+
+
+twenty_five_class_bigru_service = get_twenty_five_class_bigru_service()
+

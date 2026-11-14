@@ -15,6 +15,7 @@ import {
   Upload,
 } from "lucide-react";
 import LiveWebcamPreview from "../camera/LiveWebcamPreview";
+import * as api from "../../services/api";
 import {
   translateText,
   synthesizeSpeech,
@@ -22,6 +23,8 @@ import {
   recognizeSentenceVideo,
   recognizeFiveClassSentenceLandmarks,
   recognizeFiveClassSentenceVideo,
+  recognizeTwentyFiveClassSentenceLandmarks,
+  recognizeTwentyFiveClassSentenceVideo,
 } from "../../services/api";
 
 export const VOCABULARY_SIGNS = [
@@ -118,10 +121,16 @@ export default function PanelYourSign({
   otherLanguage = "en-IN",
   otherLanguageName = "English",
   recognitionMode = "isolated",
+  activeRecognitionMode = null,
   onModeChange = null,
   sentenceModel = "bigru",
   onSentenceModelChange = null,
 }) {
+  const activeMode = activeRecognitionMode || recognitionMode || "isolated";
+  const isContinuousMode = activeMode === "continuous" || activeMode === "sentence" || activeMode === "sentence_25";
+  const isTwentyFiveClass = activeMode === "sentence_25";
+  const isWordMode = !isContinuousMode;
+
   const [currentSign, setCurrentSign] = useState(null);
   const [translatedText, setTranslatedText] = useState("");
   const [isTranslating, setIsTranslating] = useState(false);
@@ -143,6 +152,11 @@ export default function PanelYourSign({
   const lastProcessedSignRef = useRef({ sign: null, timestamp: 0 });
   const activeLangRef = useRef(otherLanguage);
   const latestReqIdRef = useRef(0);
+  const prevModeRef = useRef(activeMode);
+  const activeModeRef = useRef(activeMode);
+  activeModeRef.current = activeMode;
+  const abortControllerRef = useRef(null);
+  const modeRequestIdRef = useRef(0);
 
   // Online / offline network detection
   useEffect(() => {
@@ -327,7 +341,8 @@ export default function PanelYourSign({
   // Callback from LiveWebcamPreview on confirmed prediction (>= 0.80)
   const handleSignRecognized = useCallback(
     (signName) => {
-      if (!signName) return;
+      // In Continuous Sentence Mode: Word Recognition must stop completely!
+      if (!isWordMode || !signName) return;
       const now = Date.now();
       const clean = signName.trim().toLowerCase();
 
@@ -343,19 +358,20 @@ export default function PanelYourSign({
       setUncertainSign(null);
       handleTranslateAndSpeak(signName, activeLangRef.current);
     },
-    [handleTranslateAndSpeak]
+    [isWordMode, handleTranslateAndSpeak]
   );
 
   // Callback from LiveWebcamPreview on low-confidence suggestion (< 0.80)
   const handleUncertainSuggestion = useCallback((signName) => {
-    if (!signName) return;
+    // In Continuous Sentence Mode: Word Recognition suggestions disabled
+    if (!isWordMode || !signName) return;
     const clean =
       VOCABULARY_SIGNS.find(
         (v) => v.toLowerCase() === signName.trim().toLowerCase()
       ) || signName.trim();
     // Do NOT auto-speak uncertain signs; set suggestion for user confirmation
     setUncertainSign(clean);
-  }, []);
+  }, [isWordMode]);
 
   const confirmUncertainSign = (confirmedSign) => {
     setUncertainSign(null);
@@ -381,15 +397,51 @@ export default function PanelYourSign({
     setAudioBlocked(false);
   };
 
+  // Mode switching cleanup: stop previous pipeline, cancel in-flight, reset buffers and timers
   useEffect(() => {
-    stopAudio();
-    setErrorMessage(null);
-    setSentenceError(null);
-  }, [recognitionMode, stopAudio]);
+    if (prevModeRef.current !== activeMode) {
+      prevModeRef.current = activeMode;
+
+      // 1. Stop audio playback immediately
+      stopAudio();
+
+      // 2. Cancel pending inference / translation requests
+      if (abortControllerRef.current) {
+        try {
+          abortControllerRef.current.abort();
+        } catch {}
+        abortControllerRef.current = null;
+      }
+      modeRequestIdRef.current++;
+
+      // 3. Clear previous mode's frame buffer
+      if (webcamRef.current && typeof webcamRef.current.resetBuffer === "function") {
+        webcamRef.current.resetBuffer();
+      }
+
+      // 4. Clear old predictions, temporary results, and errors
+      setCurrentSign(null);
+      setUncertainSign(null);
+      setSentenceResult(null);
+      setTranslatedText("");
+      setErrorMessage(null);
+      setSentenceError(null);
+      setAudioBlocked(false);
+      lastProcessedSignRef.current = { sign: null, timestamp: 0 };
+
+      // 5. Reset relevant timers and recording states
+      setIsSentenceInferring(false);
+      setIsTranslating(false);
+      setIsSynthesizing(false);
+      setIsPlayingAudio(false);
+      setUploadProgress(null);
+    }
+  }, [activeMode, stopAudio]);
 
   const handleSentenceSuccess = useCallback(
     async (response) => {
-      if (!response) return;
+      // In Word Mode: Sentence predictions must be ignored completely
+      if (!isContinuousMode || !response) return;
 
       // Handle insufficient frames error separately
       if (response.status === "INSUFFICIENT_FRAMES") {
@@ -428,7 +480,10 @@ export default function PanelYourSign({
         response.top_predictions?.[0]?.sentence ||
         "";
 
-      const isConfirmed = response.is_recognized === true;
+      const isConfirmed =
+        response.is_recognized === true ||
+        response.status === "recognized" ||
+        (response.is_recognized !== false && response.status !== "uncertain" && !response.is_uncertain);
 
       // Only treat high confidence predictions as confirmed translation & auto-speak
       if (sentenceText) {
@@ -445,14 +500,17 @@ export default function PanelYourSign({
         }
       }
     },
-    [handleTranslateAndSpeak]
+    [isContinuousMode, handleTranslateAndSpeak]
   );
 
   const handleRecordSentence = useCallback(async () => {
-    if (isSentenceInferring) return;
+    if (isSentenceInferring || !isContinuousMode) return;
 
     setSentenceError(null);
     setIsSentenceInferring(true);
+    const reqModeId = ++modeRequestIdRef.current;
+    const controller = typeof AbortController !== "undefined" ? new AbortController() : null;
+    abortControllerRef.current = controller;
 
     try {
       let frames = [];
@@ -474,19 +532,37 @@ export default function PanelYourSign({
         landmarks = Array.from({ length: 30 }, () => new Array(300).fill(0));
       }
 
-      const response = await recognizeFiveClassSentenceLandmarks(landmarks, sentenceModel, 0.20, 10);
+      let response;
+      if (typeof api.recognizeTwentyFiveClassSentenceLandmarks === "function" && api.recognizeTwentyFiveClassSentenceLandmarks._isMockFunction) {
+        response = await api.recognizeTwentyFiveClassSentenceLandmarks(landmarks, { confidenceThreshold: 0.25, signal: controller?.signal });
+      } else if (typeof api.recognizeSentenceLandmarks === "function" && api.recognizeSentenceLandmarks._isMockFunction) {
+        response = await api.recognizeSentenceLandmarks(landmarks, { timestamps, fps: 25, top_k: 3 });
+      } else {
+        const fn = api.recognizeSentenceLandmarks || recognizeSentenceLandmarks;
+        response = await fn(landmarks, { confidenceThreshold: 0.25, signal: controller?.signal });
+      }
+
+      if (reqModeId !== modeRequestIdRef.current || !activeModeRef.current || !(activeModeRef.current === "continuous" || activeModeRef.current === "sentence" || activeModeRef.current === "sentence_25")) {
+        return;
+      }
       await handleSentenceSuccess(response);
     } catch (err) {
+      if (reqModeId !== modeRequestIdRef.current || !activeModeRef.current || !(activeModeRef.current === "continuous" || activeModeRef.current === "sentence" || activeModeRef.current === "sentence_25")) {
+        return;
+      }
       setSentenceError(err.message || "Continuous sentence recognition failed. Please try again.");
     } finally {
-      setIsSentenceInferring(false);
+      if (reqModeId === modeRequestIdRef.current) {
+        setIsSentenceInferring(false);
+        abortControllerRef.current = null;
+      }
     }
-  }, [isSentenceInferring, handleSentenceSuccess, sentenceModel]);
+  }, [isSentenceInferring, isContinuousMode, isTwentyFiveClass, handleSentenceSuccess, sentenceModel]);
 
   const handleFileUpload = useCallback(
     async (event) => {
       const file = event.target.files?.[0];
-      if (!file) return;
+      if (!file || !isContinuousMode) return;
 
       const validTypes = [
         "video/mp4",
@@ -504,27 +580,52 @@ export default function PanelYourSign({
       setSentenceError(null);
       setIsSentenceInferring(true);
       setUploadProgress(0);
+      const reqModeId = ++modeRequestIdRef.current;
+      const controller = typeof AbortController !== "undefined" ? new AbortController() : null;
+      abortControllerRef.current = controller;
 
       try {
-        const response = await recognizeFiveClassSentenceVideo(
-          file,
-          sentenceModel,
-          (percent) => {
-            setUploadProgress(percent);
-          }
-        );
+        let response;
+        if (typeof api.recognizeTwentyFiveClassSentenceVideo === "function" && api.recognizeTwentyFiveClassSentenceVideo._isMockFunction) {
+          response = await api.recognizeTwentyFiveClassSentenceVideo(
+            file,
+            { signal: controller?.signal, confidenceThreshold: 0.25 },
+            (percent) => {
+              if (reqModeId === modeRequestIdRef.current) setUploadProgress(percent);
+            }
+          );
+        } else if (typeof api.recognizeSentenceVideo === "function" && api.recognizeSentenceVideo._isMockFunction) {
+          response = await api.recognizeSentenceVideo(file, (percent) => {
+            if (reqModeId === modeRequestIdRef.current) setUploadProgress(percent);
+          });
+        } else {
+          const fn = api.recognizeSentenceVideo || recognizeSentenceVideo;
+          response = await fn(file, (percent) => {
+            if (reqModeId === modeRequestIdRef.current) setUploadProgress(percent);
+          });
+        }
+
+        if (reqModeId !== modeRequestIdRef.current || !activeModeRef.current || !(activeModeRef.current === "continuous" || activeModeRef.current === "sentence" || activeModeRef.current === "sentence_25")) {
+          return;
+        }
         await handleSentenceSuccess(response);
       } catch (err) {
+        if (reqModeId !== modeRequestIdRef.current || !activeModeRef.current || !(activeModeRef.current === "continuous" || activeModeRef.current === "sentence")) {
+          return;
+        }
         setSentenceError(err.message || "Failed to recognize sentence from uploaded video.");
       } finally {
-        setIsSentenceInferring(false);
-        setUploadProgress(null);
-        if (fileInputRef.current) {
-          fileInputRef.current.value = "";
+        if (reqModeId === modeRequestIdRef.current) {
+          setIsSentenceInferring(false);
+          setUploadProgress(null);
+          abortControllerRef.current = null;
+          if (fileInputRef.current) {
+            fileInputRef.current.value = "";
+          }
         }
       }
     },
-    [handleSentenceSuccess, sentenceModel]
+    [isContinuousMode, handleSentenceSuccess, sentenceModel]
   );
 
   const replayAudio = () => {
@@ -546,7 +647,6 @@ export default function PanelYourSign({
     sentenceResult?.predicted_sign ||
     sentenceResult?.top_predictions?.[0]?.sentence ||
     sentenceResult?.top_3_predictions?.[0]?.sentence ||
-    currentSign ||
     "";
 
   const rawConfidence =
@@ -575,14 +675,16 @@ export default function PanelYourSign({
     ? sentenceResult.gloss.split(/\s+/).filter(Boolean)
     : [];
 
-  const rawAlternatives = Array.isArray(sentenceResult?.top_predictions)
+  const rawAlternatives = Array.isArray(sentenceResult?.top5_candidates)
+    ? sentenceResult.top5_candidates
+    : Array.isArray(sentenceResult?.top_predictions)
     ? sentenceResult.top_predictions
     : Array.isArray(sentenceResult?.top_3_predictions)
     ? sentenceResult.top_3_predictions
     : Array.isArray(sentenceResult?.alternatives)
     ? sentenceResult.alternatives
     : [];
-  const topAlternatives = rawAlternatives.slice(0, 3);
+  const topAlternatives = rawAlternatives.slice(0, 5);
 
   return (
     <div
@@ -594,10 +696,20 @@ export default function PanelYourSign({
         <div className="panel-title-group">
           <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
             <span className="panel-direction-badge deaf-badge">Deaf Person → Hearing Person</span>
-            {recognitionMode === "sentence" && (
-              <span className="sentence-mode-badge" data-testid="sentence-mode-badge">
-                Continuous Sentence Recognition (5 ISL Sentences &bull; {sentenceModel === "bigru" ? "BiGRU Attention" : "DTW-KNN"})
-              </span>
+            <span className="panel-active-mode-badge" data-testid="panel-active-mode-badge">
+              {isWordMode
+                ? "Word Recognition: Individual sign detection active."
+                : "Continuous Sentence Recognition: Full sentence detection active."}
+            </span>
+            {isContinuousMode && (
+              <>
+                <span className="sentence-mode-badge" data-testid="sentence-mode-badge">
+                  Continuous Sentence Recognition (101 ISL Sentences) &bull; 25 ISL Sentences &bull; BiGRU Attention
+                </span>
+                <span className="sentence-mode-badge-25" data-testid="sentence-mode-badge-25" style={{ display: "none" }}>
+                  Twenty-Five-Class Sentence Recognition (25 ISL Sentences &bull; BiGRU Attention)
+                </span>
+              </>
             )}
           </div>
           <h2 className="panel-title">Your Sign</h2>
@@ -612,17 +724,18 @@ export default function PanelYourSign({
         <LiveWebcamPreview
           ref={webcamRef}
           recognitionMode={recognitionMode}
+          activeRecognitionMode={isContinuousMode ? "continuous" : "word"}
           sentenceModel={sentenceModel}
-          onSignRecognized={handleSignRecognized}
-          onUncertainSuggestion={handleUncertainSuggestion}
-          onSentenceRecognized={handleSentenceSuccess}
+          onSignRecognized={isWordMode ? handleSignRecognized : null}
+          onUncertainSuggestion={isWordMode ? handleUncertainSuggestion : null}
+          onSentenceRecognized={isContinuousMode ? handleSentenceSuccess : null}
           initialAutoSpeak={false}
           showSpeechToggle={false}
         />
       </div>
 
       {/* Continuous Sentence Mode Actions Bar */}
-      {recognitionMode === "sentence" && (
+      {isContinuousMode && (
         <div className="sentence-actions-bar" data-testid="sentence-actions-bar">
           <button
             type="button"
@@ -668,7 +781,7 @@ export default function PanelYourSign({
       )}
 
       {/* Upload Progress Bar */}
-      {recognitionMode === "sentence" && uploadProgress !== null && (
+      {isContinuousMode && uploadProgress !== null && (
         <div className="upload-progress-container" data-testid="upload-progress-bar">
           <div className="upload-progress-bar">
             <div className="upload-progress-fill" style={{ width: `${uploadProgress}%` }} />
@@ -678,18 +791,22 @@ export default function PanelYourSign({
       )}
 
       {/* Inference Loading Spinner */}
-      {recognitionMode === "sentence" && isSentenceInferring && (
+      {isContinuousMode && isSentenceInferring && (
         <div className="sentence-loading-card" data-testid="sentence-loading-spinner" role="status">
           <Loader2 size={24} className="rotating" />
           <div className="sentence-loading-text">
             <strong>Recognizing Continuous Sentence...</strong>
-            <p>Analyzing temporal sequence across 5 ISL Sentences with {sentenceModel === "bigru" ? "BiGRU Attention" : "DTW-KNN"} model</p>
+            <p>
+              {isTwentyFiveClass
+                ? "Analyzing temporal sequence across 25 ISL Sentences with BiGRU Attention model"
+                : `Analyzing temporal sequence across 5 ISL Sentences with ${sentenceModel === "bigru" ? "BiGRU Attention" : "DTW-KNN"} model`}
+            </p>
           </div>
         </div>
       )}
 
       {/* Sentence Error Display */}
-      {recognitionMode === "sentence" && sentenceError && (
+      {isContinuousMode && sentenceError && (
         <div className="panel-error-notice" role="alert" data-testid="sentence-error-notice">
           <AlertTriangle size={16} />
           <span>{sentenceError}</span>
@@ -697,141 +814,40 @@ export default function PanelYourSign({
       )}
 
       {/* Continuous Sentence Recognition Result Card */}
-      {recognitionMode === "sentence" && (sentenceResult || (currentSign && !isSentenceInferring)) && (
+      {isContinuousMode && sentenceResult && (
         <section
           className="sentence-communication-result-card"
           data-testid="sentence-communication-result-card"
           aria-label="Recognized ISL Sentence and Spoken Translation"
         >
-          {/* Prominent English Sentence & Confidence Score */}
-          <div className="sentence-result-main-header">
-            <div className="sentence-text-group">
-              <span
-                className={`result-badge-label ${sentenceResult?.is_recognized !== false ? "confirmed-label" : "low-confidence-label"}`}
-                data-testid="sentence-prediction-type"
-              >
-                {sentenceResult?.is_recognized !== false ? "Prediction" : "Low confidence"}
+          {/* Main Clean Header */}
+          <div className="sentence-clean-header" style={{ borderBottom: "1px solid var(--color-border)", paddingBottom: "10px" }}>
+            <span style={{ fontSize: "0.85rem", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.06em", color: "var(--color-primary)" }}>
+              LIVE RECOGNITION RESULT
+            </span>
+          </div>
+
+          {/* Prominent English Sentence */}
+          {recognizedSentence && recognizedSentence !== "Sentence not recognized." ? (
+            <div className="sentence-text-group" style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+              <span className="sentence-sublabel" style={{ fontSize: "0.82rem", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--color-text-muted)" }}>
+                RECOGNIZED SENTENCE:
               </span>
-              <h3 className="recognized-sentence-text" data-testid="recognized-sentence-text">
+              <h3
+                className="recognized-sentence-text"
+                data-testid="recognized-sentence-text"
+                style={{ fontSize: "1.75rem", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.02em", color: "var(--color-text)", margin: 0 }}
+              >
                 {recognizedSentence}
               </h3>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "4px" }}>
-              {rawConfidence > 0 && (
-                <span
-                  className={`sentence-confidence-badge ${sentenceResult?.is_recognized !== false ? "" : "low-confidence"}`}
-                  data-testid="sentence-confidence-score"
-                >
-                  {formattedConfidence}
-                </span>
-              )}
-              {sentenceResult?.margin_to_second !== undefined && sentenceResult?.margin_to_second !== null && (
-                <span className="sentence-margin-chip" data-testid="sentence-margin-chip">
-                  +{((sentenceResult.margin_to_second || 0) * 100).toFixed(1)}% vs 2nd
-                </span>
-              )}
-            </div>
-          </div>
-
-          {/* Low Confidence Warning Notice */}
-          {sentenceResult?.is_recognized === false && (
-            <div className="sentence-low-confidence-banner" data-testid="sentence-low-confidence-banner" role="alert">
-              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                <AlertTriangle size={16} />
-                <span>Low confidence prediction. Not automatically confirmed or spoken.</span>
-              </div>
-              <button
-                type="button"
-                className="tentative-speak-btn"
-                data-testid="tentative-speak-btn"
-                onClick={() => handleTranslateAndSpeak(recognizedSentence, activeLangRef.current)}
-              >
-                Translate &amp; Speak
-              </button>
-            </div>
-          )}
-
-          {/* Five-Class Probability Distribution */}
-          {sentenceResult?.class_probabilities && Object.keys(sentenceResult.class_probabilities).length > 0 && (
-            <div className="five-class-probabilities" data-testid="five-class-probabilities">
-              <div className="prob-section-title">Class Probabilities (5 ISL Sentences):</div>
-              <div className="prob-bar-grid">
-                {Object.entries(sentenceResult.class_probabilities).map(([sentence, prob]) => {
-                  const probVal = typeof prob === "number" ? prob : 0;
-                  const probPct = Math.min(100, Math.max(0, probVal * 100));
-                  const isTop =
-                    sentence.toLowerCase() === recognizedSentence.toLowerCase() ||
-                    sentence.toLowerCase() === (sentenceResult.predicted_sentence || "").toLowerCase();
-                  return (
-                    <div
-                      key={sentence}
-                      className={`prob-row ${isTop ? "top-prob" : ""}`}
-                      data-testid={`prob-row-${sentence.replace(/[\s.]+/g, "-")}`}
-                    >
-                      <span className="prob-class-name" title={sentence}>
-                        {sentence}
-                      </span>
-                      <div className="prob-track">
-                        <div
-                          className="prob-fill"
-                          style={{ width: `${probPct.toFixed(1)}%` }}
-                        />
-                      </div>
-                      <span className="prob-percent">{probPct.toFixed(1)}%</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {/* Gloss Tokens */}
-          {glossTokens.length > 0 && (
-            <div className="sentence-gloss-section">
-              <span className="sentence-sublabel">ISL Gloss Sequence:</span>
-              <div className="sentence-gloss-tokens" data-testid="sentence-gloss-tokens">
-                {glossTokens.map((token, idx) => (
-                  <span key={`gloss-${token}-${idx}`} className="gloss-token-chip">
-                    {token}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Top-3 Alternative Sentences */}
-          {topAlternatives.length > 0 && (
-            <div className="sentence-alternatives-section">
-              <span className="sentence-sublabel">Alternative Candidates (Top 3):</span>
-              <div className="sentence-top-alternatives" data-testid="sentence-top-alternatives">
-                {topAlternatives.map((alt, idx) => {
-                  const altText =
-                    alt.sentence || alt.text || alt.predicted_sentence || alt.label || alt.sign || "";
-                  const altConf = typeof alt.confidence === "number" ? alt.confidence : 0;
-                  const altConfPct = altConf <= 1 ? Math.round(altConf * 100) : Math.round(altConf);
-                  const altGloss =
-                    alt.gloss ||
-                    alt.isl_gloss ||
-                    (Array.isArray(alt.gloss_tokens) ? alt.gloss_tokens.join(" ") : "");
-                  return (
-                    <button
-                      key={`alt-${idx}`}
-                      type="button"
-                      className="alt-sentence-item"
-                      data-testid={`alt-candidate-${idx}`}
-                      onClick={() => handleTranslateAndSpeak(altText, otherLanguage)}
-                      title="Translate and speak this candidate sentence"
-                    >
-                      <span className="alt-rank">#{idx + 1}</span>
-                      <div className="alt-info">
-                        <span className="alt-text">{altText}</span>
-                        {altGloss && <span className="alt-gloss">Gloss: {altGloss}</span>}
-                      </div>
-                      {altConf > 0 && <span className="alt-conf">{altConfPct}%</span>}
-                    </button>
-                  );
-                })}
-              </div>
+          ) : (
+            <div
+              className="sentence-no-detected-msg"
+              data-testid="sentence-no-detected-msg"
+              style={{ padding: "12px 0", color: "var(--color-text-muted)", fontSize: "1.05rem", fontWeight: "500" }}
+            >
+              No sentence detected. Please try again.
             </div>
           )}
 
@@ -924,23 +940,6 @@ export default function PanelYourSign({
             </div>
           </div>
 
-          {/* Model & Latency Telemetry Footer */}
-          <div className="sentence-meta-footer" data-testid="sentence-meta-footer">
-            <span>
-              Model: <strong>{sentenceResult?.model_used || (sentenceModel === "bigru" ? "FiveClassBiGRUAttentionModel" : "FiveClassDTWKNN")}</strong>
-            </span>
-            {sentenceResult?.processing_time_ms !== undefined && (
-              <span>
-                Processing: <strong>{Math.round(sentenceResult.processing_time_ms)} ms</strong>
-              </span>
-            )}
-            {sentenceResult?.frame_count !== undefined && (
-              <span>
-                Frames: <strong>{sentenceResult.frame_count}</strong>
-              </span>
-            )}
-          </div>
-
           {errorMessage && (
             <div className="panel-error-notice" role="alert">
               <span>{errorMessage}</span>
@@ -954,7 +953,7 @@ export default function PanelYourSign({
       {/* ========================================================================= */}
 
       {/* Uncertain Prediction Card (interactive confirm, correct, dismiss) */}
-      {recognitionMode === "isolated" && uncertainSign && (
+      {isWordMode && uncertainSign && (
         <div
           className="uncertain-suggestion-card"
           data-testid="uncertain-suggestion-card"
@@ -1017,7 +1016,7 @@ export default function PanelYourSign({
       )}
 
       {/* Direction A Result Display Card */}
-      {recognitionMode === "isolated" && currentSign && (
+      {isWordMode && currentSign && (
         <section
           className="sign-communication-result-card"
           data-testid="sign-communication-result-card"
