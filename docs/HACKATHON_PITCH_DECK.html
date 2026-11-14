@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signova AI — Hackathon Pitch | Team The Nexus</title>
+<style>
+/* ─── DESIGN SYSTEM ─────────────────────────────────────────── */
+:root {
+  --bg-ivory:    #F4F0E8;
+  --bg-linen:    #E8E1D6;
+  --charcoal:    #292923;
+  --graphite:    #66645D;
+  --olive:       #78816A;
+  --light-olive: #DDE2D4;
+  --terracotta:  #BD775D;
+  --sand:        #C9BFAF;
+  --white:       #FFFFFF;
+  --dark1:       #35352D;
+  --dark2:       #4A4A40;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%; height: 100%;
+  background: #1a1a18;
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow: hidden;
+}
+
+/* ─── SLIDE SHELL ───────────────────────────────────────────── */
+#deck {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slide-wrap {
+  position: absolute;
+  width: min(100vw, calc(100vh * 16/9));
+  height: min(100vh, calc(100vw * 9/16));
+  aspect-ratio: 16/9;
+  transform-origin: top left;
+}
+
+/* aspect-ratio trick — the wrap scales via JS */
+.slide {
+  display: none;
+  position: absolute; inset: 0;
+  padding: 3.8% 6.5% 4.5%;
+  overflow: hidden;
+}
+.slide.active { display: flex; flex-direction: column; }
+
+/* ─── TYPOGRAPHY ────────────────────────────────────────────── */
+.serif { font-family: 'Playfair Display', Georgia, serif; }
+.sans  { font-family: 'Inter', system-ui, sans-serif; }
+
+.h-display { font-size: 4.6vmin; font-weight: 700; line-height: 1.18; }
+.h-slide   { font-size: 3.4vmin; font-weight: 700; line-height: 1.2; }
+.body-lg   { font-size: 2.0vmin; line-height: 1.6; }
+.body-md   { font-size: 1.75vmin; line-height: 1.55; }
+.body-sm   { font-size: 1.5vmin; line-height: 1.5; }
+.label     { font-size: 1.15vmin; font-weight: 700; letter-spacing: .08em; }
+
+/* ─── HEADER / FOOTER ───────────────────────────────────────── */
+.slide-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  padding-bottom: 1.2%;
+  border-bottom: 1px solid var(--sand);
+  margin-bottom: 2.5%;
+  flex-shrink: 0;
+}
+.slide-header.dark { border-color: var(--graphite); }
+.slide-footer {
+  flex-shrink: 0;
+  margin-top: auto;
+  padding-top: 1.2%;
+  border-top: 1px solid var(--sand);
+  font-size: 1.1vmin;
+  color: var(--graphite);
+  letter-spacing: .07em;
+}
+.slide-footer.dark { border-color: var(--graphite); color: var(--sand); }
+
+/* ─── UTILITY CLASSES ───────────────────────────────────────── */
+.row { display: flex; gap: 2%; }
+.col { display: flex; flex-direction: column; }
+.flex-1 { flex: 1; }
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--sand);
+  border-radius: 2px;
+  padding: 3.5% 4%;
+}
+.card-linen {
+  background: var(--bg-linen);
+  border-radius: 2px;
+  padding: 3.5% 4%;
+}
+
+.olive-rule {
+  width: 10%;
+  height: 3px;
+  background: var(--olive);
+  margin: 2% 0;
+  flex-shrink: 0;
+}
+
+.badge-pending { color: var(--terracotta); font-weight: 700; }
+.badge-ok      { color: var(--olive);      font-weight: 700; }
+
+.pip {
+  display: inline-block;
+  width: 1vmin; height: 1vmin;
+  border-radius: 50%;
+  background: var(--olive);
+  margin-right: .5em;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.accent-top {
+  height: 3px;
+  margin-bottom: 2.5%;
+  flex-shrink: 0;
+}
+
+/* ─── PIPELINE STEP ─────────────────────────────────────────── */
+.pipeline {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  margin-bottom: 2%;
+}
+.step {
+  flex: 1;
+  background: var(--white);
+  border: 1px solid var(--sand);
+  border-radius: 2px;
+  padding: 2.5% 2.5% 2%;
+  min-width: 0;
+}
+.step.mediapipe  { background: var(--light-olive); border-color: var(--olive); }
+.step.output-step { background: var(--bg-linen);   border-color: var(--terracotta); }
+.step-num   { font-family: 'Playfair Display', serif; font-size: 2vmin; font-weight: 700; color: var(--olive); }
+.step.output-step .step-num { color: var(--terracotta); }
+.step-title { font-size: 1.5vmin; font-weight: 700; color: var(--charcoal); margin-top: .4em; }
+.step-desc  { font-size: 1.2vmin; color: var(--graphite); margin-top: .3em; line-height: 1.4; }
+.step-arrow {
+  display: flex; align-items: center; padding: 0 .4%;
+  color: var(--olive); font-size: 2vmin; font-weight: 700;
+  align-self: center; flex-shrink: 0;
+}
+
+/* ─── GRID ──────────────────────────────────────────────────── */
+.grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2%; }
+.grid-3   { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2%; }
+.grid-4   { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 1.5%; }
+.grid-5   { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.5%; }
+
+/* ─── TEAM CARD ─────────────────────────────────────────────── */
+.team-card {
+  background: var(--dark1);
+  border: 1px solid var(--dark2);
+  border-radius: 2px;
+  padding: 5% 5% 4%;
+}
+
+/* ─── CLOSING PANEL ─────────────────────────────────────────── */
+.closing-panel {
+  background: var(--dark1);
+  border: 2px solid var(--terracotta);
+  border-radius: 2px;
+  padding: 4% 6%;
+  text-align: center;
+  margin-top: 3%;
+}
+
+/* ─── MOCKUP ────────────────────────────────────────────────── */
+.mockup-bar {
+  background: var(--bg-linen);
+  padding: 1.5% 2%;
+  font-size: 1.2vmin;
+  color: var(--graphite);
+  border-bottom: 1px solid var(--sand);
+  border-radius: 2px 2px 0 0;
+}
+.mockup-viewport {
+  background: var(--charcoal);
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sand);
+  font-size: 1.3vmin;
+  letter-spacing: .05em;
+}
+.mockup-output {
+  background: var(--light-olive);
+  border: 1px solid var(--olive);
+  padding: 2% 3%;
+}
+
+/* ─── SPEC ITEM ─────────────────────────────────────────────── */
+.spec-item { margin-top: 1.1%; }
+.spec-item .spec-label { font-weight: 700; color: var(--charcoal); }
+.spec-item .spec-val   { color: var(--graphite); }
+
+/* ─── ROADMAP STEP ──────────────────────────────────────────── */
+.rm-num  { font-family: 'Playfair Display', serif; font-size: 3.2vmin; font-weight: 700; color: var(--olive); }
+.rm-head { font-size: 1.7vmin; font-weight: 700; color: var(--charcoal); margin-top: .6em; }
+.rm-body { font-size: 1.3vmin; color: var(--graphite); margin-top: .6em; line-height: 1.5; }
+
+/* ─── EVAL METRIC ───────────────────────────────────────────── */
+.metric { margin-top: 1.4%; }
+.metric-label { font-size: 1.3vmin; font-weight: 700; color: var(--charcoal); }
+.metric-val   { font-size: 1.3vmin; font-weight: 700; display: inline-block; margin-left: .3em; }
+.metric-sub   { font-size: 1.1vmin; color: var(--graphite); margin-top: .15em; padding-left: .8em; }
+
+/* ─── NAV ───────────────────────────────────────────────────── */
+#nav {
+  position: fixed; bottom: 1.5vh; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 1.5vw;
+  background: rgba(41,41,35,.88);
+  border: 1px solid rgba(201,191,175,.2);
+  border-radius: 32px;
+  padding: .6vh 2vw;
+  backdrop-filter: blur(8px);
+  z-index: 999;
+}
+#nav button {
+  background: none; border: none; color: var(--sand);
+  font-size: 1.8vh; cursor: pointer; padding: .3vh .8vw;
+  border-radius: 50%; transition: background .15s;
+}
+#nav button:hover { background: rgba(255,255,255,.12); }
+#slide-counter { color: var(--sand); font-size: 1.4vh; min-width: 5vw; text-align: center; font-family: 'Inter', sans-serif; }
+
+/* ─── NOTES PANEL ───────────────────────────────────────────── */
+#notes-toggle {
+  position: fixed; top: 1.5vh; right: 1.5vw;
+  background: rgba(41,41,35,.88); border: 1px solid rgba(201,191,175,.2);
+  color: var(--sand); padding: .5vh 1.2vw; border-radius: 20px;
+  font-size: 1.3vh; cursor: pointer; z-index: 999;
+  backdrop-filter: blur(8px);
+}
+#notes-panel {
+  display: none;
+  position: fixed; bottom: 7vh; left: 50%; transform: translateX(-50%);
+  width: min(80vw, 900px);
+  background: rgba(41,41,35,.96);
+  border: 1px solid rgba(201,191,175,.25);
+  border-radius: 8px;
+  padding: 2vh 2vw;
+  color: var(--sand);
+  font-size: 1.5vh;
+  line-height: 1.6;
+  z-index: 998;
+  max-height: 25vh;
+  overflow-y: auto;
+  backdrop-filter: blur(12px);
+}
+#notes-panel.visible { display: block; }
+
+/* ─── PROGRESS BAR ──────────────────────────────────────────── */
+#progress {
+  position: fixed; top: 0; left: 0;
+  height: 3px;
+  background: var(--terracotta);
+  transition: width .3s ease;
+  z-index: 999;
+}
+
+/* ─── PRINT / PDF ───────────────────────────────────────────── */
+@media print {
+  body { background: white; overflow: visible; }
+  #nav, #notes-toggle, #notes-panel, #progress { display: none !important; }
+  .slide { display: flex !important; page-break-after: always; position: relative; }
+  .slide-wrap { width: 100vw; height: auto; position: relative; }
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<button id="notes-toggle" onclick="toggleNotes()">📝 Notes</button>
+<div id="notes-panel"></div>
+
+<div id="deck">
+<div class="slide-wrap" id="wrap">
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 01 — OPENING
+══════════════════════════════════════════════════ -->
+<div class="slide active" data-notes="Good morning judges. We are Team The Nexus, and this is Signova AI.&#10;Our mission: break communication barriers through Indian Sign Language, using nothing more than a standard webcam.&#10;In the next five minutes we will show you why this matters, how our AI works, and what we built." style="background:var(--bg-ivory)">
+  <div class="slide-header">
+    <span class="label" style="color:var(--olive)">REVA UNIVERSITY HACKATHON  •  VOICE &amp; MULTIMODAL AI</span>
+    <span class="label" style="color:var(--graphite)">01 / 12</span>
+  </div>
+  <div class="row" style="flex:1;gap:4%;align-items:center">
+    <div class="col" style="flex:1.1">
+      <h1 class="serif h-display" style="color:var(--charcoal);font-size:5.8vmin">Signova AI</h1>
+      <p class="sans body-lg" style="color:var(--terracotta);font-weight:700;margin-top:1.5%;line-height:1.35;font-size:2.3vmin">
+        Breaking Communication Barriers<br>Through Indian Sign Language.
+      </p>
+      <div class="olive-rule"></div>
+      <p class="label" style="color:var(--olive)">DEVELOPED BY THE NEXUS</p>
+      <p class="sans body-md" style="color:var(--charcoal);margin-top:.8%">
+        Raj Jadav  •  Harsh Sanchaniya  •  Jaineel Khatri  •  Om Panday
+      </p>
+    </div>
+    <div style="flex:0.9;background:var(--bg-linen);border-radius:2px;padding:3%;display:flex;flex-direction:column;align-items:center;align-self:stretch">
+      <div style="flex:1;width:100%;background:var(--charcoal);border-radius:2px;display:flex;align-items:center;justify-content:center;color:var(--light-olive);font-size:1.6vmin;letter-spacing:.06em">
+        ✋  MEDIAPIPE ISL LANDMARK VISUALIZATION<br><span style="font-size:1.1vmin;color:var(--sand);margin-top:.5em;display:block;text-align:center">75 Body &amp; Hand Keypoints  •  Zero Wearable Hardware</span>
+      </div>
+      <p class="label" style="color:var(--graphite);margin-top:2%;text-align:center">Real MediaPipe Output  •  Live Sign Detection</p>
+    </div>
+  </div>
+  <div class="slide-footer">SIGNOVA AI  •  REVA UNIVERSITY HACKATHON  •  TEAM THE NEXUS</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 02 — THE PROBLEM
+══════════════════════════════════════════════════ -->
+<div class="slide" data-notes="India has over 7 million Deaf citizens who use ISL as their primary language.&#10;Fewer than 0.1% of hearing Indians understand sign language.&#10;This gap creates a daily crisis in hospitals, classrooms, and government offices.&#10;We built Signova AI to restore independence." style="background:var(--bg-ivory)">
+  <div class="slide-header">
+    <span class="label" style="color:var(--olive)">THE HUMAN PROBLEM  •  COMMUNICATION BARRIER</span>
+    <span class="label" style="color:var(--graphite)">02 / 12</span>
+  </div>
+  <h2 class="serif h-slide" style="color:var(--charcoal);margin-bottom:3%">Communication should never be a barrier.</h2>
+  <div class="row" style="flex:1;gap:3%">
+    <div class="col" style="flex:1.05">
+      <p class="sans body-lg" style="color:var(--charcoal);font-size:2.1vmin">
+        Millions of individuals who communicate through Indian Sign Language encounter an invisible wall in daily life.
+      </p>
+      <p class="sans body-md" style="color:var(--graphite);margin-top:5%">
+        When society cannot understand sign language, a
+        <strong style="color:var(--terracotta)">Communication Barrier</strong>
+        turns every routine interaction into a moment of isolation.
+      </p>
+    </div>
+    <div class="card-linen col" style="flex:0.95">
+      <div class="spec-item">
+        <span class="spec-label sans body-sm">•  Daily Exchanges: </span>
+        <span class="spec-val sans body-sm">Simple conversations become hesitant exchanges of gestures or scribbled notes.</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label sans body-sm">•  Public Services: </span>
+        <span class="spec-val sans body-sm">Banks, transit, and civic counters require third-party escorts or remain inaccessible.</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label sans body-sm">•  Healthcare: </span>
+        <span class="spec-val sans body-sm">Patients lose privacy and clinical nuance when interpreters are absent.</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label sans body-sm">•  Dignity &amp; Autonomy: </span>
+        <span class="spec-val sans body-sm">Constant dependence on others limits independence in private matters.</span>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">SIGNOVA AI  •  REVA UNIVERSITY HACKATHON  •  TEAM THE NEXUS</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 03 — WHY IT MATTERS
+══════════════════════════════════════════════════ -->
+<div class="slide" data-notes="Accessibility is not a charity feature—it is fundamental human infrastructure.&#10;In healthcare, privacy matters. In classrooms, active participation matters.&#10;At every public counter and social moment, dignity matters.&#10;Signova AI addresses all four of these real-world touchpoints." style="background:var(--bg-ivory)">
+  <div class="slide-header">
+    <span class="label" style="color:var(--olive)">IMPACT DOMAINS  •  WHERE ACCESSIBILITY IS ESSENTIAL</span>
+    <span class="label" style="color:var(--graphite)">03 / 12</span>
+  </div>
+  <h2 class="serif h-slide" style="color:var(--charcoal);margin-bottom:4%">Communication is a basic human need.</h2>
+  <div class="grid-4" style="flex:1">
+    <div class="card col">
+      <div class="serif" style="font-size:3.4vmin;font-weight:700;color:var(--olive)">01</div>
+      <div class="sans" style="font-size:1.9vmin;font-weight:700;color:var(--charcoal);margin-top:.7em">Education</div>
+      <div class="sans body-sm" style="color:var(--graphite);margin-top:.8em">Enables Deaf students to participate actively—asking questions, joining debates, and accessing resources without waiting for an interpreter.</div>
+    </div>
+    <div class="card col">
+      <div class="serif" style="font-size:3.4vmin;font-weight:700;color:var(--olive)">02</div>
+      <div class="sans" style="font-size:1.9vmin;font-weight:700;color:var(--charcoal);margin-top:.7em">Healthcare</div>
+      <div class="sans body-sm" style="color:var(--graphite);margin-top:.8em">Lets patients describe symptoms privately and directly to medical staff, preserving both clinical accuracy and personal dignity.</div>
+    </div>
+    <div class="card col">
+      <div class="serif" style="font-size:3.4vmin;font-weight:700;color:var(--olive)">03</div>
+      <div class="sans" style="font-size:1.9vmin;font-weight:700;color:var(--charcoal);margin-top:.7em">Public Services</div>
+      <div class="sans body-sm" style="color:var(--graphite);margin-top:.8em">Navigate transit, banks, and civic desks independently—no escort required, no information withheld, full equal access.</div>
+    </div>
+    <div class="card col">
+      <div class="serif" style="font-size:3.4vmin;font-weight:700;color:var(--olive)">04</div>
+      <div class="sans" style="font-size:1.9vmin;font-weight:700;color:var(--charcoal);margin-top:.7em">Everyday Life</div>
+      <div class="sans body-sm" style="color:var(--graphite);margin-top:.8em">Enables spontaneous social moments: at a shop, a restaurant, or a workplace, without rehearsing communication workarounds.</div>
+    </div>
+  </div>
+  <div class="slide-footer">SIGNOVA AI  •  REVA UNIVERSITY HACKATHON  •  TEAM THE NEXUS</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 04 — OUR SOLUTION
+══════════════════════════════════════════════════ -->
+<div class="slide" data-notes="Signova AI requires no specialized hardware—just a standard laptop camera.&#10;The system observes live signing, extracts skeletal joint geometry in real time, and returns predicted text in under 20 milliseconds.&#10;It supports live webcam streams and uploaded video files equally." style="background:var(--bg-ivory)">
+  <div class="slide-header">
+    <span class="label" style="color:var(--olive)">THE SOLUTION  •  SYSTEM OVERVIEW</span>
+    <span class="label" style="color:var(--graphite)">04 / 12</span>
+  </div>
+  <h2 class="serif h-slide" style="color:var(--charcoal);margin-bottom:2%">Meet Signova AI.</h2>
+  <div class="row" style="flex:1;gap:3%">
+    <div class="col" style="flex:1">
+      <p class="sans body-md" style="color:var(--charcoal);font-size:1.9vmin;margin-bottom:4%">
+        A camera-based platform that recognizes supported Indian Sign Language signs and presents their predicted meaning as readable text.
+      </p>
+      <div style="display:flex;flex-direction:column;gap:1.8%">
+        <div style="display:flex;align-items:flex-start;gap:1.5%">
+          <span class="pip"></span>
+          <div class="sans body-sm"><strong style="color:var(--charcoal)">Camera-Based Recognition</strong> — Live webcam inference, no depth sensors or gloves required.</div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:1.5%">
+          <span class="pip"></span>
+          <div class="sans body-sm"><strong style="color:var(--charcoal)">Video Upload Recognition</strong> — Process recorded MP4/AVI sequences for offline analysis.</div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:1.5%">
+          <span class="pip"></span>
+          <div class="sans body-sm"><strong style="color:var(--charcoal)">Supported Word Pipeline</strong> — High-confidence isolated sign identification with bilateral mirror support.</div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:1.5%">
+          <span class="pip"></span>
+          <div class="sans body-sm"><strong style="color:var(--charcoal)">Sentence Recognition (25-class)</strong> — Temporal sequence model recognizing continuous ISL phrase patterns.</div>
+        </div>
+      </div>
+    </div>
+    <div class="col" style="flex:.9;border:1px solid var(--sand);border-radius:2px;overflow:hidden">
+      <div class="mockup-bar">● ● ●   SIGNOVA AI  •  LIVE RECOGNITION CONSOLE</div>
+      <div class="mockup-viewport" style="flex:1;min-height:0">
+        <div style="text-align:center">
+          <div style="font-size:2.2vmin">🤟</div>
+          <div style="margin-top:1em;font-size:1.3vmin;line-height:1.6">
+            MediaPipe Landmark Tracking Active<br>
+            <span style="color:var(--light-olive)">75 Keypoints  •  Hands + Pose Detected</span>
+          </div>
+        </div>
+      </div>
+      <div class="mockup-output">
+        <div class="label" style="color:var(--olive)">PREDICTED ISL SENTENCE</div>
+        <div class="sans" style="font-size:1.6vmin;font-weight:700;color:var(--charcoal);margin-top:.4em">"i need water"</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">SIGNOVA AI  •  REVA UNIVERSITY HACKATHON  •  TEAM THE NEXUS</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 05 — HOW IT WORKS
+══════════════════════════════════════════════════ -->
+<div class="slide" data-notes="Here is our six-stage pipeline.&#10;The core insight: we never send raw pixels to the ML model.&#10;MediaPipe extracts 75 upper-body landmark coordinates per frame, turning video into clean geometric trajectories.&#10;This gives us less than 20ms latency and immunity to background clutter." style="background:var(--bg-ivory)">
+  <div class="slide-header">
+    <span class="label" style="color:var(--olive)">EXECUTION FLOW  •  PIPELINE ARCHITECTURE</span>
+    <span class="label" style="color:var(--graphite)">05 / 12</span>
+  </div>
+  <h2 class="serif h-slide" style="color:var(--charcoal);margin-bottom:3%">From sign to readable meaning.</h2>
+  <div class="pipeline">
+    <div class="step"><div class="step-num">01</div><div class="step-title">Camera Input</div><div class="step-desc">Live video or MP4 upload</div></div>
+    <div class="step-arrow">→</div>
+    <div class="step"><div class="step-num">02</div><div class="step-title">Frame Extraction</div><div class="step-desc">OpenCV temporal sampling</div></div>
+    <div class="step-arrow">→</div>
+    <div class="step mediapipe"><div class="step-num">03</div><div class="step-title">MediaPipe Holistic</div><div class="step-desc">75 landmark detection</div></div>
+    <div class="step-arrow">→</div>
+    <div class="step"><div class="step-num">04</div><div class="step-title">Feature Processing</div><div class="step-desc">Normalize + velocity vectors</div></div>
+    <div class="step-arrow">→</div>
+    <div class="step"><div class="step-num">05</div><div class="step-title">Recognition Model</div><div class="step-desc">BiGRU + Attention</div></div>
+    <div class="step-arrow">→</div>
+    <div class="step output-step"><div class="step-num" style="color:var(--terracotta)">06</div><div class="step-title">Predicted Output</div><div class="step-desc">Confidence-scored text</div></div>
+  </div>
+  <div class="card" style="flex:1;min-height:0">
+    <div class="label" style="color:var(--olive);margin-bottom:1.5%">DESIGN PHILOSOPHY: ZERO RAW PIXEL DEPENDENCY</div>
+    <p class="sans body-md" style="color:var(--graphite)">
+      Rather than feeding raw RGB video into convolutional networks—which overfit to background, lighting, and skin tone—Signova AI strips visual noise immediately. We convert motion into <strong style="color:var(--charcoal)">75 skeletal landmark coordinates</strong>, letting the model learn pure movement geometry. The result: &lt;20ms inference on a standard laptop CPU.
+    </p>
+  </div>
+  <div class="slide-footer">SIGNOVA AI  •  REVA UNIVERSITY HACKATHON  •  TEAM THE NEXUS</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 06 — KEY FEATURES
+══════════════════════════════════════════════════ -->
+<div class="slide" data-notes="Signova AI delivers a complete functional toolkit today.&#10;Live camera, video upload, isolated words, continuous sentences, vocabulary limits clearly documented, and a session history.&#10;Every feature here is implemented—not aspirational." style="background:var(--bg-ivory)">
+  <div class="slide-header">
+    <span class="label" style="color:var(--olive)">PRODUCT CAPABILITIES  •  WHAT IT DOES TODAY</span>
+    <span class="label" style="color:var(--graphite)">06 / 12</span>
+  </div>
+  <h2 class="serif h-slide" style="color:var(--charcoal);margin-bottom:3%">Designed around real communication needs.</h2>
+  <div class="grid-3" style="flex:1">
+    <div class="card col" style="position:relative;overflow:hidden">
+      <div class="accent-top" style="background:var(--terracotta)"></div>
+      <div class="sans" style="font-size:1.7vmin;font-weight:700;color:var(--charcoal)">Live Camera Recognition</div>
+      <div class="sans body-sm" style="color:var(--graphite);margin-top:.8em">Real-time webcam inference with landmark overlay and countdown capture flow.</div>
+    </div>
+    <div class="card col" style="position:relative;overflow:hidden">
+      <div class="accent-top" style="background:var(--olive)"></div>
+      <div class="sans" style="font-size:1.7vmin;font-weight:700;color:var(--charcoal)">Video Upload Workflow</div>
+      <div class="sans body-sm" style="color:var(--graphite);margin-top:.8em">Process recorded sign video files for offline analysis and batch evaluation.</div>
+    </div>
+    <div class="card col" style="position:relative;overflow:hidden">
+      <div class="accent-top" style="background:var(--terracotta)"></div>
+      <div class="sans" style="font-size:1.7vmin;font-weight:700;color:var(--charcoal)">Supported Word Pipeline</div>
+      <div class="sans body-sm" style="color:var(--graphite);margin-top:.8em">DTW-KNN isolated vocabulary matcher—fast and high-confidence for single signs.</div>
+    </div>
+    <div class="card col" style="position:relative;overflow:hidden">
+      <div class="accent-top" style="background:var(--olive)"></div>
+      <div class="sans" style="font-size:1.7vmin;font-weight:700;color:var(--charcoal)">Sentence Recognition</div>
+      <div class="sans body-sm" style="color:var(--graphite);margin-top:.8em">25-class temporal sequence model for continuous ISL phrase identification.</div>
+    </div>
+    <div class="card col" style="position:relative;overflow:hidden">
+      <div class="accent-top" style="background:var(--terracotta)"></div>
+      <div class="sans" style="font-size:1.7vmin;font-weight:700;color:var(--charcoal)">Supported Sign Vocabulary</div>
+      <div class="sans body-sm" style="color:var(--graphite);margin-top:.8em">Curated set of essential daily phrases with explicit boundary classification.</div>
+    </div>
+    <div class="card col" style="position:relative;overflow:hidden">
+      <div class="accent-top" style="background:var(--olive)"></div>
+      <div class="sans" style="font-size:1.7vmin;font-weight:700;color:var(--charcoal)">Recognition History Log</div>
+      <div class="sans body-sm" style="color:var(--graphite);margin-top:.8em">Session transcript: review, copy, and replay translated sign exchanges.</div>
+    </div>
+  </div>
+  <div class="slide-footer">SIGNOVA AI  •  REVA UNIVERSITY HACKATHON  •  TEAM THE NEXUS</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 07 — TECHNOLOGY STACK
+══════════════════════════════════════════════════ -->
+<div class="slide" data-notes="Our stack is intentionally lean and battle-tested.&#10;React handles rapid frame rendering. MediaPipe plus OpenCV extract 75 landmarks per frame.&#10;PyTorch powers the BiGRU-Attention network; DTW-KNN provides our fast word baseline.&#10;No unnecessary dependencies, no over-engineered layers." style="background:var(--bg-ivory)">
+  <div class="slide-header">
+    <span class="label" style="color:var(--olive)">SYSTEM ARCHITECTURE  •  TECHNOLOGY STACK</span>
+    <span class="label" style="color:var(--graphite)">07 / 12</span>
+  </div>
+  <h2 class="serif h-slide" style="color:var(--charcoal);margin-bottom:3%">Built with computer vision and machine learning.</h2>
+  <div class="grid-3" style="flex:1">
+    <div class="card col" style="overflow:hidden">
+      <div style="background:var(--bg-linen);margin:-3.5% -4% 0;padding:2% 4%;margin-bottom:3%">
+        <span class="label" style="color:var(--graphite)">FRONTEND &amp; USER EXPERIENCE</span>
+      </div>
+      <div class="sans" style="font-size:1.8vmin;font-weight:700;color:var(--charcoal)">React 18 &amp; JavaScript</div>
+      <div class="sans body-sm" style="color:var(--graphite);margin-top:1em;white-space:pre-line">• Modular component architecture
+• WebRTC webcam capture &amp; HTML5 Canvas
+• High-contrast, WCAG-compliant UI
+• Real-time latency and confidence display</div>
+    </div>
+    <div class="card col" style="overflow:hidden">
+      <div style="background:var(--bg-linen);margin:-3.5% -4% 0;padding:2% 4%;margin-bottom:3%">
+        <span class="label" style="color:var(--graphite)">COMPUTER VISION &amp; FEATURES</span>
+      </div>
+      <div class="sans" style="font-size:1.8vmin;font-weight:700;color:var(--charcoal)">Google MediaPipe &amp; OpenCV</div>
+      <div class="sans body-sm" style="color:var(--graphite);margin-top:1em;white-space:pre-line">• MediaPipe Holistic: hand &amp; pose tracking
+• 75 landmarks: 33 Pose + 21 L + 21 R Hand
+• OpenCV: frame decoding &amp; resampling
+• Torso-scale normalized coordinates</div>
+    </div>
+    <div class="card col" style="overflow:hidden">
+      <div style="background:var(--light-olive);margin:-3.5% -4% 0;padding:2% 4%;margin-bottom:3%">
+        <span class="label" style="color:var(--olive)">MACHINE LEARNING</span>
+      </div>
+      <div class="sans" style="font-size:1.8vmin;font-weight:700;color:var(--charcoal)">PyTorch  •  BiGRU  •  DTW-KNN</div>
+      <div class="sans body-sm" style="color:var(--graphite);margin-top:1em;white-space:pre-line">• PyTorch: deep temporal sequence modeling
+• BiGRU + Self-Attention: recurrent architecture
+• DTW-KNN: velocity-dominant elastic alignment
+• 25-class softmax with confidence gating</div>
+    </div>
+  </div>
+  <div class="slide-footer">SIGNOVA AI  •  REVA UNIVERSITY HACKATHON  •  TEAM THE NEXUS</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 08 — AI ARCHITECTURE
+══════════════════════════════════════════════════ -->
+<div class="slide" data-notes="Here is the core technical architecture.&#10;Each video frame yields 75 landmarks × 4 coordinates = 300 numerical features.&#10;These form a temporal sequence fed into a 2-layer Bidirectional GRU.&#10;A self-attention head learns which frames carry the most discriminative signing motion.&#10;The result: a 25-class softmax over supported ISL sentences." style="background:var(--bg-ivory)">
+  <div class="slide-header">
+    <span class="label" style="color:var(--olive)">NEURAL ARCHITECTURE  •  25-CLASS SENTENCE PIPELINE</span>
+    <span class="label" style="color:var(--graphite)">08 / 12</span>
+  </div>
+  <h2 class="serif h-slide" style="color:var(--charcoal);margin-bottom:3%">Understanding movement, not just images.</h2>
+  <div class="row" style="flex:1;gap:3%">
+    <div class="card col" style="flex:1">
+      <div class="label" style="color:var(--olive);margin-bottom:2%">SPATIAL FEATURE VECTOR DESIGN</div>
+      <div class="spec-item body-sm sans"><span class="spec-label">•  Total Landmarks / Frame: </span><span class="spec-val">75 Keypoints</span></div>
+      <div class="spec-item body-sm sans"><span class="spec-label">•  Upper Body Pose: </span><span class="spec-val">33 Keypoints (Shoulders, Arms, Spine)</span></div>
+      <div class="spec-item body-sm sans"><span class="spec-label">•  Left Hand: </span><span class="spec-val">21 Keypoints (Fingers, Palm, Wrist)</span></div>
+      <div class="spec-item body-sm sans"><span class="spec-label">•  Right Hand: </span><span class="spec-val">21 Keypoints (Fingers, Palm, Wrist)</span></div>
+      <div class="spec-item body-sm sans"><span class="spec-label">•  Channels / Landmark: </span><span class="spec-val">4  →  X, Y, Z, Visibility</span></div>
+      <div class="spec-item body-sm sans"><span class="spec-label">•  Feature Vector / Frame: </span><span class="spec-val" style="color:var(--charcoal);font-weight:700">75 × 4 = 300 Dimensions</span></div>
+      <div class="spec-item body-sm sans"><span class="spec-label">•  Temporal Sequence: </span><span class="spec-val">Resampled to fixed 32 / 64 frames</span></div>
+    </div>
+    <div class="card-linen col" style="flex:1">
+      <div class="label" style="color:var(--charcoal);margin-bottom:2%">END-TO-END NEURAL ARCHITECTURE</div>
+      <div class="spec-item body-sm sans">
+        <span class="spec-label" style="color:var(--olive)">1  Input Sequence  ➔  </span><span class="spec-val">Sequential video frames  [T × 300]</span>
+      </div>
+      <div class="spec-item body-sm sans">
+        <span class="spec-label" style="color:var(--olive)">2  MediaPipe Holistic  ➔  </span><span class="spec-val">75 landmarks × 4 channels = 300-dim per frame</span>
+      </div>
+      <div class="spec-item body-sm sans">
+        <span class="spec-label" style="color:var(--olive)">3  Normalization  ➔  </span><span class="spec-val">Centre on torso, scale-invariant to camera distance</span>
+      </div>
+      <div class="spec-item body-sm sans">
+        <span class="spec-label" style="color:var(--olive)">4  BiGRU Encoder  ➔  </span><span class="spec-val">2-layer Bidirectional GRU  |  Hidden=128  |  Dropout=0.3</span>
+      </div>
+      <div class="spec-item body-sm sans">
+        <span class="spec-label" style="color:var(--olive)">5  Self-Attention  ➔  </span><span class="spec-val">Weights critical temporal inflection frames per sign</span>
+      </div>
+      <div class="spec-item body-sm sans">
+        <span class="spec-label" style="color:var(--olive)">6  Classifier Head  ➔  </span><span class="spec-val" style="color:var(--charcoal);font-weight:700">Linear projection → 25-class Softmax output</span>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">SIGNOVA AI  •  REVA UNIVERSITY HACKATHON  •  TEAM THE NEXUS</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 09 — WHAT MAKES IT DIFFERENT
+══════════════════════════════════════════════════ -->
+<div class="slide" data-notes="Standard vision models fail sign language because signs are not static images.&#10;Hand shape is roughly 20% of the signal. Trajectory, speed, and body position carry the rest.&#10;By encoding both spatial landmark positions and temporal velocity profiles, Signova AI captures genuine linguistic movement.&#10;And critically—we do not pretend to translate what we cannot." style="background:var(--bg-ivory)">
+  <div class="slide-header">
+    <span class="label" style="color:var(--olive)">DIFFERENTIATORS  •  SPATIAL + TEMPORAL DYNAMICS</span>
+    <span class="label" style="color:var(--graphite)">09 / 12</span>
+  </div>
+  <h2 class="serif h-slide" style="color:var(--charcoal);margin-bottom:3%">Signs are movement, not just shapes.</h2>
+  <div class="grid-2x2" style="flex:1">
+    <div class="card col">
+      <div class="sans" style="font-size:1.8vmin;font-weight:700;color:var(--olive)">Spatial Information</div>
+      <div class="sans body-sm" style="color:var(--graphite);margin-top:.8em">Captures precise 3D positions of finger joints, wrist orientation, and upper-torso reference points across every frame.</div>
+    </div>
+    <div class="card col">
+      <div class="sans" style="font-size:1.8vmin;font-weight:700;color:var(--olive)">Temporal Information</div>
+      <div class="sans body-sm" style="color:var(--graphite);margin-top:.8em">Models velocity, acceleration, and trajectory arcs. Many signs share identical hand shapes yet differ entirely in motion pattern.</div>
+    </div>
+    <div class="card col">
+      <div class="sans" style="font-size:1.8vmin;font-weight:700;color:var(--olive)">Dual Recognition Pipelines</div>
+      <div class="sans body-sm" style="color:var(--graphite);margin-top:.8em">DTW-KNN for fast isolated word identification. BiGRU-Attention for continuous multi-sign phrase sequences. Each tuned independently.</div>
+    </div>
+    <div class="card col">
+      <div class="sans" style="font-size:1.8vmin;font-weight:700;color:var(--olive)">Closed-Vocabulary Honesty</div>
+      <div class="sans body-sm" style="color:var(--graphite);margin-top:.8em">Strict confidence thresholds reject out-of-vocabulary inputs rather than producing false translations—engineering integrity over inflated claims.</div>
+    </div>
+  </div>
+  <div class="slide-footer">SIGNOVA AI  •  REVA UNIVERSITY HACKATHON  •  TEAM THE NEXUS</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 10 — PROTOTYPE & EVALUATION
+══════════════════════════════════════════════════ -->
+<div class="slide" data-notes="Transparency is a core engineering value for us.&#10;Every implementation item on the left is live and running today.&#10;For final test accuracy and F1, we follow strict protocol: Signer 2's 98 samples remain quarantined until final evaluation—no contamination, no inflated numbers.&#10;What we have measured honestly: inference runs under 20 milliseconds on a standard laptop." style="background:var(--bg-ivory)">
+  <div class="slide-header">
+    <span class="label" style="color:var(--olive)">EMPIRICAL STATUS  •  PROTOTYPE EVALUATION</span>
+    <span class="label" style="color:var(--graphite)">10 / 12</span>
+  </div>
+  <h2 class="serif h-slide" style="color:var(--charcoal);margin-bottom:3%">From concept to working prototype.</h2>
+  <div class="row" style="flex:1;gap:3%">
+    <div class="card col" style="flex:1">
+      <div class="label" style="color:var(--olive);margin-bottom:2%">IMPLEMENTATION STATUS</div>
+      <div class="spec-item body-sm sans"><strong style="color:var(--charcoal)">✔  25-Class Sentence Model: </strong><span style="color:var(--graphite)">BiGRU-Attention fully compiled and running live inference.</span></div>
+      <div class="spec-item body-sm sans"><strong style="color:var(--charcoal)">✔  Supported Word Pipeline: </strong><span style="color:var(--graphite)">DTW-KNN with bilateral mirror augmentation active.</span></div>
+      <div class="spec-item body-sm sans"><strong style="color:var(--charcoal)">✔  Live Camera Streaming: </strong><span style="color:var(--graphite)">Sub-second webcam frame capture with bounding-box tracking.</span></div>
+      <div class="spec-item body-sm sans"><strong style="color:var(--charcoal)">✔  Video Upload Pipeline: </strong><span style="color:var(--graphite)">Full batch evaluation on recorded MP4 datasets confirmed.</span></div>
+      <div class="spec-item body-sm sans"><strong style="color:var(--charcoal)">✔  Confidence Calibration: </strong><span style="color:var(--graphite)">Softmax + distance thresholding for OOV rejection operational.</span></div>
+    </div>
+    <div class="card-linen col" style="flex:1">
+      <div class="label" style="color:var(--charcoal);margin-bottom:2%">BENCHMARK DASHBOARD</div>
+      <div class="metric">
+        <div><span class="metric-label">25-Class Test Accuracy:</span><span class="metric-val badge-pending">[VERIFICATION IN PROGRESS]</span></div>
+        <div class="metric-sub">↳ Target — multi-signer Signer 2 test set</div>
+      </div>
+      <div class="metric">
+        <div><span class="metric-label">Macro F1-Score:</span><span class="metric-val badge-pending">[VERIFICATION IN PROGRESS]</span></div>
+        <div class="metric-sub">↳ Balanced per-class harmonic mean</div>
+      </div>
+      <div class="metric">
+        <div><span class="metric-label">Test Split:</span><span class="metric-val badge-ok">Signer 2  •  98 samples</span></div>
+        <div class="metric-sub">↳ Strictly quarantined — zero contamination</div>
+      </div>
+      <div class="metric">
+        <div><span class="metric-label">Inference Latency:</span><span class="metric-val badge-ok">&lt; 20 ms per frame</span></div>
+        <div class="metric-sub">↳ Measured on standard laptop CPU</div>
+      </div>
+      <div class="metric">
+        <div><span class="metric-label">Validation Split:</span><span class="metric-val badge-ok">Signer 7  •  85 samples</span></div>
+        <div class="metric-sub">↳ Hyperparameter tuning partition</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">SIGNOVA AI  •  REVA UNIVERSITY HACKATHON  •  TEAM THE NEXUS</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 11 — FUTURE SCOPE
+══════════════════════════════════════════════════ -->
+<div class="slide" data-notes="This prototype is step one of a longer journey.&#10;Our roadmap: 100-plus vocabulary phrases, diverse community training data, ONNX mobile quantization, and live pilot deployments.&#10;Every step is grounded in what real accessibility demands—not what sounds impressive in a pitch." style="background:var(--bg-ivory)">
+  <div class="slide-header">
+    <span class="label" style="color:var(--olive)">ROADMAP  •  FUTURE DEVELOPMENT</span>
+    <span class="label" style="color:var(--graphite)">11 / 12</span>
+  </div>
+  <h2 class="serif h-slide" style="color:var(--charcoal);margin-bottom:3%">Building towards more accessible communication.</h2>
+  <div class="grid-5" style="flex:1">
+    <div class="card col">
+      <div class="rm-num">01</div>
+      <div class="rm-head">Expand Vocabulary</div>
+      <div class="rm-body">Scale from 25 to 100+ supported sentences across medical, civic, and education domains.</div>
+    </div>
+    <div class="card col">
+      <div class="rm-num">02</div>
+      <div class="rm-head">Diverse Signer Data</div>
+      <div class="rm-body">Partner with ISL institutions to gather signing data across speeds, dialects, and demographics.</div>
+    </div>
+    <div class="card col">
+      <div class="rm-num">03</div>
+      <div class="rm-head">Robust Generalization</div>
+      <div class="rm-body">Adversarial augmentation, low-light resilience, and signer-independent model hardening.</div>
+    </div>
+    <div class="card col">
+      <div class="rm-num">04</div>
+      <div class="rm-head">Mobile Deployment</div>
+      <div class="rm-body">Quantize models to ONNX / TFLite for offline inference on low-cost Android smartphones.</div>
+    </div>
+    <div class="card col">
+      <div class="rm-num">05</div>
+      <div class="rm-head">Real-World Pilots</div>
+      <div class="rm-body">Deploy accessibility kiosks at university admin desks and public health clinic counters.</div>
+    </div>
+  </div>
+  <div class="slide-footer">SIGNOVA AI  •  REVA UNIVERSITY HACKATHON  •  TEAM THE NEXUS</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 12 — TEAM & CLOSING
+══════════════════════════════════════════════════ -->
+<div class="slide" data-notes="Team The Nexus: Raj Jadav, Harsh Sanchaniya, Jaineel Khatri, and Om Panday.&#10;We built Signova AI because communication is not a privilege.&#10;Every person deserves to be understood.&#10;Thank you—we welcome your questions and a live demonstration." style="background:var(--charcoal)">
+  <div class="slide-header dark" style="border-color:var(--graphite)">
+    <span class="label" style="color:var(--light-olive)">TEAM THE NEXUS  •  REVA UNIVERSITY HACKATHON</span>
+    <span class="label" style="color:var(--sand)">12 / 12</span>
+  </div>
+  <h2 class="serif h-slide" style="color:var(--white);margin-bottom:4%">Meet The Nexus.</h2>
+  <div class="grid-4" style="margin-bottom:3%">
+    <div class="team-card col">
+      <div class="sans" style="font-size:1.8vmin;font-weight:700;color:var(--white)">Raj Jadav</div>
+      <div class="sans" style="font-size:1.3vmin;font-weight:700;color:var(--light-olive);margin-top:.5em">Team Leader</div>
+      <div class="sans" style="font-size:1.2vmin;color:var(--sand);margin-top:.8em">Full-Stack Architecture &amp; AI Pipeline Integration</div>
+    </div>
+    <div class="team-card col">
+      <div class="sans" style="font-size:1.8vmin;font-weight:700;color:var(--white)">Harsh Sanchaniya</div>
+      <div class="sans" style="font-size:1.3vmin;font-weight:700;color:var(--light-olive);margin-top:.5em">Team Member</div>
+      <div class="sans" style="font-size:1.2vmin;color:var(--sand);margin-top:.8em">AI/ML Modeling &amp; BiGRU Feature Engineering</div>
+    </div>
+    <div class="team-card col">
+      <div class="sans" style="font-size:1.8vmin;font-weight:700;color:var(--white)">Jaineel Khatri</div>
+      <div class="sans" style="font-size:1.3vmin;font-weight:700;color:var(--light-olive);margin-top:.5em">Team Member</div>
+      <div class="sans" style="font-size:1.2vmin;color:var(--sand);margin-top:.8em">Frontend React &amp; Real-Time Accessibility UX</div>
+    </div>
+    <div class="team-card col">
+      <div class="sans" style="font-size:1.8vmin;font-weight:700;color:var(--white)">Om Panday</div>
+      <div class="sans" style="font-size:1.3vmin;font-weight:700;color:var(--light-olive);margin-top:.5em">Team Member</div>
+      <div class="sans" style="font-size:1.2vmin;color:var(--sand);margin-top:.8em">Testing, Evaluation &amp; Sarvam AI Integration</div>
+    </div>
+  </div>
+  <div class="closing-panel">
+    <div class="serif" style="font-size:3vmin;color:var(--white);line-height:1.3">"Every person deserves to be understood."</div>
+    <div class="label" style="color:var(--light-olive);margin-top:1.5em">SIGNOVA AI  •  BREAKING COMMUNICATION BARRIERS THROUGH INDIAN SIGN LANGUAGE</div>
+  </div>
+  <div class="slide-footer dark" style="margin-top:auto">SIGNOVA AI  •  REVA UNIVERSITY HACKATHON  •  TEAM THE NEXUS</div>
+</div>
+
+</div><!-- /slide-wrap -->
+</div><!-- /deck -->
+
+
+<!-- ─── NAVIGATION ────────────────────────────────────────────────────────── -->
+<div id="nav">
+  <button onclick="go(-1)" title="Previous (←)">◀</button>
+  <span id="slide-counter">1 / 12</span>
+  <button onclick="go(1)"  title="Next (→ / Space)">▶</button>
+</div>
+
+
+<script>
+const slides  = document.querySelectorAll('.slide');
+const counter = document.getElementById('slide-counter');
+const progress= document.getElementById('progress');
+const notesEl = document.getElementById('notes-panel');
+let curr = 0;
+
+function show(n) {
+  slides[curr].classList.remove('active');
+  curr = (n + slides.length) % slides.length;
+  slides[curr].classList.add('active');
+  counter.textContent = `${curr+1} / ${slides.length}`;
+  progress.style.width = `${(curr+1)/slides.length*100}%`;
+  if (notesEl.classList.contains('visible')) showNotes();
+}
+
+function go(dir) { show(curr + dir); }
+
+function toggleNotes() {
+  notesEl.classList.toggle('visible');
+  if (notesEl.classList.contains('visible')) showNotes();
+}
+
+function showNotes() {
+  const raw = slides[curr].dataset.notes || '';
+  notesEl.innerHTML = raw.replace(/\n/g,'<br>');
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(1); }
+  if (e.key === 'ArrowLeft')                   { e.preventDefault(); go(-1); }
+  if (e.key === 'n' || e.key === 'N')           toggleNotes();
+  if (e.key === 'f' || e.key === 'F')           {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen();
+  }
+});
+
+// Scale the slide-wrap to fill viewport maintaining 16:9
+function scaleWrap() {
+  const wrap  = document.getElementById('wrap');
+  const vw = window.innerWidth, vh = window.innerHeight;
+  const sw = vw, sh = vw * 9/16;
+  const scale = sh > vh ? vh / (vw * 9/16) : 1;
+  const aw = vw * scale, ah = vw * 9/16 * scale;
+  wrap.style.width  = vw + 'px';
+  wrap.style.height = (vw * 9/16) + 'px';
+  wrap.style.transform = `scale(${scale})`;
+  wrap.style.left = `${(vw - aw)/2}px`;
+  wrap.style.top  = `${(vh - ah)/2}px`;
+}
+window.addEventListener('resize', scaleWrap);
+scaleWrap();
+
+// Initial progress bar
+progress.style.width = `${1/slides.length*100}%`;
+</script>
+</body>
+</html>
